@@ -1,0 +1,55 @@
+name: Deploy
+
+# Builds the PWA and publishes it to GitHub Pages. Runs on:
+#   - pushes to main (code changes)
+#   - manual dispatch
+#   - completion of the "Update results" job (the data-refresh commit, which a
+#     bot push would otherwise not trigger directly)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+  workflow_run:
+    workflows: ['Update results']
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        env:
+          # Project Pages serve from /<repo>/ — match Vite's base path to that.
+          BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

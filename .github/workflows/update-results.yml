@@ -1,0 +1,49 @@
+name: Update results
+
+# Hourly job that pulls scores + top scorers from API-Football and commits the
+# refreshed public/data/live.json. The commit is picked up by deploy.yml (via
+# workflow_run) to publish the updated site.
+#
+# 24 runs/day x 2 API calls each (fixtures + top scorers) = ~48 calls/day, within
+# API-Football's free 100/day tier.
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # every hour, on the hour (UTC)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-results
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch latest results
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          FOOTBALL_DATA_COMP: ${{ vars.FOOTBALL_DATA_COMP }}
+          FOOTBALL_DATA_SEASON: ${{ vars.FOOTBALL_DATA_SEASON }}
+        run: node scripts/update_results.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- public/data/live.json; then
+            echo "No changes."
+          else
+            git add public/data/live.json
+            git commit -m "chore: update results $(date -u +%FT%TZ)"
+            git push
+          fi
