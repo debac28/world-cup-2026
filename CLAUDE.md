@@ -7,7 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 An installable PWA for the FIFA World Cup 2026: today's matches in the user's local
 timezone, live/final scores, group standings + progression, knockout bracket, and top
 scorers. Vanilla JS + Vite, deployed as static files to GitHub Pages; live data comes
-from a GitHub Actions cron that runs every hour (~48 API calls/day), not a server.
+from a GitHub Actions cron (every 5 min during match hours, hourly otherwise), not a
+server. The app reads live.json straight from raw GitHub so data commits need no redeploy.
 
 ## Commands
 

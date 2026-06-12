@@ -7,8 +7,10 @@ progressing**, the **knockout bracket**, the **top goal scorers**, match **venue
 
 The static schedule (fixtures, groups, bracket) is extracted once from `fifa_2026.xlsx`.
 Live scores and scorers are pulled from [football-data.org](https://www.football-data.org)
-(free tier, World Cup competition) by a GitHub Actions cron job every hour and committed
-as a small JSON file, so the deployed site is just static files — no server.
+(free tier, World Cup competition) by a GitHub Actions cron job — every 5 minutes during
+match hours, hourly otherwise — and committed as a small JSON file, so the deployed site
+is just static files — no server. The app reads that JSON directly from raw GitHub, so
+score updates appear without a redeploy.
 
 ## How it fits together
 
@@ -73,8 +75,9 @@ search costs 100 units against the free 10,000/day quota, and it caps searches p
 
 Two workflows run the show:
 
-- **`update-results.yml`** — cron every hour (and manual): fetches results and
-  commits `live.json`. ~48 API calls/day, within API-Football's free 100/day tier.
+- **`update-results.yml`** — cron every 5 min during match hours (UTC 16–23 & 00–06)
+  and hourly in the quiet window (UTC 07–15), plus manual: fetches results and commits
+  `live.json`. Public repo, so Actions minutes are free; data commits don't redeploy.
 - **`deploy.yml`** — builds & deploys on push to `main`, on manual dispatch, and after
   each successful results update.
 

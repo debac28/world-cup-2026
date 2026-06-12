@@ -1,16 +1,21 @@
 name: Update results
 
-# Every-5-minutes job that pulls scores + top scorers from football-data.org and commits
-# the refreshed public/data/live.json. The app reads live.json directly from raw GitHub,
-# so each commit reaches users without a redeploy.
+# Pulls scores + top scorers from football-data.org and commits public/data/live.json.
+# The app reads live.json directly from raw GitHub, so each commit reaches users without
+# a redeploy. (Public repo => GitHub Actions minutes are free.)
 #
-# Quota notes (football-data free tier = 10 calls/min): 2 calls/run x 288 runs/day.
-# YouTube highlight searches are throttled to ~once/hour inside the script (see
-# enrichHighlights) so the 5-min cadence stays within YouTube's free quota.
+# Frequency is matched to when matches are actually live. Derived from the fixtures
+# (kickoff .. +2.5h, in UTC): matches occur during UTC hours 16-23 and 00-06; UTC
+# 07-15 has no matches. So we poll every 5 min during match hours and hourly otherwise.
+#
+# YouTube highlight searches are throttled to the top of each hour inside the script
+# (see enrichHighlights) so the 5-min cadence stays within YouTube's free quota.
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # every 5 minutes (UTC); GitHub may delay a few minutes
+    - cron: '*/5 16-23 * * *'  # match hours (UTC): every 5 min
+    - cron: '*/5 0-6 * * *'    # match hours (UTC, late Americas night): every 5 min
+    - cron: '0 7-15 * * *'     # quiet hours (UTC): hourly
   workflow_dispatch: {}
 
 permissions:
