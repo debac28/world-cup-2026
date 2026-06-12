@@ -2,13 +2,23 @@ name = "worldcup26-live"
 main = "src/index.js"
 compatibility_date = "2024-11-01"
 
-# Reliable live scores. The Worker computes the merged live payload on request and
-# caches it for ~60s (so football-data.org is hit at most ~once/minute regardless of
-# how many people are watching). No cron or KV needed.
+# The Worker is the live backend: GET /live serves fresh scores+scorers (football-data)
+# merged with highlight links from KV, cached ~60s. The hourly cron searches YouTube for
+# finished matches missing highlights and stores them in KV — replacing GitHub's
+# unreliable scheduler.
 #
-# Set the API token as a secret (not committed):
-#   cd worker && npx wrangler secret put FOOTBALL_DATA_TOKEN
-#
-# Optional override of the GitHub base (scorers + highlights) the Worker merges in:
+# Secrets (set via wrangler, not committed):
+#   npx wrangler secret put FOOTBALL_DATA_TOKEN -c worker/wrangler.toml
+#   npx wrangler secret put YOUTUBE_API_KEY     -c worker/wrangler.toml
+
+[triggers]
+crons = ["0 * * * *"] # hourly highlight search (Cloudflare crons are reliable)
+
+# KV store persisting found highlights ({ matchId: { US: {...} } }).
+[[kv_namespaces]]
+binding = "KV"
+id = "b8acddfd78234223abe64a27adaa4a7f"
+
 [vars]
+# Fallback source if football-data is briefly unavailable.
 BASE_LIVE_URL = "https://raw.githubusercontent.com/debac28/world-cup-2026/main/public/data/live.json"

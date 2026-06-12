@@ -1,16 +1,17 @@
 name: Update results
 
-# Hourly job that refreshes scorers + highlight links and the committed base
-# public/data/live.json. Near-real-time LIVE SCORES are handled separately by the
-# Cloudflare Worker (worker/), which the app reads directly — so this job no longer
-# needs a fast cadence (GitHub's scheduler is unreliable at minute granularity anyway).
-# The Worker merges this base's scorers + highlights with fresh scores from football-data.
+# Backup/base refresher only. The Cloudflare Worker (worker/) is now the live backend:
+# it serves fresh scores + scorers from football-data and owns YouTube highlights (via
+# its own reliable cron + KV). This job just refreshes the committed public/data/live.json
+# that the Worker falls back to if football-data is briefly unavailable. It deliberately
+# does NOT set YOUTUBE_API_KEY (the Worker owns highlights), so there's no quota conflict.
 #
-# YouTube highlight searches run at the top of the hour (see enrichHighlights).
+# Kept mostly for manual runs; GitHub's scheduler is unreliable, which is exactly why
+# live data moved to the Worker.
 
 on:
   schedule:
-    - cron: '0 * * * *'  # hourly (UTC)
+    - cron: '0 */6 * * *'  # every 6h (best-effort base refresh; Worker is primary)
   workflow_dispatch: {}
 
 permissions:
@@ -35,7 +36,7 @@ jobs:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           FOOTBALL_DATA_COMP: ${{ vars.FOOTBALL_DATA_COMP }}
           FOOTBALL_DATA_SEASON: ${{ vars.FOOTBALL_DATA_SEASON }}
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          # No YOUTUBE_API_KEY here on purpose — the Cloudflare Worker owns highlights.
         run: node scripts/update_results.mjs
 
       - name: Commit if changed

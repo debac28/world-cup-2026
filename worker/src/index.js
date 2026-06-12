@@ -1,16 +1,20 @@
-// Cloudflare Worker: serves fresh live World Cup results at GET /live.
+// Cloudflare Worker: the live backend for the World Cup app.
 //
-// Why this exists: GitHub Actions' scheduler is unreliable for ~5-minute live updates.
-// This Worker fetches football-data.org on demand, maps it onto our fixtures (shared
-// logic in scripts/lib/map.mjs), and merges in scorers + highlight links from the
-// GitHub-built base (live.json). It caches the merged result ~60s via the Cache API,
-// so football-data is hit at most ~once/minute no matter how many viewers there are.
+//  GET /live  (fetch handler) — returns fresh scores + scorers from football-data.org,
+//             mapped onto our fixtures (shared scripts/lib/map.mjs), with highlight
+//             links merged in from KV. Cached ~60s via the Cache API, so football-data
+//             is hit at most ~once/minute regardless of traffic. CORS enabled.
 //
-// The app polls this endpoint (every 60s during live matches), so scores are never
-// more than ~1 minute stale.
+//  cron       (scheduled handler) — hourly: searches YouTube for finished matches still
+//             missing a US highlight and stores them in KV. This replaces GitHub's
+//             unreliable scheduler, so highlights appear automatically.
+//
+// Bindings/secrets (see wrangler.toml + `wrangler secret put`):
+//   FOOTBALL_DATA_TOKEN, YOUTUBE_API_KEY (secrets); KV (namespace); BASE_LIVE_URL (var).
 
 import seed from '../../public/data/seed.json'
-import { buildResults } from '../../scripts/lib/map.mjs'
+import { buildResults, norm } from '../../scripts/lib/map.mjs'
+import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 
 const FD_BASE = 'https://api.football-data.org/v4'
 const CORS = {
@@ -19,15 +23,16 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 const CACHE_SECONDS = 60
+const HL_KEY = 'highlights' // KV: { [matchId]: { US: {...} } }
+const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
+const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
 
 export default {
   async fetch(request, env, ctx) {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: CORS })
-    }
+    if (request.method === 'OPTIONS') return new Response(null, { headers: CORS })
 
     const cache = caches.default
-    const cacheKey = new Request(new URL('/live', request.url).toString(), request)
+    const cacheKey = new Request(new URL('/live', request.url).toString())
     const cached = await cache.match(cacheKey)
     if (cached) return withCors(cached)
 
@@ -42,6 +47,10 @@ export default {
     ctx.waitUntil(cache.put(cacheKey, res.clone()))
     return res
   },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(refreshHighlights(env))
+  },
 }
 
 function withCors(res) {
@@ -50,47 +59,119 @@ function withCors(res) {
   return r
 }
 
-async function buildPayload(env) {
-  // Base: scorers + highlight links produced by the GitHub updater.
-  const base = await fetchJSON(env.BASE_LIVE_URL).catch(() => null)
+async function fetchJSON(url, init) {
+  const res = await fetch(url, init)
+  if (!res.ok) throw new Error(`${url} -> ${res.status}`)
+  return res.json()
+}
 
-  const token = env.FOOTBALL_DATA_TOKEN
-  let results = base?.results || {}
-  if (token) {
+const fdHeaders = (env) => ({ 'X-Auth-Token': env.FOOTBALL_DATA_TOKEN })
+const compQuery = (env) => {
+  const comp = env.FOOTBALL_DATA_COMP || 'WC'
+  const season = env.FOOTBALL_DATA_SEASON ? `&season=${env.FOOTBALL_DATA_SEASON}` : ''
+  return { comp, season }
+}
+
+async function fdMatches(env) {
+  const { comp, season } = compQuery(env)
+  const q = season ? `?${season.slice(1)}` : ''
+  const data = await fetchJSON(`${FD_BASE}/competitions/${comp}/matches${q}`, {
+    headers: fdHeaders(env),
+  })
+  return data.matches || []
+}
+
+async function fdScorers(env) {
+  const { comp, season } = compQuery(env)
+  const data = await fetchJSON(
+    `${FD_BASE}/competitions/${comp}/scorers?limit=30${season}`,
+    { headers: fdHeaders(env) },
+  )
+  return (data.scorers || [])
+    .map((s) => ({ player: s.player?.name, team: norm(s.team?.name), goals: s.goals ?? 0 }))
+    .filter((s) => s.player && s.goals > 0)
+}
+
+async function readHighlights(env) {
+  if (!env.KV) return {}
+  try {
+    return JSON.parse((await env.KV.get(HL_KEY)) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+async function buildPayload(env) {
+  let results = {}
+  let scorers = []
+
+  if (env.FOOTBALL_DATA_TOKEN) {
     try {
-      const comp = env.FOOTBALL_DATA_COMP || 'WC'
-      const season = env.FOOTBALL_DATA_SEASON
-      const q = season ? `?season=${season}` : ''
-      const data = await fetchJSON(`${FD_BASE}/competitions/${comp}/matches${q}`, {
-        headers: { 'X-Auth-Token': token },
-      })
-      const fresh = buildResults(seed, data.matches || [])
-      if (Object.keys(fresh).length) results = fresh
+      results = buildResults(seed, await fdMatches(env))
     } catch (e) {
-      // Network/API hiccup — fall back to the base results.
-      console.log('football-data fetch failed:', e.message)
+      console.log('matches fetch failed:', e.message)
+    }
+    try {
+      scorers = await fdScorers(env)
+    } catch (e) {
+      console.log('scorers fetch failed:', e.message)
     }
   }
 
-  // Carry forward per-region highlight links from the base onto the fresh results
-  // (migrating the legacy single `highlight` into `highlights.US`).
-  const baseResults = base?.results || {}
+  // Fallback to the GitHub-committed base if football-data is unavailable.
+  if (!Object.keys(results).length && env.BASE_LIVE_URL) {
+    const base = await fetchJSON(env.BASE_LIVE_URL).catch(() => null)
+    if (base) {
+      results = base.results || {}
+      if (!scorers.length) scorers = base.scorers || []
+    }
+  }
+
+  // Merge highlight links from KV.
+  const map = await readHighlights(env)
   for (const [id, r] of Object.entries(results)) {
-    const b = baseResults[id]
-    const bh = b?.highlights || (b?.highlight ? { US: b.highlight } : null)
-    if (bh && !r.highlights) r.highlights = bh
+    if (map[id]) r.highlights = map[id]
   }
 
   return {
     updated: new Date().toISOString(),
     source: 'cloudflare-worker',
     results,
-    scorers: base?.scorers || [],
+    scorers,
   }
 }
 
-async function fetchJSON(url, init) {
-  const res = await fetch(url, init)
-  if (!res.ok) throw new Error(`${url} -> ${res.status}`)
-  return res.json()
+// Hourly: find US highlight videos for finished matches that don't have one yet.
+async function refreshHighlights(env) {
+  if (!env.KV || !env.YOUTUBE_API_KEY || !env.FOOTBALL_DATA_TOKEN) {
+    console.log('refreshHighlights: missing KV / YOUTUBE_API_KEY / token — skipping.')
+    return
+  }
+  let results
+  try {
+    results = buildResults(seed, await fdMatches(env))
+  } catch (e) {
+    console.log('refreshHighlights matches failed:', e.message)
+    return
+  }
+  const map = await readHighlights(env)
+  const todo = matchesNeedingHighlights(results, map, HL_MAX_AGE_MS)
+  let budget = HL_BUDGET
+  let changed = false
+  for (const [id, r] of todo) {
+    if (budget <= 0) break
+    budget--
+    try {
+      const h = await youtubeHighlight(r.home, r.away, 'US', env.YOUTUBE_API_KEY)
+      if (h) {
+        map[id] = { US: h }
+        changed = true
+        console.log(`highlight #${id} ${r.home} v ${r.away} -> ${h.videoId}`)
+      }
+    } catch (e) {
+      console.log('YouTube search failed:', e.message)
+      break
+    }
+  }
+  if (changed) await env.KV.put(HL_KEY, JSON.stringify(map))
 }

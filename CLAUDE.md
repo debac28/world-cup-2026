@@ -39,14 +39,20 @@ Two data sources are merged **in the browser** at load time:
    A finished result may also carry `highlight: { videoId, title, channel, thumbnail }`
    from the optional YouTube Data API enrichment (see below).
 
-**Live scores come from a Cloudflare Worker** (`worker/src/index.js`), not directly from
-GitHub. The Worker fetches football-data.org on demand, maps it via the shared
-`scripts/lib/map.mjs` (`buildResults`), merges scorers + highlight links from the
-GitHub-built `live.json` base, and serves `/live` (CORS, ~60s Cache-API cache). The app's
-`PRIMARY_LIVE` is the Worker URL (`VITE_LIVE_URL`), with raw GitHub `live.json` as a
-fallback. So GitHub's hourly cron only maintains the base (scorers/highlights/fallback);
-the Worker owns live-score freshness. `scripts/lib/map.mjs` is the single source of the
-football-data→fixtures mapping, imported by both the Node updater and the Worker.
+**The Cloudflare Worker (`worker/src/index.js`) is the live backend.** Its `fetch`
+handler serves `/live`: fresh scores + scorers from football-data.org, mapped via the
+shared `scripts/lib/map.mjs` (`buildResults`), with highlight links merged from **Workers
+KV** — CORS, ~60s Cache-API cache. Its `scheduled` handler (hourly cron) searches YouTube
+for finished matches missing a US highlight (shared `scripts/lib/highlights.mjs`) and
+writes them to KV — this replaces GitHub's unreliable scheduler. The app's `PRIMARY_LIVE`
+is the Worker URL (`VITE_LIVE_URL`), with raw GitHub `live.json` as fallback. Two shared
+modules are imported by both the Node updater and the Worker: `map.mjs` (fixtures mapping)
+and `highlights.mjs` (YouTube search). The GitHub `update-results` workflow is now only a
+best-effort fallback-base refresher (results+scorers, no highlights).
+
+Operational note: changing `worker/` requires `npm run worker:deploy` — it is NOT
+deployed by the GitHub Pages workflow. The KV namespace id lives in `worker/wrangler.toml`;
+secrets `FOOTBALL_DATA_TOKEN` and `YOUTUBE_API_KEY` are set via `wrangler secret put`.
 
 `src/lib/data.js` (`load()`) fetches both, normalizes API-Football statuses into
 `scheduled | live | finished`, and produces one merged match list plus computed

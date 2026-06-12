@@ -21,6 +21,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
+import { youtubeHighlight } from './lib/highlights.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -41,8 +42,6 @@ const YT_KEY = process.env.YOUTUBE_API_KEY
 const YT_BUDGET = Number(process.env.YOUTUBE_SEARCH_BUDGET || 4)
 const YT_MAX_AGE_MS =
   Number(process.env.YOUTUBE_MAX_AGE_DAYS || 5) * 24 * 60 * 60 * 1000
-// Channels we trust for official highlights, in preference order.
-const YT_PREFERRED = /fox soccer|fox sports|fifa|one football|fox/i
 
 async function api(path) {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -68,36 +67,6 @@ async function loadExisting() {
 // Sony/JioHotstar), so India viewers get a YouTube *search* link in the app instead —
 // no API search needed, and no risk of linking spam re-uploads.
 const HIGHLIGHT_REGIONS = ['US']
-
-// Find an official highlights video playable in `regionCode` via the YouTube Data API.
-async function youtubeHighlight(home, away, regionCode) {
-  const q = encodeURIComponent(`${home} vs ${away} 2026 World Cup highlights`)
-  const url =
-    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video` +
-    `&maxResults=6&order=relevance&relevanceLanguage=en&regionCode=${regionCode}` +
-    `&q=${q}&key=${YT_KEY}`
-  const res = await fetch(url)
-  if (!res.ok) {
-    const body = await res.text().catch(() => '')
-    throw new Error(`YouTube ${res.status} ${body.slice(0, 160)}`)
-  }
-  const items = (await res.json()).items || []
-  const isHi = (it) => /highlight/i.test(it.snippet?.title || '')
-  // Require the title to actually say "highlights" — avoids linking re-uploaded full
-  // matches or live streams when official region clips aren't on YouTube. Prefer
-  // trusted channels among those.
-  const pref =
-    items.find((it) => YT_PREFERRED.test(it.snippet?.channelTitle || '') && isHi(it)) ||
-    items.find(isHi) ||
-    null
-  if (!pref?.id?.videoId) return null
-  return {
-    videoId: pref.id.videoId,
-    title: pref.snippet.title,
-    channel: pref.snippet.channelTitle,
-    thumbnail: pref.snippet.thumbnails?.medium?.url || null,
-  }
-}
 
 // Attach per-region highlight links to finished matches: carry forward what we already
 // found, then search (per region) for recent finished matches still missing one.
@@ -132,7 +101,7 @@ async function enrichHighlights(results, existing) {
       if (r.highlights?.[region]) continue // already have this region
       budget--
       try {
-        const h = await youtubeHighlight(r.home, r.away, region)
+        const h = await youtubeHighlight(r.home, r.away, region, YT_KEY)
         if (h) {
           r.highlights = { ...(r.highlights || {}), [region]: h }
           console.log(`  highlight #${id} [${region}] ${r.home} v ${r.away} -> ${h.videoId} (${h.channel})`)

@@ -64,27 +64,33 @@ search costs 100 units against the free 10,000/day quota, and it caps searches p
 
 ## Near-real-time live scores (Cloudflare Worker)
 
-GitHub's scheduler is too unreliable for ~5-minute live updates, so live scores are
-served by a small Cloudflare Worker (`worker/`) instead. It fetches football-data.org on
-demand, maps it onto the fixtures (shared logic in `scripts/lib/map.mjs`), merges in
-scorers + highlight links from the GitHub-built `live.json`, and caches the result ~60s
-(so football-data is hit at most once/minute regardless of traffic). The app reads live
-data from the Worker, falling back to raw GitHub if the Worker is unreachable.
+GitHub's scheduler is too unreliable for live updates, so the **Cloudflare Worker**
+(`worker/`) is the live backend:
 
-Deploy it (free Cloudflare account needed):
+- **`GET /live`** — fetches football-data.org on demand for fresh scores + scorers, maps
+  them onto the fixtures (shared `scripts/lib/map.mjs`), merges highlight links from KV,
+  and caches ~60s (so football-data is hit at most once/minute regardless of traffic).
+- **Hourly cron** — searches YouTube for finished matches missing a US highlight and
+  stores them in **Workers KV** (so highlights appear automatically and are never
+  re-searched). This is what replaces GitHub's broken scheduler.
+
+The app reads `/live` from the Worker (`VITE_LIVE_URL`), falling back to raw GitHub.
+
+Deploy/operate it (free Cloudflare account):
 
 ```bash
-npx wrangler login                 # one-time browser auth
-npm run worker:secret              # paste your FOOTBALL_DATA_TOKEN
-npm run worker:deploy              # prints the worker URL
+npx wrangler login                                          # one-time browser auth
+npx wrangler kv namespace create KV -c worker/wrangler.toml # once; put id in wrangler.toml
+npm run worker:secret                                       # FOOTBALL_DATA_TOKEN
+npx wrangler secret put YOUTUBE_API_KEY -c worker/wrangler.toml
+npm run worker:deploy                                       # prints the worker URL
 ```
 
-Then point the app at it: set a repo **variable** `VITE_LIVE_URL` to
-`https://<worker-url>/live` and redeploy the site. Test locally with `npm run worker:dev`
-(reads `worker/.dev.vars`).
+Then set a repo **variable** `VITE_LIVE_URL` = `https://<worker-url>/live` and redeploy
+the site. Test locally with `npm run worker:dev` (reads `worker/.dev.vars`).
 
-GitHub Actions then only refreshes the base hourly (scorers + highlights + fallback
-results); the Worker provides the fast live scores.
+The GitHub `update-results` workflow is now just a best-effort fallback-base refresher
+(results + scorers, **no** highlights) — the Worker owns live data and highlights.
 
 ## Deploying to GitHub Pages
 
