@@ -1,15 +1,16 @@
 name: Update results
 
-# Hourly job that pulls scores + top scorers from API-Football and commits the
-# refreshed public/data/live.json. The commit is picked up by deploy.yml (via
-# workflow_run) to publish the updated site.
+# Every-5-minutes job that pulls scores + top scorers from football-data.org and commits
+# the refreshed public/data/live.json. The app reads live.json directly from raw GitHub,
+# so each commit reaches users without a redeploy.
 #
-# 24 runs/day x 2 API calls each (fixtures + top scorers) = ~48 calls/day, within
-# API-Football's free 100/day tier.
+# Quota notes (football-data free tier = 10 calls/min): 2 calls/run x 288 runs/day.
+# YouTube highlight searches are throttled to ~once/hour inside the script (see
+# enrichHighlights) so the 5-min cadence stays within YouTube's free quota.
 
 on:
   schedule:
-    - cron: '0 * * * *'  # every hour, on the hour (UTC)
+    - cron: '*/5 * * * *'  # every 5 minutes (UTC); GitHub may delay a few minutes
   workflow_dispatch: {}
 
 permissions:

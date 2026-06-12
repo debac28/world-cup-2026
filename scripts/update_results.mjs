@@ -142,10 +142,20 @@ async function enrichHighlights(results, existing) {
     console.log('YOUTUBE_API_KEY not set — skipping highlights.')
     return
   }
+  // Carry forward already-found highlights every run so they always display.
   const prev = existing.results || {}
   for (const [id, r] of Object.entries(results)) {
     if (!r.highlight && prev[id]?.highlight) r.highlight = prev[id].highlight
   }
+
+  // The score cron runs every 5 min, but YouTube quota is small — only actually
+  // SEARCH near the top of the hour (or when forced locally), i.e. ~once/hour.
+  const topOfHour = new Date().getUTCMinutes() < 5
+  if (!topOfHour && !process.env.FORCE_HIGHLIGHTS) {
+    console.log('Highlights: carried forward; skipping search (not top of hour).')
+    return
+  }
+
   const now = Date.now()
   const todo = Object.entries(results)
     .filter(([, r]) => {

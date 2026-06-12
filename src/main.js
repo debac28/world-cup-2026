@@ -105,10 +105,17 @@ document.addEventListener('visibilitychange', () => {
 })
 window.addEventListener('focus', doRefresh)
 
-// 3) Light polling while the app is open and visible (every 3 minutes).
-setInterval(() => {
-  if (document.visibilityState === 'visible') doRefresh()
-}, 3 * 60 * 1000)
+// 3) Adaptive polling while visible: every 60s when a match is in play, else 3 min.
+let pollTimer = null
+function schedulePoll() {
+  clearTimeout(pollTimer)
+  const liveNow = !!model && model.matches.some((m) => m.live)
+  const delay = (liveNow ? 60 : 180) * 1000
+  pollTimer = setTimeout(async () => {
+    if (document.visibilityState === 'visible') await doRefresh()
+    schedulePoll()
+  }, delay)
+}
 
 // Keep the "updated Xm ago" label honest without a full re-fetch.
 setInterval(setStatus, 30 * 1000)
@@ -120,6 +127,7 @@ async function init() {
     model = await load()
     setStatus()
     renderView()
+    schedulePoll()
   } catch (e) {
     console.error(e)
     statusEl.textContent = ''

@@ -8,6 +8,15 @@ import { computeStandings, resolveKnockout } from './standings.js'
 
 const BASE = import.meta.env.BASE_URL
 
+// Live results are read straight from raw GitHub in production, so the every-5-minutes
+// updater's commits reach users without waiting for a redeploy. In dev we read the
+// local file. Override with VITE_LIVE_URL if the repo path ever changes.
+const RAW_LIVE =
+  'https://raw.githubusercontent.com/debac28/world-cup-2026/main/public/data/live.json'
+const LIVE_URL = import.meta.env.DEV
+  ? `${BASE}data/live.json`
+  : import.meta.env.VITE_LIVE_URL || RAW_LIVE
+
 let model = null
 let seedCache = null
 
@@ -22,8 +31,18 @@ async function loadJSON(path, fallback) {
   }
 }
 
-const fetchLive = () =>
-  loadJSON('data/live.json', { updated: null, results: {}, scorers: [] })
+// `no-store` so we always ask the network for the freshest results; the service
+// worker's NetworkFirst rule still provides the last copy when offline.
+async function fetchLive() {
+  try {
+    const res = await fetch(LIVE_URL, { cache: 'no-store' })
+    if (!res.ok) throw new Error(res.status)
+    return await res.json()
+  } catch (e) {
+    console.warn('Could not load live results:', e.message)
+    return { updated: null, results: {}, scorers: [] }
+  }
+}
 
 // API-Football statuses -> our three buckets.
 const LIVE = new Set(['1H', '2H', 'HT', 'ET', 'BT', 'P', 'LIVE', 'INT'])

@@ -1,18 +1,16 @@
 name: Deploy
 
-# Builds the PWA and publishes it to GitHub Pages. Runs on:
-#   - pushes to main (code changes)
-#   - manual dispatch
-#   - completion of the "Update results" job (the data-refresh commit, which a
-#     bot push would otherwise not trigger directly)
+# Builds the PWA and publishes it to GitHub Pages. Runs on code changes and manual
+# dispatch only. The every-5-minutes results commits do NOT redeploy: the app reads
+# live.json directly from raw GitHub, so data refreshes need no rebuild. We ignore
+# live.json so a data commit never triggers a deploy.
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'public/data/live.json'
   workflow_dispatch: {}
-  workflow_run:
-    workflows: ['Update results']
-    types: [completed]
 
 permissions:
   contents: read
