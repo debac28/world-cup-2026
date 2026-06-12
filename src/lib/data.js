@@ -9,6 +9,7 @@ import { computeStandings, resolveKnockout } from './standings.js'
 const BASE = import.meta.env.BASE_URL
 
 let model = null
+let seedCache = null
 
 async function loadJSON(path, fallback) {
   try {
@@ -21,6 +22,9 @@ async function loadJSON(path, fallback) {
   }
 }
 
+const fetchLive = () =>
+  loadJSON('data/live.json', { updated: null, results: {}, scorers: [] })
+
 // API-Football statuses -> our three buckets.
 const LIVE = new Set(['1H', '2H', 'HT', 'ET', 'BT', 'P', 'LIVE', 'INT'])
 const DONE = new Set(['FT', 'AET', 'PEN'])
@@ -31,15 +35,7 @@ function normStatus(s) {
   return 'scheduled'
 }
 
-export async function load() {
-  if (model) return model
-
-  const [seed, live] = await Promise.all([
-    loadJSON('data/seed.json', null),
-    loadJSON('data/live.json', { updated: null, results: {}, scorers: [] }),
-  ])
-  if (!seed) throw new Error('Missing seed.json — run `npm run seed`.')
-
+function buildModel(seed, live) {
   const flagOf = new Map(seed.teams.map((t) => [t.name, t.flag]))
   const rankOf = new Map(seed.teams.map((t) => [t.name, t.rankPoints]))
   const results = live.results || {}
@@ -75,11 +71,7 @@ export async function load() {
   }
 
   const groupMatches = seed.fixtures.map((f) => withResult(f, f.home, f.away))
-
-  // Standings per group, computed from finished group matches.
   const standings = computeStandings(seed.groups, groupMatches, rankOf)
-
-  // Resolve knockout slots ("1A", "2B", "W74", ...) to real teams where known.
   const knockoutMatches = resolveKnockout(
     seed.knockout,
     standings,
@@ -87,7 +79,7 @@ export async function load() {
     normStatus,
   ).map((ko) => withResult(ko, ko.home, ko.away))
 
-  model = {
+  return {
     seed,
     updated: live.updated ? parse(live.updated) : null,
     teams: seed.teams,
@@ -99,6 +91,22 @@ export async function load() {
     standings,
     scorers: live.scorers || [],
   }
+}
+
+export async function load() {
+  if (model) return model
+  const [seed, live] = await Promise.all([loadJSON('data/seed.json', null), fetchLive()])
+  if (!seed) throw new Error('Missing seed.json — run `npm run seed`.')
+  seedCache = seed
+  model = buildModel(seed, live)
+  return model
+}
+
+// Re-fetch live results and rebuild the model (seed is static, kept cached).
+export async function refresh() {
+  if (!seedCache) return load()
+  const live = await fetchLive()
+  model = buildModel(seedCache, live)
   return model
 }
 

@@ -31,9 +31,15 @@ export default defineConfig(({ command }) => ({
         // Live results JSON: serve fast from cache, refresh in the background.
         runtimeCaching: [
           {
+            // Network-first so a refresh fetches the latest results when online,
+            // falling back to the last cached copy when offline.
             urlPattern: ({ url }) => url.pathname.endsWith('/data/live.json'),
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'live-data' },
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'live-data',
+              networkTimeoutSeconds: 4,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 3 },
+            },
           },
           {
             urlPattern: ({ url }) => url.hostname === 'flagcdn.com',

@@ -1,5 +1,5 @@
 import './style.css'
-import { load } from './lib/data.js'
+import { load, refresh } from './lib/data.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
 import { renderMatches } from './views/matches.js'
@@ -53,13 +53,33 @@ function renderView() {
   viewEl.scrollTo?.(0, 0)
 }
 
-function setStatus() {
+function setStatus(state) {
+  if (state === 'refreshing') {
+    statusEl.textContent = 'Refreshing…'
+    return
+  }
   if (!model) return
   if (model.updated) {
-    const rel = relTime(model.updated)
-    statusEl.textContent = `Results updated ${rel}`
+    statusEl.textContent = `Results updated ${relTime(model.updated)} · tap to refresh`
   } else {
-    statusEl.textContent = 'Schedule loaded · awaiting results'
+    statusEl.textContent = 'Awaiting results · tap to refresh'
+  }
+}
+
+// Re-fetch live data and re-render. Guarded so overlapping triggers don't stack.
+let refreshing = false
+async function doRefresh() {
+  if (refreshing) return
+  refreshing = true
+  setStatus('refreshing')
+  try {
+    model = await refresh()
+    renderView()
+  } catch (e) {
+    console.error('refresh failed', e)
+  } finally {
+    refreshing = false
+    setStatus()
   }
 }
 
@@ -73,6 +93,25 @@ function relTime(date) {
 }
 
 window.addEventListener('hashchange', renderView)
+
+// --- Refresh triggers ---------------------------------------------------------
+// 1) Tap the status text.
+statusEl.addEventListener('click', doRefresh)
+statusEl.style.cursor = 'pointer'
+
+// 2) When the app/tab returns to the foreground (e.g. reopened on a phone).
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') doRefresh()
+})
+window.addEventListener('focus', doRefresh)
+
+// 3) Light polling while the app is open and visible (every 3 minutes).
+setInterval(() => {
+  if (document.visibilityState === 'visible') doRefresh()
+}, 3 * 60 * 1000)
+
+// Keep the "updated Xm ago" label honest without a full re-fetch.
+setInterval(setStatus, 30 * 1000)
 
 async function init() {
   statusEl.textContent = 'Loading…'
