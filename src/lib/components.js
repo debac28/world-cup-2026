@@ -23,7 +23,26 @@ export function matchRow(m, { showRound = false } = {}) {
         ? el('span', { class: 'venue' }, `${m.venue.stadium} · ${m.venue.city}`)
         : null,
     ]),
+    m.highlight ? highlightLink(m.highlight) : null,
   ])
+}
+
+function highlightLink(h) {
+  return el(
+    'a',
+    {
+      class: 'highlight',
+      href: `https://www.youtube.com/watch?v=${h.videoId}`,
+      target: '_blank',
+      rel: 'noopener',
+    },
+    [
+      h.thumbnail
+        ? el('img', { class: 'highlight__thumb', src: h.thumbnail, alt: '', loading: 'lazy' })
+        : null,
+      el('span', { class: 'highlight__label' }, '▶ Watch highlights'),
+    ],
+  )
 }
 
 function side(name, code, winner, which) {

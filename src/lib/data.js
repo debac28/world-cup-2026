@@ -68,6 +68,7 @@ export async function load() {
       status,
       homeGoals: hasScore ? r.homeGoals : null,
       awayGoals: hasScore ? r.awayGoals : null,
+      highlight: r.highlight || null,
       finished: status === 'finished',
       live: status === 'live',
     }

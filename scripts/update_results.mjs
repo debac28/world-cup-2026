@@ -31,6 +31,18 @@ const COMP = process.env.FOOTBALL_DATA_COMP || 'WC' // World Cup
 const SEASON = process.env.FOOTBALL_DATA_SEASON || '' // e.g. "2026"; empty = current
 const TOKEN = process.env.FOOTBALL_DATA_TOKEN
 
+// --- YouTube highlights (optional) --------------------------------------------
+// If YOUTUBE_API_KEY is set, the script finds an official highlights video for each
+// finished match and caches it. Quota-safe: a YouTube search costs 100 units and the
+// free daily quota is 10,000, so we cap searches per run (default 4 => max ~96/day)
+// and never re-search a match that already has a highlight.
+const YT_KEY = process.env.YOUTUBE_API_KEY
+const YT_BUDGET = Number(process.env.YOUTUBE_SEARCH_BUDGET || 4)
+const YT_MAX_AGE_MS =
+  Number(process.env.YOUTUBE_MAX_AGE_DAYS || 5) * 24 * 60 * 60 * 1000
+// Channels we trust for official highlights, in preference order.
+const YT_PREFERRED = /fox soccer|fox sports|fifa|one football|fox/i
+
 // football-data.org team name -> our seed name. Extend as needed once names are known.
 const TEAM_ALIASES = {
   'South Korea': 'Korea Republic',
@@ -94,6 +106,71 @@ async function loadExisting() {
     return JSON.parse(await readFile(OUT_PATH, 'utf8'))
   } catch {
     return { updated: null, results: {}, scorers: [] }
+  }
+}
+
+// Find an official highlights video for one match via the YouTube Data API.
+async function youtubeHighlight(home, away) {
+  const q = encodeURIComponent(`${home} vs ${away} 2026 World Cup highlights`)
+  const url =
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video` +
+    `&maxResults=6&order=relevance&relevanceLanguage=en&q=${q}&key=${YT_KEY}`
+  const res = await fetch(url)
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`YouTube ${res.status} ${body.slice(0, 160)}`)
+  }
+  const items = (await res.json()).items || []
+  const isHi = (it) => /highlight/i.test(it.snippet?.title || '')
+  const pref =
+    items.find((it) => YT_PREFERRED.test(it.snippet?.channelTitle || '') && isHi(it)) ||
+    items.find(isHi) ||
+    items[0]
+  if (!pref?.id?.videoId) return null
+  return {
+    videoId: pref.id.videoId,
+    title: pref.snippet.title,
+    channel: pref.snippet.channelTitle,
+    thumbnail: pref.snippet.thumbnails?.medium?.url || null,
+  }
+}
+
+// Attach highlight links to finished matches: carry forward what we already found,
+// then search for the most-recent finished matches still missing one (within budget).
+async function enrichHighlights(results, existing) {
+  if (!YT_KEY) {
+    console.log('YOUTUBE_API_KEY not set — skipping highlights.')
+    return
+  }
+  const prev = existing.results || {}
+  for (const [id, r] of Object.entries(results)) {
+    if (!r.highlight && prev[id]?.highlight) r.highlight = prev[id].highlight
+  }
+  const now = Date.now()
+  const todo = Object.entries(results)
+    .filter(([, r]) => {
+      if (r.status !== 'FT' || r.highlight || !r.kickoff || !r.home || !r.away) return false
+      const age = now - new Date(r.kickoff).getTime()
+      return age > 0 && age < YT_MAX_AGE_MS
+    })
+    .sort((a, b) => new Date(b[1].kickoff) - new Date(a[1].kickoff))
+
+  let budget = YT_BUDGET
+  for (const [id, r] of todo) {
+    if (budget <= 0) break
+    budget--
+    try {
+      const h = await youtubeHighlight(r.home, r.away)
+      if (h) {
+        r.highlight = h
+        console.log(`  highlight #${id} ${r.home} v ${r.away} -> ${h.videoId} (${h.channel})`)
+      } else {
+        console.log(`  no highlight yet #${id} ${r.home} v ${r.away}`)
+      }
+    } catch (e) {
+      console.warn('  YouTube search failed:', e.message)
+      break // likely quota/key issue — stop hitting the API this run
+    }
   }
 }
 
@@ -202,6 +279,9 @@ async function main() {
   const haveResults = Object.keys(results).length
   const finalResults = haveResults ? results : existing.results || {}
   const finalScorers = scorers.length ? scorers : existing.scorers || []
+
+  // Attach YouTube highlight links to finished matches (no-op without a key).
+  await enrichHighlights(finalResults, existing)
 
   const out = {
     updated: new Date().toISOString(),

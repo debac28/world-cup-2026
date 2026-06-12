@@ -35,6 +35,8 @@ Two data sources are merged **in the browser** at load time:
 2. **Live layer — `public/data/live.json`**, produced by `scripts/update_results.mjs`
    from football-data.org (free tier, World Cup competition) and committed by the cron.
    Shape: `{ updated, results, scorers }` where `results` is keyed by match number 1–104.
+   A finished result may also carry `highlight: { videoId, title, channel, thumbnail }`
+   from the optional YouTube Data API enrichment (see below).
 
 `src/lib/data.js` (`load()`) fetches both, normalizes API-Football statuses into
 `scheduled | live | finished`, and produces one merged match list plus computed
@@ -71,6 +73,10 @@ the app shows cached results instantly then refreshes.
   `import.meta.env.BASE_URL` (see `data.js`).
 - Secret `FOOTBALL_DATA_TOKEN` (repo Actions secret) powers the cron. Without it the
   update script is a deliberate no-op that preserves existing data.
+- Optional secret `YOUTUBE_API_KEY` enables highlight links. The updater carries forward
+  already-found highlights and only searches finished matches that lack one, capped at
+  `YOUTUBE_SEARCH_BUDGET` (default 4) searches/run to stay within YouTube's free quota.
+  Highlights are cached in `live.json` so a match is never re-searched once found.
 - `update-results.yml` commits `live.json`; `deploy.yml` rebuilds via a `workflow_run`
   trigger because a bot's commit won't fire `push`.
 

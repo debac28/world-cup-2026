@@ -2,7 +2,8 @@
 
 An installable progressive web app for the FIFA World Cup 2026. It shows **today's
 matches in your own timezone**, **live & final scores**, **group standings with who's
-progressing**, the **knockout bracket**, and the **top goal scorers**.
+progressing**, the **knockout bracket**, the **top goal scorers**, match **venues**, and
+**YouTube highlight links** for completed matches.
 
 The static schedule (fixtures, groups, bracket) is extracted once from `fifa_2026.xlsx`.
 Live scores and scorers are pulled from [football-data.org](https://www.football-data.org)
@@ -45,6 +46,19 @@ npm run seed         # needs python3 + openpyxl (pip install openpyxl)
 3. `npm run update` — fetches results + scorers into `public/data/live.json`.
 
 Without a token the script is a no-op and leaves existing data untouched.
+
+### Optional: YouTube highlights
+
+To attach an official highlights video to each finished match, set `YOUTUBE_API_KEY`:
+
+1. In the [Google Cloud Console](https://console.cloud.google.com), create a project and
+   enable **YouTube Data API v3**, then create an **API key**.
+2. Add it to `.env` (`YOUTUBE_API_KEY=...`) and as a repo secret of the same name.
+
+The updater searches YouTube for each finished match, prefers official channels
+(FOX Soccer / FIFA), and caches the result so it never re-searches. It's quota-safe: a
+search costs 100 units against the free 10,000/day quota, and it caps searches per run
+(`YOUTUBE_SEARCH_BUDGET`, default 4). Without the key, highlights are simply skipped.
 
 ## Deploying to GitHub Pages
 

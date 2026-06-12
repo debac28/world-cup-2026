@@ -123,6 +123,10 @@ html, body {
 .match__meta { margin-top: 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .venue { font-size: 0.68rem; color: var(--muted); }
 
+.highlight { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 6px; border-radius: 10px; background: var(--panel-2); text-decoration: none; border: 1px solid var(--line); }
+.highlight__thumb { width: 64px; height: 36px; border-radius: 6px; object-fit: cover; flex: none; }
+.highlight__label { color: var(--gold); font-weight: 700; font-size: 0.8rem; }
+
 .badge { font-size: 0.68rem; color: var(--muted); background: var(--panel-2); padding: 2px 8px; border-radius: 999px; }
 .badge--live { color: #fff; background: var(--live); font-weight: 700; }
 .badge--ft { color: var(--text); }

@@ -34,6 +34,7 @@ jobs:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           FOOTBALL_DATA_COMP: ${{ vars.FOOTBALL_DATA_COMP }}
           FOOTBALL_DATA_SEASON: ${{ vars.FOOTBALL_DATA_SEASON }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: node scripts/update_results.mjs
 
       - name: Commit if changed
