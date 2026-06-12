@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12T00:18:58.539Z",
+  "updated": "2026-06-12T02:31:32.681Z",
   "season": "2026",
   "results": {
     "1": {
@@ -19,9 +19,9 @@
     "2": {
       "home": "Korea Republic",
       "away": "Czech Republic",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "status": "2H",
       "kickoff": "2026-06-12T02:00:00Z"
     },
     "3": {
