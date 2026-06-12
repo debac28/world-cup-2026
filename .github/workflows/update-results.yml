@@ -1,21 +1,16 @@
 name: Update results
 
-# Pulls scores + top scorers from football-data.org and commits public/data/live.json.
-# The app reads live.json directly from raw GitHub, so each commit reaches users without
-# a redeploy. (Public repo => GitHub Actions minutes are free.)
+# Hourly job that refreshes scorers + highlight links and the committed base
+# public/data/live.json. Near-real-time LIVE SCORES are handled separately by the
+# Cloudflare Worker (worker/), which the app reads directly — so this job no longer
+# needs a fast cadence (GitHub's scheduler is unreliable at minute granularity anyway).
+# The Worker merges this base's scorers + highlights with fresh scores from football-data.
 #
-# Frequency is matched to when matches are actually live. Derived from the fixtures
-# (kickoff .. +2.5h, in UTC): matches occur during UTC hours 16-23 and 00-06; UTC
-# 07-15 has no matches. So we poll every 5 min during match hours and hourly otherwise.
-#
-# YouTube highlight searches are throttled to the top of each hour inside the script
-# (see enrichHighlights) so the 5-min cadence stays within YouTube's free quota.
+# YouTube highlight searches run at the top of the hour (see enrichHighlights).
 
 on:
   schedule:
-    - cron: '*/5 16-23 * * *'  # match hours (UTC): every 5 min
-    - cron: '*/5 0-6 * * *'    # match hours (UTC, late Americas night): every 5 min
-    - cron: '0 7-15 * * *'     # quiet hours (UTC): hourly
+    - cron: '0 * * * *'  # hourly (UTC)
   workflow_dispatch: {}
 
 permissions:

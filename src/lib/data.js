@@ -8,14 +8,16 @@ import { computeStandings, resolveKnockout } from './standings.js'
 
 const BASE = import.meta.env.BASE_URL
 
-// Live results are read straight from raw GitHub in production, so the every-5-minutes
-// updater's commits reach users without waiting for a redeploy. In dev we read the
-// local file. Override with VITE_LIVE_URL if the repo path ever changes.
+// Live results come from the Cloudflare Worker (VITE_LIVE_URL) for near-real-time
+// scores, with raw GitHub as a fallback if the Worker is unreachable. In dev we read
+// the local file.
 const RAW_LIVE =
   'https://raw.githubusercontent.com/debac28/world-cup-2026/main/public/data/live.json'
-const LIVE_URL = import.meta.env.DEV
+const PRIMARY_LIVE = import.meta.env.DEV
   ? `${BASE}data/live.json`
   : import.meta.env.VITE_LIVE_URL || RAW_LIVE
+// Only worth a fallback when the primary isn't already raw/local.
+const FALLBACK_LIVE = PRIMARY_LIVE === RAW_LIVE ? null : RAW_LIVE
 
 let model = null
 let seedCache = null
@@ -32,16 +34,20 @@ async function loadJSON(path, fallback) {
 }
 
 // `no-store` so we always ask the network for the freshest results; the service
-// worker's NetworkFirst rule still provides the last copy when offline.
+// worker's NetworkFirst rule still provides the last copy when offline. Tries the
+// primary source (Worker), then the raw-GitHub fallback.
 async function fetchLive() {
-  try {
-    const res = await fetch(LIVE_URL, { cache: 'no-store' })
-    if (!res.ok) throw new Error(res.status)
-    return await res.json()
-  } catch (e) {
-    console.warn('Could not load live results:', e.message)
-    return { updated: null, results: {}, scorers: [] }
+  for (const url of [PRIMARY_LIVE, FALLBACK_LIVE]) {
+    if (!url) continue
+    try {
+      const res = await fetch(url, { cache: 'no-store' })
+      if (!res.ok) throw new Error(res.status)
+      return await res.json()
+    } catch (e) {
+      console.warn(`Live fetch failed (${url}):`, e.message)
+    }
   }
+  return { updated: null, results: {}, scorers: [] }
 }
 
 // API-Football statuses -> our three buckets.

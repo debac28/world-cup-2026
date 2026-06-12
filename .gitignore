@@ -7,7 +7,9 @@ dev-dist/
 .env.*
 !.env.example
 __pycache__/
+.wrangler/
 
 # Test artifacts
 .playwright-mcp/
 /*.png
+.dev.vars

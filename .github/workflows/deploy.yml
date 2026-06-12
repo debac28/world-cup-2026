@@ -41,6 +41,8 @@ jobs:
         env:
           # Project Pages serve from /<repo>/ — match Vite's base path to that.
           BASE_PATH: /${{ github.event.repository.name }}/
+          # Cloudflare Worker URL the app reads live scores from (repo variable).
+          VITE_LIVE_URL: ${{ vars.VITE_LIVE_URL }}
         run: npm run build
 
       - uses: actions/configure-pages@v5

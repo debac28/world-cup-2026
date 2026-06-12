@@ -1,0 +1,14 @@
+name = "worldcup26-live"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Reliable live scores. The Worker computes the merged live payload on request and
+# caches it for ~60s (so football-data.org is hit at most ~once/minute regardless of
+# how many people are watching). No cron or KV needed.
+#
+# Set the API token as a secret (not committed):
+#   cd worker && npx wrangler secret put FOOTBALL_DATA_TOKEN
+#
+# Optional override of the GitHub base (scorers + highlights) the Worker merges in:
+[vars]
+BASE_LIVE_URL = "https://raw.githubusercontent.com/debac28/world-cup-2026/main/public/data/live.json"

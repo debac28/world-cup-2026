@@ -39,6 +39,15 @@ Two data sources are merged **in the browser** at load time:
    A finished result may also carry `highlight: { videoId, title, channel, thumbnail }`
    from the optional YouTube Data API enrichment (see below).
 
+**Live scores come from a Cloudflare Worker** (`worker/src/index.js`), not directly from
+GitHub. The Worker fetches football-data.org on demand, maps it via the shared
+`scripts/lib/map.mjs` (`buildResults`), merges scorers + highlight links from the
+GitHub-built `live.json` base, and serves `/live` (CORS, ~60s Cache-API cache). The app's
+`PRIMARY_LIVE` is the Worker URL (`VITE_LIVE_URL`), with raw GitHub `live.json` as a
+fallback. So GitHub's hourly cron only maintains the base (scorers/highlights/fallback);
+the Worker owns live-score freshness. `scripts/lib/map.mjs` is the single source of the
+football-data→fixtures mapping, imported by both the Node updater and the Worker.
+
 `src/lib/data.js` (`load()`) fetches both, normalizes API-Football statuses into
 `scheduled | live | finished`, and produces one merged match list plus computed
 standings and resolved knockout matches. **Standings and bracket progression are

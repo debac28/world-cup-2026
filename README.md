@@ -62,6 +62,30 @@ The updater searches YouTube for each finished match, prefers official channels
 search costs 100 units against the free 10,000/day quota, and it caps searches per run
 (`YOUTUBE_SEARCH_BUDGET`, default 4). Without the key, highlights are simply skipped.
 
+## Near-real-time live scores (Cloudflare Worker)
+
+GitHub's scheduler is too unreliable for ~5-minute live updates, so live scores are
+served by a small Cloudflare Worker (`worker/`) instead. It fetches football-data.org on
+demand, maps it onto the fixtures (shared logic in `scripts/lib/map.mjs`), merges in
+scorers + highlight links from the GitHub-built `live.json`, and caches the result ~60s
+(so football-data is hit at most once/minute regardless of traffic). The app reads live
+data from the Worker, falling back to raw GitHub if the Worker is unreachable.
+
+Deploy it (free Cloudflare account needed):
+
+```bash
+npx wrangler login                 # one-time browser auth
+npm run worker:secret              # paste your FOOTBALL_DATA_TOKEN
+npm run worker:deploy              # prints the worker URL
+```
+
+Then point the app at it: set a repo **variable** `VITE_LIVE_URL` to
+`https://<worker-url>/live` and redeploy the site. Test locally with `npm run worker:dev`
+(reads `worker/.dev.vars`).
+
+GitHub Actions then only refreshes the base hourly (scorers + highlights + fallback
+results); the Worker provides the fast live scores.
+
 ## Deploying to GitHub Pages
 
 1. Push this repo to GitHub.

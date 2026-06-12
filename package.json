@@ -8,10 +8,14 @@
     "build": "vite build",
     "preview": "vite preview",
     "seed": "python3 scripts/extract_seed.py",
-    "update": "node --env-file-if-exists=.env scripts/update_results.mjs"
+    "update": "node --env-file-if-exists=.env scripts/update_results.mjs",
+    "worker:dev": "wrangler dev -c worker/wrangler.toml",
+    "worker:deploy": "wrangler deploy -c worker/wrangler.toml",
+    "worker:secret": "wrangler secret put FOOTBALL_DATA_TOKEN -c worker/wrangler.toml"
   },
   "devDependencies": {
     "vite": "^5.4.0",
-    "vite-plugin-pwa": "^0.20.0"
+    "vite-plugin-pwa": "^0.20.0",
+    "wrangler": "^3.80.0"
   }
 }
