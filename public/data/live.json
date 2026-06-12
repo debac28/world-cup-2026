@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12T03:23:36.444Z",
+  "updated": "2026-06-12T07:31:59.232Z",
   "season": "2026",
   "results": {
     "1": {
@@ -21,10 +21,18 @@
     "2": {
       "home": "Korea Republic",
       "away": "Czech Republic",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "2H",
-      "kickoff": "2026-06-12T02:00:00Z"
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-12T02:00:00Z",
+      "highlights": {
+        "US": {
+          "videoId": "QWoDfCkh7f8",
+          "title": "South Korea vs Czechia Highlights 🌎🏆 2026 FIFA World Cup™",
+          "channel": "FOX Sports",
+          "thumbnail": "https://i.ytimg.com/vi/QWoDfCkh7f8/mqdefault.jpg"
+        }
+      }
     },
     "3": {
       "home": "Canada",
@@ -603,6 +611,18 @@
     {
       "player": "Ladislav Krejčí",
       "team": "Czech Republic",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "In-beom Hwang",
+      "team": "Korea Republic",
+      "goals": 1,
+      "assists": 1
+    },
+    {
+      "player": "Hyun-Gyu Oh",
+      "team": "Korea Republic",
       "goals": 1,
       "assists": 0
     }
