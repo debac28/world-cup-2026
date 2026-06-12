@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12T16:19:34.698Z",
+  "updated": "2026-06-12T19:06:30.503Z",
   "season": "2026",
   "results": {
     "1": {
@@ -8,15 +8,7 @@
       "homeGoals": 2,
       "awayGoals": 0,
       "status": "FT",
-      "kickoff": "2026-06-11T19:00:00Z",
-      "highlights": {
-        "US": {
-          "videoId": "r1Afsds3ZD0",
-          "title": "Mexico vs South Africa Highlights 🌎🏆 2026 FIFA World Cup™",
-          "channel": "FOX Sports",
-          "thumbnail": "https://i.ytimg.com/vi/r1Afsds3ZD0/mqdefault.jpg"
-        }
-      }
+      "kickoff": "2026-06-11T19:00:00Z"
     },
     "2": {
       "home": "Korea Republic",
@@ -24,22 +16,14 @@
       "homeGoals": 2,
       "awayGoals": 1,
       "status": "FT",
-      "kickoff": "2026-06-12T02:00:00Z",
-      "highlights": {
-        "US": {
-          "videoId": "QWoDfCkh7f8",
-          "title": "South Korea vs Czechia Highlights 🌎🏆 2026 FIFA World Cup™",
-          "channel": "FOX Sports",
-          "thumbnail": "https://i.ytimg.com/vi/QWoDfCkh7f8/mqdefault.jpg"
-        }
-      }
+      "kickoff": "2026-06-12T02:00:00Z"
     },
     "3": {
       "home": "Canada",
       "away": "Bosnia and Herzegovina",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "status": "2H",
       "kickoff": "2026-06-12T19:00:00Z"
     },
     "4": {
