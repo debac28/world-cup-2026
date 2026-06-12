@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12T03:01:27.737Z",
+  "updated": "2026-06-12T03:23:36.444Z",
   "season": "2026",
   "results": {
     "1": {
@@ -9,11 +9,13 @@
       "awayGoals": 0,
       "status": "FT",
       "kickoff": "2026-06-11T19:00:00Z",
-      "highlight": {
-        "videoId": "r1Afsds3ZD0",
-        "title": "Mexico vs South Africa Highlights 🌎🏆 2026 FIFA World Cup™",
-        "channel": "FOX Sports",
-        "thumbnail": "https://i.ytimg.com/vi/r1Afsds3ZD0/mqdefault.jpg"
+      "highlights": {
+        "US": {
+          "videoId": "r1Afsds3ZD0",
+          "title": "Mexico vs South Africa Highlights 🌎🏆 2026 FIFA World Cup™",
+          "channel": "FOX Sports",
+          "thumbnail": "https://i.ytimg.com/vi/r1Afsds3ZD0/mqdefault.jpg"
+        }
       }
     },
     "2": {
@@ -21,7 +23,7 @@
       "away": "Czech Republic",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "HT",
+      "status": "2H",
       "kickoff": "2026-06-12T02:00:00Z"
     },
     "3": {
@@ -595,6 +597,12 @@
     {
       "player": "Raúl Jiménez",
       "team": "Mexico",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Ladislav Krejčí",
+      "team": "Czech Republic",
       "goals": 1,
       "assists": 0
     }

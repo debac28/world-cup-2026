@@ -72,10 +72,13 @@ async function buildPayload(env) {
     }
   }
 
-  // Carry forward highlight links from the base onto the fresh results.
+  // Carry forward per-region highlight links from the base onto the fresh results
+  // (migrating the legacy single `highlight` into `highlights.US`).
   const baseResults = base?.results || {}
   for (const [id, r] of Object.entries(results)) {
-    if (!r.highlight && baseResults[id]?.highlight) r.highlight = baseResults[id].highlight
+    const b = baseResults[id]
+    const bh = b?.highlights || (b?.highlight ? { US: b.highlight } : null)
+    if (bh && !r.highlights) r.highlights = bh
   }
 
   return {

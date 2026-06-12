@@ -63,12 +63,19 @@ async function loadExisting() {
   }
 }
 
-// Find an official highlights video for one match via the YouTube Data API.
-async function youtubeHighlight(home, away) {
+// We only pin an exact video for the US, where official FOX/FIFA highlights are
+// reliably on YouTube. India has no official WC highlights on YouTube (rights sit with
+// Sony/JioHotstar), so India viewers get a YouTube *search* link in the app instead —
+// no API search needed, and no risk of linking spam re-uploads.
+const HIGHLIGHT_REGIONS = ['US']
+
+// Find an official highlights video playable in `regionCode` via the YouTube Data API.
+async function youtubeHighlight(home, away, regionCode) {
   const q = encodeURIComponent(`${home} vs ${away} 2026 World Cup highlights`)
   const url =
     `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video` +
-    `&maxResults=6&order=relevance&relevanceLanguage=en&q=${q}&key=${YT_KEY}`
+    `&maxResults=6&order=relevance&relevanceLanguage=en&regionCode=${regionCode}` +
+    `&q=${q}&key=${YT_KEY}`
   const res = await fetch(url)
   if (!res.ok) {
     const body = await res.text().catch(() => '')
@@ -76,10 +83,13 @@ async function youtubeHighlight(home, away) {
   }
   const items = (await res.json()).items || []
   const isHi = (it) => /highlight/i.test(it.snippet?.title || '')
+  // Require the title to actually say "highlights" — avoids linking re-uploaded full
+  // matches or live streams when official region clips aren't on YouTube. Prefer
+  // trusted channels among those.
   const pref =
     items.find((it) => YT_PREFERRED.test(it.snippet?.channelTitle || '') && isHi(it)) ||
     items.find(isHi) ||
-    items[0]
+    null
   if (!pref?.id?.videoId) return null
   return {
     videoId: pref.id.videoId,
@@ -89,51 +99,50 @@ async function youtubeHighlight(home, away) {
   }
 }
 
-// Attach highlight links to finished matches: carry forward what we already found,
-// then search for the most-recent finished matches still missing one (within budget).
+// Attach per-region highlight links to finished matches: carry forward what we already
+// found, then search (per region) for recent finished matches still missing one.
 async function enrichHighlights(results, existing) {
   if (!YT_KEY) {
     console.log('YOUTUBE_API_KEY not set — skipping highlights.')
     return
   }
-  // Carry forward already-found highlights every run so they always display.
+  // Carry forward already-found highlights, migrating the old single `highlight`
+  // (US-only) into the new per-region `highlights` shape.
   const prev = existing.results || {}
   for (const [id, r] of Object.entries(results)) {
-    if (!r.highlight && prev[id]?.highlight) r.highlight = prev[id].highlight
-  }
-
-  // The score cron runs every 5 min, but YouTube quota is small — only actually
-  // SEARCH near the top of the hour (or when forced locally), i.e. ~once/hour.
-  const topOfHour = new Date().getUTCMinutes() < 5
-  if (!topOfHour && !process.env.FORCE_HIGHLIGHTS) {
-    console.log('Highlights: carried forward; skipping search (not top of hour).')
-    return
+    const prevH =
+      prev[id]?.highlights || (prev[id]?.highlight ? { US: prev[id].highlight } : null)
+    if (prevH) r.highlights = { ...prevH, ...(r.highlights || {}) }
   }
 
   const now = Date.now()
   const todo = Object.entries(results)
     .filter(([, r]) => {
-      if (r.status !== 'FT' || r.highlight || !r.kickoff || !r.home || !r.away) return false
+      if (r.status !== 'FT' || !r.kickoff || !r.home || !r.away) return false
+      const missing = HIGHLIGHT_REGIONS.some((rg) => !r.highlights?.[rg])
       const age = now - new Date(r.kickoff).getTime()
-      return age > 0 && age < YT_MAX_AGE_MS
+      return missing && age > 0 && age < YT_MAX_AGE_MS
     })
     .sort((a, b) => new Date(b[1].kickoff) - new Date(a[1].kickoff))
 
-  let budget = YT_BUDGET
-  for (const [id, r] of todo) {
-    if (budget <= 0) break
-    budget--
-    try {
-      const h = await youtubeHighlight(r.home, r.away)
-      if (h) {
-        r.highlight = h
-        console.log(`  highlight #${id} ${r.home} v ${r.away} -> ${h.videoId} (${h.channel})`)
-      } else {
-        console.log(`  no highlight yet #${id} ${r.home} v ${r.away}`)
+  let budget = YT_BUDGET // counts individual searches (region × match)
+  outer: for (const [id, r] of todo) {
+    for (const region of HIGHLIGHT_REGIONS) {
+      if (budget <= 0) break outer
+      if (r.highlights?.[region]) continue // already have this region
+      budget--
+      try {
+        const h = await youtubeHighlight(r.home, r.away, region)
+        if (h) {
+          r.highlights = { ...(r.highlights || {}), [region]: h }
+          console.log(`  highlight #${id} [${region}] ${r.home} v ${r.away} -> ${h.videoId} (${h.channel})`)
+        } else {
+          console.log(`  no [${region}] highlight yet #${id} ${r.home} v ${r.away}`)
+        }
+      } catch (e) {
+        console.warn('  YouTube search failed:', e.message)
+        break outer // likely quota/key issue — stop hitting the API this run
       }
-    } catch (e) {
-      console.warn('  YouTube search failed:', e.message)
-      break // likely quota/key issue — stop hitting the API this run
     }
   }
 }

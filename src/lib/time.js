@@ -5,6 +5,31 @@
 export const LOCAL_TZ =
   Intl.DateTimeFormat().resolvedOptions().timeZone || 'local time'
 
+// Highlights are split US vs non-US: the exact FOX/official video plays in the US, but
+// is geo-blocked elsewhere, so everyone outside the US gets a YouTube search link their
+// own app resolves to a region-playable clip. Override for testing with ?region=US.
+const US_TZ =
+  /^America\/(New_York|Detroit|Chicago|Denver|Boise|Phoenix|Los_Angeles|Anchorage|Juneau|Sitka|Metlakatla|Yakutat|Nome|Adak|Menominee|Indiana\/|Kentucky\/|North_Dakota\/)|^Pacific\/(Honolulu|Pago_Pago)|^America\/Puerto_Rico/
+
+function isUS() {
+  if (US_TZ.test(LOCAL_TZ)) return true
+  try {
+    return new Intl.Locale(navigator.language).region === 'US'
+  } catch {
+    return false
+  }
+}
+
+function detectRegion() {
+  try {
+    const o = new URLSearchParams(location.search).get('region')
+    if (o) return o.toUpperCase() === 'US' ? 'US' : 'INTL'
+  } catch {}
+  return isUS() ? 'US' : 'INTL'
+}
+// 'US' (exact video) or 'INTL' (YouTube search link).
+export const REGION = detectRegion()
+
 const timeFmt = new Intl.DateTimeFormat(undefined, {
   hour: '2-digit',
   minute: '2-digit',

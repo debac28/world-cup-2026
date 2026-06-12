@@ -1,6 +1,6 @@
 // Shared renderers used across views.
 import { el, flag } from './dom.js'
-import { fmtTime, relativeHint } from './time.js'
+import { fmtTime, relativeHint, REGION } from './time.js'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
 export function matchRow(m, { showRound = false } = {}) {
@@ -23,11 +23,33 @@ export function matchRow(m, { showRound = false } = {}) {
         ? el('span', { class: 'venue' }, `${m.venue.stadium} · ${m.venue.city}`)
         : null,
     ]),
-    m.highlight ? highlightLink(m.highlight) : null,
+    highlightLink(m),
   ])
 }
 
-function highlightLink(h) {
+// Highlights link for finished matches:
+//  - Outside the US: a YouTube *search* link (the US clip is geo-blocked, so the
+//    viewer's own YouTube app surfaces a region-playable highlight).
+//  - In the US: the exact official video found by the updater.
+function highlightLink(m) {
+  if (!m.finished) return null
+
+  if (REGION !== 'US') {
+    const q = encodeURIComponent(`${m.home} vs ${m.away} 2026 World Cup highlights`)
+    return el(
+      'a',
+      {
+        class: 'highlight',
+        href: `https://www.youtube.com/results?search_query=${q}`,
+        target: '_blank',
+        rel: 'noopener',
+      },
+      [el('span', { class: 'highlight__label' }, '▶ Find highlights on YouTube')],
+    )
+  }
+
+  const h = m.highlights?.US
+  if (!h) return null
   return el(
     'a',
     {

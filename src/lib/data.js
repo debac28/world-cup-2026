@@ -89,7 +89,8 @@ function buildModel(seed, live) {
       status,
       homeGoals: hasScore ? r.homeGoals : null,
       awayGoals: hasScore ? r.awayGoals : null,
-      highlight: r.highlight || null,
+      // Per-region highlights {US, IN}; migrate the legacy single `highlight` -> US.
+      highlights: r.highlights || (r.highlight ? { US: r.highlight } : null),
       finished: status === 'finished',
       live: status === 'live',
     }
