@@ -28,6 +28,10 @@ export default defineConfig(({ command }) => ({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,json}'],
+        // Never precache live results — it must always come from the network
+        // (NetworkFirst rule below), or a stale copy gets baked into the app shell.
+        // seed.json is still precached for offline use.
+        globIgnores: ['**/data/live.json'],
         // Live results JSON: serve fast from cache, refresh in the background.
         runtimeCaching: [
           {
