@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-11T23:27:45.556Z",
+  "updated": "2026-06-12T00:18:58.539Z",
   "season": "2026",
   "results": {
     "1": {
@@ -8,7 +8,13 @@
       "homeGoals": 2,
       "awayGoals": 0,
       "status": "FT",
-      "kickoff": "2026-06-11T19:00:00Z"
+      "kickoff": "2026-06-11T19:00:00Z",
+      "highlight": {
+        "videoId": "r1Afsds3ZD0",
+        "title": "Mexico vs South Africa Highlights 🌎🏆 2026 FIFA World Cup™",
+        "channel": "FOX Sports",
+        "thumbnail": "https://i.ytimg.com/vi/r1Afsds3ZD0/mqdefault.jpg"
+      }
     },
     "2": {
       "home": "Korea Republic",
