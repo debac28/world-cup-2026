@@ -32,7 +32,10 @@ export function renderBracket(model) {
 
 function bracketCard(m, model) {
   return el('div', { class: 'bcard' }, [
-    el('div', { class: 'bcard__date' }, m.kickoff ? `${fmtDay(m.kickoff)} · ${fmtTime(m.kickoff)}` : 'TBD'),
+    el('div', { class: 'bcard__top' }, [
+      el('span', { class: 'bcard__num' }, `Match ${m.id}`),
+      el('span', { class: 'bcard__date' }, m.kickoff ? `${fmtDay(m.kickoff)} · ${fmtTime(m.kickoff)}` : 'TBD'),
+    ]),
     slot(m.home, m.homeFlag, model, m, 'home'),
     slot(m.away, m.awayFlag, model, m, 'away'),
     m.venue ? el('div', { class: 'bcard__venue' }, m.venue.city) : null,

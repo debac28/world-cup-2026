@@ -9,9 +9,12 @@ export function matchRow(m, { showRound = false } = {}) {
   const awayWin = m.finished && m.awayGoals > m.homeGoals
 
   return el('article', { class: `match ${m.live ? 'match--live' : ''}` }, [
-    showRound && m.roundName
-      ? el('div', { class: 'match__round' }, m.roundName)
-      : null,
+    el('div', { class: 'match__top' }, [
+      el('span', { class: 'match__num' }, `Match ${m.id}`),
+      showRound && m.roundName
+        ? el('span', { class: 'match__round' }, m.roundName)
+        : null,
+    ]),
     el('div', { class: 'match__body' }, [
       side(m.home, m.homeFlag, homeWin, 'home'),
       score,

@@ -103,7 +103,9 @@ html, body {
   padding: 12px 14px;
 }
 .match--live { border-color: var(--live); box-shadow: 0 0 0 1px var(--live) inset; }
-.match__round { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+.match__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.match__num { font-size: 0.64rem; color: var(--muted); font-weight: 700; letter-spacing: 0.3px; }
+.match__round { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
 .match__body {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -145,6 +147,7 @@ html, body {
 .filterbar { display: flex; gap: 8px; }
 .chip { background: var(--panel); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 .chip--on { background: var(--gold); color: #1a1300; border-color: var(--gold); }
+.country-select { margin-left: auto; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; max-width: 52%; }
 
 /* Cards / tables */
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
@@ -174,7 +177,9 @@ table.standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 .bcol { flex: none; width: 200px; display: flex; flex-direction: column; gap: 12px; }
 .bcol__head { position: sticky; top: 0; margin: 0; font-size: 0.78rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.6px; }
 .bcard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
-.bcard__date { font-size: 0.62rem; color: var(--muted); margin-bottom: 6px; }
+.bcard__top { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+.bcard__num { font-size: 0.58rem; color: var(--gold); font-weight: 700; }
+.bcard__date { font-size: 0.62rem; color: var(--muted); }
 .bcard__venue { font-size: 0.6rem; color: var(--muted); margin-top: 6px; text-align: right; }
 .bslot { display: flex; align-items: center; gap: 7px; padding: 5px 4px; font-size: 0.8rem; }
 .bslot + .bslot { border-top: 1px solid var(--line); }
