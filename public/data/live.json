@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-12T19:06:30.503Z",
+  "updated": "2026-06-13T02:09:42.638Z",
   "season": "2026",
   "results": {
     "1": {
@@ -21,17 +21,17 @@
     "3": {
       "home": "Canada",
       "away": "Bosnia and Herzegovina",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "2H",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-12T19:00:00Z"
     },
     "4": {
       "home": "United States",
       "away": "Paraguay",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "status": "HT",
       "kickoff": "2026-06-13T01:00:00Z"
     },
     "5": {
@@ -581,6 +581,12 @@
   },
   "scorers": [
     {
+      "player": "Folarin Balogun",
+      "team": "United States",
+      "goals": 2,
+      "assists": 0
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -607,6 +613,18 @@
     {
       "player": "Hyun-Gyu Oh",
       "team": "Korea Republic",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Jovo Lukić",
+      "team": "Bosnia and Herzegovina",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Cyle Larin",
+      "team": "Canada",
       "goals": 1,
       "assists": 0
     }
