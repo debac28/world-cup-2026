@@ -22,7 +22,6 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
 import { youtubeHighlight } from './lib/highlights.mjs'
-import { fetchMatchGoals } from './lib/scorers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -117,36 +116,6 @@ async function enrichHighlights(results, existing) {
   }
 }
 
-// Merge TheSportsDB goal scorers into each result's `goals` array. Carries forward the
-// previous goals first, then overwrites a match only when the fresh fetch is non-empty.
-const TSDB_KEY = process.env.THESPORTSDB_KEY || '3'
-const TSDB_SEASON = process.env.THESPORTSDB_SEASON || SEASON || '2026'
-
-async function attachMatchGoals(seed, results, existing) {
-  const prev = existing.results || {}
-  for (const [id, r] of Object.entries(results)) {
-    if (prev[id]?.goals) r.goals = prev[id].goals
-  }
-  let goalsById = {}
-  try {
-    goalsById = await fetchMatchGoals(seed, results, {
-      key: TSDB_KEY,
-      season: TSDB_SEASON,
-    })
-  } catch (e) {
-    console.warn('Match scorers fetch failed:', e.message)
-    return
-  }
-  let count = 0
-  for (const [id, goals] of Object.entries(goalsById)) {
-    if (results[id] && goals.length) {
-      results[id].goals = goals
-      count += goals.length
-    }
-  }
-  console.log(`Attached ${count} goal events across ${Object.keys(goalsById).length} matches.`)
-}
-
 async function main() {
   const seed = JSON.parse(await readFile(SEED_PATH, 'utf8'))
 
@@ -181,11 +150,6 @@ async function main() {
   const haveResults = Object.keys(results).length
   const finalResults = haveResults ? results : existing.results || {}
   const finalScorers = scorers.length ? scorers : existing.scorers || []
-
-  // Per-match goal scorers from TheSportsDB (football-data has none on the free tier).
-  // Carry forward what we have and only overwrite a match when a fresh, non-empty list
-  // arrives — its data can lag, so we never replace known goals with an empty pull.
-  await attachMatchGoals(seed, finalResults, existing)
 
   // Attach YouTube highlight links to finished matches (no-op without a key).
   await enrichHighlights(finalResults, existing)

@@ -15,7 +15,6 @@
 import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
-import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
 const FD_BASE = 'https://api.football-data.org/v4'
 const CORS = {
@@ -132,20 +131,6 @@ async function buildPayload(env) {
   const map = await readHighlights(env)
   for (const [id, r] of Object.entries(results)) {
     if (map[id]) r.highlights = map[id]
-  }
-
-  // Merge per-match goal scorers from TheSportsDB (football-data has none on free tier).
-  // Cached with the rest of /live (~60s), so TheSportsDB is hit at most ~once/minute.
-  try {
-    const goalsById = await fetchMatchGoals(seed, results, {
-      key: env.THESPORTSDB_KEY || '3',
-      season: env.THESPORTSDB_SEASON || env.FOOTBALL_DATA_SEASON || '2026',
-    })
-    for (const [id, goals] of Object.entries(goalsById)) {
-      if (results[id] && goals.length) results[id].goals = goals
-    }
-  } catch (e) {
-    console.log('match scorers fetch failed:', e.message)
   }
 
   return {
