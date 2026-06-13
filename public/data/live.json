@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-13T07:15:56.941Z",
+  "updated": "2026-06-13T08:45:33.882Z",
   "season": "2026",
   "results": {
     "1": {
@@ -24,15 +24,7 @@
           "og": false,
           "team": "Mexico"
         }
-      ],
-      "highlights": {
-        "US": {
-          "videoId": "PmevGCkUtM8",
-          "title": "Highlights | Mexico 2-0 South Africa | FIFA World Cup 2026™",
-          "channel": "FIFA",
-          "thumbnail": "https://i.ytimg.com/vi/PmevGCkUtM8/mqdefault.jpg"
-        }
-      }
+      ]
     },
     "2": {
       "home": "Korea Republic",
@@ -63,15 +55,7 @@
           "og": false,
           "team": "Czech Republic"
         }
-      ],
-      "highlights": {
-        "US": {
-          "videoId": "QWoDfCkh7f8",
-          "title": "South Korea vs Czechia Highlights 🌎🏆 2026 FIFA World Cup™",
-          "channel": "FOX Sports",
-          "thumbnail": "https://i.ytimg.com/vi/QWoDfCkh7f8/mqdefault.jpg"
-        }
-      }
+      ]
     },
     "3": {
       "home": "Canada",
@@ -95,15 +79,7 @@
           "og": false,
           "team": "Bosnia and Herzegovina"
         }
-      ],
-      "highlights": {
-        "US": {
-          "videoId": "n5qkHOWhFAc",
-          "title": "Canada vs Bosnia and Herzegovina Highlights | 2026 FIFA World Cup™",
-          "channel": "FOX Sports",
-          "thumbnail": "https://i.ytimg.com/vi/n5qkHOWhFAc/mqdefault.jpg"
-        }
-      }
+      ]
     },
     "4": {
       "home": "United States",
@@ -148,15 +124,7 @@
           "og": false,
           "team": "Paraguay"
         }
-      ],
-      "highlights": {
-        "US": {
-          "videoId": "BXD1_mhODBU",
-          "title": "United States vs Paraguay Highlights | 2026 FIFA World Cup™",
-          "channel": "FOX Sports",
-          "thumbnail": "https://i.ytimg.com/vi/BXD1_mhODBU/mqdefault.jpg"
-        }
-      }
+      ]
     },
     "5": {
       "home": "Haiti",
