@@ -22,6 +22,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
 import { youtubeHighlight } from './lib/highlights.mjs'
+import { fetchMatchGoals } from './lib/scorers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -116,6 +117,34 @@ async function enrichHighlights(results, existing) {
   }
 }
 
+// Carry forward already-known goals (a finished match never changes), then fetch goals for
+// any finished match still missing them. The shared module validates count vs scoreline.
+async function attachMatchGoals(seed, results, existing) {
+  const prev = existing.results || {}
+  const existingGoals = {}
+  for (const [id, r] of Object.entries(results)) {
+    if (prev[id]?.goals?.length) {
+      r.goals = prev[id].goals
+      existingGoals[id] = prev[id].goals
+    }
+  }
+  let goalsById = {}
+  try {
+    goalsById = await fetchMatchGoals(seed, results, { existingGoals })
+  } catch (e) {
+    console.warn('Wikipedia scorers fetch failed:', e.message)
+    return
+  }
+  let count = 0
+  for (const [id, goals] of Object.entries(goalsById)) {
+    if (results[id] && goals.length) {
+      results[id].goals = goals
+      count += goals.length
+    }
+  }
+  console.log(`Attached ${count} goal events across ${Object.keys(goalsById).length} matches.`)
+}
+
 async function main() {
   const seed = JSON.parse(await readFile(SEED_PATH, 'utf8'))
 
@@ -150,6 +179,10 @@ async function main() {
   const haveResults = Object.keys(results).length
   const finalResults = haveResults ? results : existing.results || {}
   const finalScorers = scorers.length ? scorers : existing.scorers || []
+
+  // Per-match goal scorers from Wikipedia (football-data has no goal events). Finished
+  // matches only, validated against the scoreline, cached forever (carried forward).
+  await attachMatchGoals(seed, finalResults, existing)
 
   // Attach YouTube highlight links to finished matches (no-op without a key).
   await enrichHighlights(finalResults, existing)

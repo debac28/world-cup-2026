@@ -15,6 +15,7 @@
 import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
+import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
 const FD_BASE = 'https://api.football-data.org/v4'
 const CORS = {
@@ -24,6 +25,7 @@ const CORS = {
 }
 const CACHE_SECONDS = 60
 const HL_KEY = 'highlights' // KV: { [matchId]: { US: {...} } }
+const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og}, ... ] }
 const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
 const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
 
@@ -50,6 +52,7 @@ export default {
 
   async scheduled(event, env, ctx) {
     ctx.waitUntil(refreshHighlights(env))
+    ctx.waitUntil(refreshGoals(env))
   },
 }
 
@@ -101,6 +104,15 @@ async function readHighlights(env) {
   }
 }
 
+async function readGoals(env) {
+  if (!env.KV) return {}
+  try {
+    return JSON.parse((await env.KV.get(GOALS_KEY)) || '{}')
+  } catch {
+    return {}
+  }
+}
+
 async function buildPayload(env) {
   let results = {}
   let scorers = []
@@ -131,6 +143,12 @@ async function buildPayload(env) {
   const map = await readHighlights(env)
   for (const [id, r] of Object.entries(results)) {
     if (map[id]) r.highlights = map[id]
+  }
+
+  // Merge per-match goal scorers from KV (populated by the scheduled Wikipedia refresh).
+  const goalsMap = await readGoals(env)
+  for (const [id, r] of Object.entries(results)) {
+    if (goalsMap[id]) r.goals = goalsMap[id]
   }
 
   return {
@@ -174,4 +192,37 @@ async function refreshHighlights(env) {
     }
   }
   if (changed) await env.KV.put(HL_KEY, JSON.stringify(map))
+}
+
+// Scheduled: parse goal scorers from Wikipedia for finished matches missing them, cache in
+// KV forever (a finished match never changes). The shared module validates count vs score.
+async function refreshGoals(env) {
+  if (!env.KV || !env.FOOTBALL_DATA_TOKEN) {
+    console.log('refreshGoals: missing KV / token — skipping.')
+    return
+  }
+  let results
+  try {
+    results = buildResults(seed, await fdMatches(env))
+  } catch (e) {
+    console.log('refreshGoals matches failed:', e.message)
+    return
+  }
+  const have = await readGoals(env)
+  let found
+  try {
+    found = await fetchMatchGoals(seed, results, { existingGoals: have })
+  } catch (e) {
+    console.log('refreshGoals Wikipedia failed:', e.message)
+    return
+  }
+  let changed = false
+  for (const [id, goals] of Object.entries(found)) {
+    if (goals.length) {
+      have[id] = goals
+      changed = true
+      console.log(`goals #${id}: ${goals.length} scorers`)
+    }
+  }
+  if (changed) await env.KV.put(GOALS_KEY, JSON.stringify(have))
 }

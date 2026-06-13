@@ -100,6 +100,9 @@ function buildModel(seed, live) {
       awayGoals: hasScore ? r.awayGoals : null,
       // Per-region highlights {US, IN}; migrate the legacy single `highlight` -> US.
       highlights: r.highlights || (r.highlight ? { US: r.highlight } : null),
+      // Per-match goal scorers (parsed from Wikipedia), assigned to a side by team name so
+      // orientation never matters. Empty until the match finishes and its article fills in.
+      goals: (r.goals || []).map((g) => ({ ...g, home: g.team === home })),
       finished: status === 'finished',
       live: status === 'live',
     }

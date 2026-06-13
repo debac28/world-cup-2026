@@ -122,6 +122,19 @@ html, body {
 .team--away .team__id { align-items: flex-end; }
 .team__rank { font-size: 0.68rem; font-weight: 600; color: var(--muted); line-height: 1.1; }
 
+.scorers-line {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+.scorers-line__side { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.scorers-line__home { text-align: left; }
+.scorers-line__away { text-align: right; }
+.scorers-line__ball { align-self: start; opacity: 0.7; font-size: 0.8rem; }
+
 .score { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 1.15rem; padding: 0 6px; }
 .score--time { font-size: 0.95rem; color: var(--muted); font-weight: 700; }
 .score__sep { color: var(--muted); }

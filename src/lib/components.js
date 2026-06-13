@@ -20,6 +20,7 @@ export function matchRow(m, { showRound = false } = {}) {
       score,
       side(m.away, m.awayFlag, awayWin, 'away', m.awayRank),
     ]),
+    scorerList(m),
     el('div', { class: 'match__meta' }, [
       metaText(m),
       m.venue
@@ -27,6 +28,21 @@ export function matchRow(m, { showRound = false } = {}) {
         : null,
     ]),
     highlightLink(m),
+  ])
+}
+
+// Goal scorers grouped by side: home goals left, away goals right ("Player min'").
+// Only rendered once a match has goal data; absent for scheduled/in-progress matches.
+function scorerList(m) {
+  if (!m.goals?.length) return null
+  const fmt = (g) =>
+    el('li', {}, `${g.player}${g.og ? ' (OG)' : ''}${g.pen ? ' (P)' : ''} ${g.minute}'`.trim())
+  const home = m.goals.filter((g) => g.home).map(fmt)
+  const away = m.goals.filter((g) => !g.home).map(fmt)
+  return el('div', { class: 'scorers-line' }, [
+    el('ul', { class: 'scorers-line__side scorers-line__home' }, home),
+    el('span', { class: 'scorers-line__ball' }, '⚽'),
+    el('ul', { class: 'scorers-line__side scorers-line__away' }, away),
   ])
 }
 
