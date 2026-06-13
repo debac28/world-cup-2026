@@ -1,5 +1,6 @@
 import './style.css'
 import { load, refresh } from './lib/data.js'
+import { initAnalytics } from './lib/analytics.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
 import { renderMatches } from './views/matches.js'
@@ -135,4 +136,5 @@ async function init() {
   }
 }
 
+initAnalytics()
 init()

@@ -63,6 +63,13 @@ function normStatus(s) {
 function buildModel(seed, live) {
   const flagOf = new Map(seed.teams.map((t) => [t.name, t.flag]))
   const rankOf = new Map(seed.teams.map((t) => [t.name, t.rankPoints]))
+  // FIFA ranking position (1 = highest), derived by sorting all teams on their
+  // stored FIFA points. The seed only carries points, not positions.
+  const rankPosOf = new Map(
+    [...seed.teams]
+      .sort((a, b) => b.rankPoints - a.rankPoints)
+      .map((t, i) => [t.name, i + 1]),
+  )
   const results = live.results || {}
 
   function withResult(fix, home, away) {
@@ -84,6 +91,8 @@ function buildModel(seed, live) {
       away,
       homeFlag: flagOf.get(home) || null,
       awayFlag: flagOf.get(away) || null,
+      homeRank: rankPosOf.get(home) || null,
+      awayRank: rankPosOf.get(away) || null,
       kickoff: parse(fix.kickoff),
       venue: fix.venue || null,
       status,
@@ -91,6 +100,9 @@ function buildModel(seed, live) {
       awayGoals: hasScore ? r.awayGoals : null,
       // Per-region highlights {US, IN}; migrate the legacy single `highlight` -> US.
       highlights: r.highlights || (r.highlight ? { US: r.highlight } : null),
+      // Per-match goal scorers (from TheSportsDB), assigned to a side by team name so
+      // orientation never matters. Empty when no goal data is available yet.
+      goals: (r.goals || []).map((g) => ({ ...g, home: g.team === home })),
       finished: status === 'finished',
       live: status === 'live',
     }

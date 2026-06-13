@@ -16,10 +16,11 @@ export function matchRow(m, { showRound = false } = {}) {
         : null,
     ]),
     el('div', { class: 'match__body' }, [
-      side(m.home, m.homeFlag, homeWin, 'home'),
+      side(m.home, m.homeFlag, homeWin, 'home', m.homeRank),
       score,
-      side(m.away, m.awayFlag, awayWin, 'away'),
+      side(m.away, m.awayFlag, awayWin, 'away', m.awayRank),
     ]),
+    scorerList(m),
     el('div', { class: 'match__meta' }, [
       metaText(m),
       m.venue
@@ -27,6 +28,25 @@ export function matchRow(m, { showRound = false } = {}) {
         : null,
     ]),
     highlightLink(m),
+  ])
+}
+
+// Goal scorers grouped by side: home goals left, away goals right (each "Player min'").
+// Only rendered once a match has goal data; absent for scheduled/0-0 matches.
+function scorerList(m) {
+  if (!m.goals?.length) return null
+  const fmt = (g) => {
+    const mins = g.minute != null ? `${g.minute}'` : ''
+    const og = /own/i.test(g.type || '') ? ' (OG)' : ''
+    const pen = /pen/i.test(g.type || '') ? ' (P)' : ''
+    return el('li', {}, `${g.player}${og}${pen} ${mins}`.trim())
+  }
+  const home = m.goals.filter((g) => g.home).map(fmt)
+  const away = m.goals.filter((g) => !g.home).map(fmt)
+  return el('div', { class: 'scorers-line' }, [
+    el('ul', { class: 'scorers-line__side scorers-line__home' }, home),
+    el('span', { class: 'scorers-line__ball' }, '⚽'),
+    el('ul', { class: 'scorers-line__side scorers-line__away' }, away),
   ])
 }
 
@@ -70,10 +90,13 @@ function highlightLink(m) {
   )
 }
 
-function side(name, code, winner, which) {
+function side(name, code, winner, which, rank) {
   return el('div', { class: `team team--${which} ${winner ? 'team--win' : ''}` }, [
     flag(code, name),
-    el('span', { class: 'team__name' }, name),
+    el('div', { class: 'team__id' }, [
+      el('span', { class: 'team__name' }, name),
+      rank ? el('span', { class: 'team__rank', title: 'FIFA ranking' }, `#${rank}`) : null,
+    ]),
   ])
 }
 
