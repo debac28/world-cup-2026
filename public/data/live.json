@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-13T13:22:30.311Z",
+  "updated": "2026-06-13T19:05:59.194Z",
   "season": "2026",
   "results": {
     "1": {
@@ -153,9 +153,9 @@
     "8": {
       "home": "Qatar",
       "away": "Switzerland",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "status": "2H",
       "kickoff": "2026-06-13T19:00:00Z"
     },
     "9": {
