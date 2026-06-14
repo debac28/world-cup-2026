@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-14T02:32:32.978Z",
+  "updated": "2026-06-14T09:00:37.701Z",
   "season": "2026",
   "results": {
     "1": {
@@ -131,16 +131,41 @@
       "away": "Scotland",
       "homeGoals": 0,
       "awayGoals": 1,
-      "status": "2H",
-      "kickoff": "2026-06-14T01:00:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-14T01:00:00Z",
+      "goals": [
+        {
+          "player": "McGinn",
+          "minute": "28",
+          "pen": false,
+          "og": false,
+          "team": "Scotland"
+        }
+      ]
     },
     "6": {
       "home": "Australia",
       "away": "Turkey",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-14T04:00:00Z"
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "status": "FT",
+      "kickoff": "2026-06-14T04:00:00Z",
+      "goals": [
+        {
+          "player": "Irankunda",
+          "minute": "27",
+          "pen": false,
+          "og": false,
+          "team": "Australia"
+        },
+        {
+          "player": "Metcalfe",
+          "minute": "75",
+          "pen": false,
+          "og": false,
+          "team": "Australia"
+        }
+      ]
     },
     "7": {
       "home": "Brazil",
@@ -791,6 +816,18 @@
     {
       "player": "John McGinn",
       "team": "Scotland",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Nestor Irankunda",
+      "team": "Australia",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Connor Metcalfe",
+      "team": "Australia",
       "goals": 1,
       "assists": 0
     }
