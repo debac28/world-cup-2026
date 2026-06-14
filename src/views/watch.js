@@ -67,13 +67,13 @@ export function renderWatch(model) {
 
   wrap.appendChild(
     el('div', { class: 'card wp-search' }, [
-      el('div', { class: 'wp-search__row' }, [zipInput, searchBtn]),
       matchSelect
         ? el('label', { class: 'wp-search__match' }, [
             el('span', { class: 'wp-watch__label' }, '📺 Watch'),
             matchSelect,
           ])
         : null,
+      el('div', { class: 'wp-search__row' }, [zipInput, searchBtn]),
       statusLine,
     ]),
   )
@@ -195,7 +195,7 @@ function venueCard(v, mi, match) {
       el(
         'button',
         { class: 'wp-action wp-action--share', type: 'button', onclick: () => shareInvite(shareText()) },
-        '📺 Watch here',
+        '👋 Meet here',
       ),
       el(
         'a',
