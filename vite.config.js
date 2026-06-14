@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 // On GitHub Pages a *project* site is served from /<repo>/, so the build needs a
 // matching base path. Override with BASE_PATH (the deploy workflow sets it from the
@@ -8,7 +9,13 @@ const base = process.env.BASE_PATH || '/worldcup26/'
 
 export default defineConfig(({ command }) => ({
   base: command === 'serve' ? '/' : base,
+  // Allow phone testing through a cloudflared quick tunnel (dev only).
+  server: { allowedHosts: ['.trycloudflare.com'] },
   plugins: [
+    // Optional dev-only self-signed HTTPS (set HTTPS=1). Off by default because iOS Safari
+    // rejects self-signed certs; for phone testing we use a cloudflared tunnel instead.
+    // Never added to the production build.
+    ...(command === 'serve' && process.env.HTTPS ? [basicSsl()] : []),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png'],

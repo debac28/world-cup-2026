@@ -203,3 +203,47 @@ table.standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 .bslot__score { font-weight: 800; }
 .bslot--tbd .bslot__name { color: var(--muted); font-size: 0.72rem; }
 .bslot--win .bslot__name { color: var(--gold); font-weight: 700; }
+
+/* Watch Together */
+.wp-search { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.wp-search__row { display: flex; gap: 8px; }
+.wp-input { flex: 1; background: var(--ink); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 0.95rem; }
+.wp-input::placeholder { color: var(--muted); }
+.wp-btn { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+.wp-btn--loc { flex: 1; text-align: center; }
+.wp-btn:active { background: var(--pitch); }
+.wp-search__date { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); }
+.wp-date { margin-left: auto; background: var(--ink); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 0.85rem; }
+.wp-status { margin: 0; font-size: 0.74rem; color: var(--muted); }
+
+.wp-results { display: flex; flex-direction: column; gap: 10px; }
+.wp-group { margin: 14px 2px 2px; font-size: 0.82rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
+.wp-note { margin: 4px 2px; font-size: 0.8rem; color: var(--muted); }
+
+.wp-card { padding: 12px; }
+.wp-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.wp-card__name { margin: 0; font-size: 0.98rem; font-weight: 800; }
+.wp-mi { flex: none; font-size: 0.72rem; font-weight: 800; color: #1a1300; background: var(--gold); border-radius: 999px; padding: 2px 9px; }
+.wp-card__sub { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.wp-tag { font-size: 0.64rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; padding: 2px 8px; border-radius: 999px; }
+.wp-tag--official { color: #06281b; background: var(--green); }
+.wp-tag--bar { color: var(--text); background: var(--panel-2); border: 1px solid var(--line); }
+.wp-city { font-size: 0.78rem; color: var(--muted); }
+.wp-dates { margin: 8px 0 0; font-size: 0.78rem; color: var(--text); }
+.wp-desc { margin: 6px 0 0; font-size: 0.8rem; color: var(--muted); line-height: 1.35; }
+.wp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.wp-chip { padding: 3px 10px; font-size: 0.7rem; cursor: default; }
+.wp-addr { margin: 8px 0 0; font-size: 0.74rem; color: var(--muted); }
+.wp-reg { display: inline-block; margin-top: 6px; font-size: 0.74rem; color: var(--gold); text-decoration: none; }
+.wp-search__match { display: flex; align-items: center; gap: 8px; }
+.wp-watch__label { flex: none; font-size: 0.78rem; color: var(--muted); }
+.wp-match { flex: 1; min-width: 0; background: var(--ink); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 0.82rem; }
+.wp-actions { display: flex; gap: 8px; margin-top: 12px; }
+.wp-action { flex: none; text-decoration: none; font-size: 0.74rem; font-weight: 700; border-radius: 8px; padding: 6px 13px; border: 1px solid var(--line); background: transparent; color: var(--text); }
+button.wp-action { font: inherit; cursor: pointer; }
+.wp-action--share { color: var(--green); border-color: var(--green); }
+.wp-action--dir { color: var(--muted); }
+
+/* "Start a party" share on match cards */
+.match__share { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 0.72rem; font-weight: 700; text-decoration: none; color: var(--green); }
+.match__share:active { opacity: 0.7; }

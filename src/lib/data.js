@@ -21,6 +21,9 @@ const FALLBACK_LIVE = PRIMARY_LIVE === RAW_LIVE ? null : RAW_LIVE
 
 let model = null
 let seedCache = null
+// Static list of official fan zones + bars, loaded once (like the seed) and carried across
+// refreshes since it never changes per live update.
+let watchCache = null
 
 async function loadJSON(path, fallback) {
   try {
@@ -128,14 +131,20 @@ function buildModel(seed, live) {
     knockoutMatches,
     standings,
     scorers: live.scorers || [],
+    watchParties: watchCache || [],
   }
 }
 
 export async function load() {
   if (model) return model
-  const [seed, live] = await Promise.all([loadJSON('data/seed.json', null), fetchLive()])
+  const [seed, live, watch] = await Promise.all([
+    loadJSON('data/seed.json', null),
+    fetchLive(),
+    loadJSON('data/watch-parties.json', []),
+  ])
   if (!seed) throw new Error('Missing seed.json — run `npm run seed`.')
   seedCache = seed
+  watchCache = Array.isArray(watch) ? watch : []
   model = buildModel(seed, live)
   return model
 }

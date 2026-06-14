@@ -7,6 +7,7 @@ import { renderMatches } from './views/matches.js'
 import { renderGroups } from './views/groups.js'
 import { renderScorers } from './views/scorers.js'
 import { renderBracket } from './views/bracket.js'
+import { renderWatch } from './views/watch.js'
 
 const TABS = [
   { id: 'today', label: 'Today', render: renderToday },
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'groups', label: 'Groups', render: renderGroups },
   { id: 'bracket', label: 'Bracket', render: renderBracket },
   { id: 'scorers', label: 'Scorers', render: renderScorers },
+  { id: 'watch', label: 'Watch', render: renderWatch },
 ]
 
 const tabsEl = document.getElementById('tabs')
