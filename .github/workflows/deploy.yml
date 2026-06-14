@@ -39,8 +39,9 @@ jobs:
 
       - name: Build
         env:
-          # Project Pages serve from /<repo>/ — match Vite's base path to that.
-          BASE_PATH: /${{ github.event.repository.name }}/
+          # Served at the root of the custom domain (fifa2026.scoreit.fyi via public/CNAME),
+          # so the base path is '/', not /<repo>/.
+          BASE_PATH: /
           # Cloudflare Worker URL the app reads live scores from (repo variable).
           VITE_LIVE_URL: ${{ vars.VITE_LIVE_URL }}
           # Cloudflare Web Analytics site token (repo variable). Beacon is skipped when unset.

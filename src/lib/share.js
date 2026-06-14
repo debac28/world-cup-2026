@@ -12,7 +12,7 @@
 
 // Known production URL (GitHub Pages project site). Override at build time with
 // VITE_PUBLIC_URL if the app is served elsewhere (custom domain, different repo).
-const PROD_URL = 'https://debac28.github.io/world-cup-2026/'
+const PROD_URL = 'https://fifa2026.scoreit.fyi/'
 
 function isLocalHost(host) {
   return (
