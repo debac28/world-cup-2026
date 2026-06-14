@@ -113,6 +113,9 @@ html, body {
   gap: 8px;
 }
 .team { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.team__meta { display: flex; align-items: baseline; gap: 6px; }
+.team--away .team__meta { justify-content: flex-end; }
+.team__prob { font-size: 0.72rem; font-weight: 800; color: var(--gold); }
 .team--away { flex-direction: row-reverse; text-align: right; }
 .team__name { font-weight: 600; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .team--win .team__name { color: #fff; }

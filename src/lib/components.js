@@ -4,10 +4,12 @@ import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
-export function matchRow(m, { showRound = false } = {}) {
+export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
   const score = scoreCell(m)
   const homeWin = m.finished && m.homeGoals > m.awayGoals
   const awayWin = m.finished && m.awayGoals > m.homeGoals
+  // Elo win % sits next to each team's rank, only on upcoming matches where opted in.
+  const prob = showPrediction && !m.finished && !m.live ? m.winProb : null
 
   return el('article', { class: `match ${m.live ? 'match--live' : ''}` }, [
     el('div', { class: 'match__top' }, [
@@ -17,9 +19,9 @@ export function matchRow(m, { showRound = false } = {}) {
         : null,
     ]),
     el('div', { class: 'match__body' }, [
-      side(m.home, m.homeFlag, homeWin, 'home', m.homeRank),
+      side(m.home, m.homeFlag, homeWin, 'home', m.homeRank, prob?.home),
       score,
-      side(m.away, m.awayFlag, awayWin, 'away', m.awayRank),
+      side(m.away, m.awayFlag, awayWin, 'away', m.awayRank, prob?.away),
     ]),
     scorerList(m),
     el('div', { class: 'match__meta' }, [
@@ -116,12 +118,16 @@ function highlightLink(m) {
   )
 }
 
-function side(name, code, winner, which, rank) {
+function side(name, code, winner, which, rank, prob) {
+  const meta = []
+  if (rank) meta.push(el('span', { class: 'team__rank', title: 'FIFA ranking' }, `#${rank}`))
+  if (prob != null)
+    meta.push(el('span', { class: 'team__prob', title: 'Win chance (Elo, from FIFA points)' }, `${prob}%`))
   return el('div', { class: `team team--${which} ${winner ? 'team--win' : ''}` }, [
     flag(code, name),
     el('div', { class: 'team__id' }, [
       el('span', { class: 'team__name' }, name),
-      rank ? el('span', { class: 'team__rank', title: 'FIFA ranking' }, `#${rank}`) : null,
+      meta.length ? el('div', { class: 'team__meta' }, meta) : null,
     ]),
   ])
 }

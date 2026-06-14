@@ -18,7 +18,7 @@ export function renderToday(model) {
   )
 
   if (today.length) {
-    for (const m of today) frag.appendChild(matchRow(m, { showRound: true }))
+    for (const m of today) frag.appendChild(matchRow(m, { showRound: true, showPrediction: true }))
   } else {
     frag.appendChild(empty('No matches today.'))
     const next = nextMatchDay(model, key)

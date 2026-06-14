@@ -5,6 +5,7 @@
 
 import { parse } from './time.js'
 import { computeStandings, resolveKnockout } from './standings.js'
+import { winProbability } from './predict.js'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -96,6 +97,9 @@ function buildModel(seed, live) {
       awayFlag: flagOf.get(away) || null,
       homeRank: rankPosOf.get(home) || null,
       awayRank: rankPosOf.get(away) || null,
+      // Elo-based pre-match win split from FIFA points; null when a team isn't known yet
+      // (unresolved knockout slot). Only surfaced on upcoming Today-tab cards.
+      winProb: winProbability(rankOf.get(home), rankOf.get(away)),
       kickoff: parse(fix.kickoff),
       venue: fix.venue || null,
       status,
