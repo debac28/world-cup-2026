@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-14T13:25:34.898Z",
+  "updated": "2026-06-14T19:07:31.809Z",
   "season": "2026",
   "results": {
     "1": {
@@ -226,9 +226,9 @@
     "10": {
       "home": "Germany",
       "away": "Curaçao",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 7,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-14T17:00:00Z"
     },
     "11": {
@@ -736,6 +736,12 @@
       "assists": 0
     },
     {
+      "player": "Kai Havertz",
+      "team": "Germany",
+      "goals": 2,
+      "assists": 0
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -830,6 +836,42 @@
       "team": "Australia",
       "goals": 1,
       "assists": 0
+    },
+    {
+      "player": "Felix Kalu Nmecha",
+      "team": "Germany",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Livano Comenencia",
+      "team": "Curaçao",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Nico Schlotterbeck",
+      "team": "Germany",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Jamal Musiala",
+      "team": "Germany",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Nathaniel Brown",
+      "team": "Germany",
+      "goals": 1,
+      "assists": 1
+    },
+    {
+      "player": "Deniz Undav",
+      "team": "Germany",
+      "goals": 1,
+      "assists": 2
     }
   ]
 }
