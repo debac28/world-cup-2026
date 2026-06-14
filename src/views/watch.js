@@ -1,7 +1,7 @@
 import { el, empty, clear } from '../lib/dom.js'
 import { sectionTitle } from '../lib/components.js'
 import { localDayKey, fmtDay, fmtTime } from '../lib/time.js'
-import { geocodeZip, haversineMiles } from '../lib/geo.js'
+import { geocodeZip, geocodeAddress, haversineMiles } from '../lib/geo.js'
 import { shareInvite } from '../lib/share.js'
 
 const NEAR_MILES = 50
@@ -16,7 +16,7 @@ export function renderWatch(model) {
 
   const wrap = el('div', { class: 'stack' })
   wrap.appendChild(
-    sectionTitle('Watch Together', 'Pick a match, then find a fan zone or bar near you'),
+    sectionTitle('Watch Together', 'Pick a match, then host at your place or find a fan zone'),
   )
 
   if (!parties.length) {
@@ -24,9 +24,57 @@ export function renderWatch(model) {
     return wrap
   }
 
-  let origin = null // { lat, lng, label } once a zip is resolved
+  const matchSelect = upcoming.length ? buildMatchSelect(upcoming) : null
+  if (matchSelect) matchSelect.addEventListener('change', renderList)
 
-  // --- controls ---
+  function selectedMatch() {
+    if (!matchSelect) return null
+    return upcoming.find((m) => String(m.id) === matchSelect.value) || upcoming[0]
+  }
+
+  // === "Your place" mode: type any address (worldwide), validate it, share the invite. ===
+  const addrInput = el('input', {
+    class: 'wp-input',
+    type: 'text',
+    placeholder: 'Your address',
+    'aria-label': 'Your address',
+    autocomplete: 'street-address',
+  })
+  const addrStatus = el('p', { class: 'wp-status' })
+  const addrBtn = el('button', { class: 'wp-btn', type: 'button', onclick: shareOwnPlace }, '👋 Share invite')
+
+  async function shareOwnPlace() {
+    const q = addrInput.value.trim()
+    if (!q) return
+    addrStatus.textContent = 'Checking address…'
+    let loc
+    try {
+      loc = await geocodeAddress(q)
+    } catch (e) {
+      addrStatus.textContent = e.message || "Couldn't find that address"
+      return
+    }
+    addrStatus.textContent = `📍 ${loc.label}`
+    const match = selectedMatch()
+    const maps = `https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`
+    const text = match
+      ? `⚽ Let's watch ${match.home} vs ${match.away} at my place!\n` +
+        `${fmtDay(match.kickoff)}, ${fmtTime(match.kickoff)}\n${loc.label}\n${maps}`
+      : `⚽ Let's watch the World Cup at my place!\n${loc.label}\n${maps}`
+    shareInvite(text)
+  }
+  addrInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') shareOwnPlace()
+  })
+
+  const ownPanel = el('div', { class: 'wp-mode' }, [
+    el('div', { class: 'wp-search__row' }, [addrInput, addrBtn]),
+    addrStatus,
+    el('p', { class: 'wp-note' }, 'Enter any address worldwide — your guests get the spot and a map link.'),
+  ])
+
+  // === "Public viewing area" mode: zip → fan zones & bars, nearest first. ===
+  let origin = null // { lat, lng, label } once a zip is resolved
   const zipInput = el('input', {
     class: 'wp-input',
     type: 'text',
@@ -36,17 +84,8 @@ export function renderWatch(model) {
     'aria-label': 'Zip code',
   })
   const searchBtn = el('button', { class: 'wp-btn', type: 'button', onclick: useZip }, '🔍 Search')
-
-  const matchSelect = upcoming.length ? buildMatchSelect(upcoming) : null
-  if (matchSelect) matchSelect.addEventListener('change', renderList)
-
   const statusLine = el('p', { class: 'wp-status' })
   const results = el('div', { class: 'wp-results' })
-
-  function selectedMatch() {
-    if (!matchSelect) return null
-    return upcoming.find((m) => String(m.id) === matchSelect.value) || upcoming[0]
-  }
 
   async function useZip() {
     const z = zipInput.value.trim()
@@ -65,6 +104,23 @@ export function renderWatch(model) {
     if (e.key === 'Enter') useZip()
   })
 
+  const publicPanel = el('div', { class: 'wp-mode' }, [
+    el('div', { class: 'wp-search__row' }, [zipInput, searchBtn]),
+    statusLine,
+  ])
+
+  // === Mode toggle. Default to the public viewing-area finder. ===
+  const segOwn = el('button', { class: 'wp-seg', type: 'button', onclick: () => setMode('own') }, '🏠 Your place')
+  const segPublic = el('button', { class: 'wp-seg', type: 'button', onclick: () => setMode('public') }, '📍 Public viewing area')
+  function setMode(mode) {
+    const own = mode === 'own'
+    segOwn.classList.toggle('wp-seg--on', own)
+    segPublic.classList.toggle('wp-seg--on', !own)
+    ownPanel.style.display = own ? '' : 'none'
+    publicPanel.style.display = own ? 'none' : ''
+    results.style.display = own ? 'none' : ''
+  }
+
   wrap.appendChild(
     el('div', { class: 'card wp-search' }, [
       matchSelect
@@ -73,8 +129,9 @@ export function renderWatch(model) {
             matchSelect,
           ])
         : null,
-      el('div', { class: 'wp-search__row' }, [zipInput, searchBtn]),
-      statusLine,
+      el('div', { class: 'wp-seg-wrap' }, [segOwn, segPublic]),
+      ownPanel,
+      publicPanel,
     ]),
   )
   wrap.appendChild(results)
@@ -126,6 +183,7 @@ export function renderWatch(model) {
   }
 
   renderList()
+  setMode('public')
   return wrap
 }
 

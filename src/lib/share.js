@@ -55,14 +55,16 @@ let _ogFile = null // File once loaded, false if it failed, null while pending
 // falling back to a text-only WhatsApp deep link on desktop / insecure contexts. Call this
 // directly from a click handler when the text is computed at click time (e.g. a venue card
 // whose match is chosen from a dropdown).
-export function shareInvite(text) {
+// Pass `image: false` for shares whose body is itself a link (e.g. a score + highlight
+// URL) — there the og card is off-message and we want a plain text/link share instead.
+export function shareInvite(text, { image = true } = {}) {
   if (!navigator.share) {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener')
     return
   }
   const payload = { text }
   // Attach the image as a file when the platform supports it → photo + caption, no URL.
-  if (_ogFile && navigator.canShare && navigator.canShare({ files: [_ogFile] })) {
+  if (image && _ogFile && navigator.canShare && navigator.canShare({ files: [_ogFile] })) {
     payload.files = [_ogFile]
   }
   navigator.share(payload).catch(() => {})
@@ -70,7 +72,7 @@ export function shareInvite(text) {
 
 // Anchor-props variant for static text (e.g. a match card). Spread onto an el('a', ...);
 // the href is a no-JS WhatsApp fallback, the onclick uses the native sheet when available.
-export function shareAnchor(text) {
+export function shareAnchor(text, { image = true } = {}) {
   return {
     href: `https://wa.me/?text=${encodeURIComponent(text)}`,
     target: '_blank',
@@ -78,7 +80,7 @@ export function shareAnchor(text) {
     onclick: (e) => {
       if (!navigator.share) return // let the href handle it
       e.preventDefault()
-      shareInvite(text)
+      shareInvite(text, { image })
     },
   }
 }

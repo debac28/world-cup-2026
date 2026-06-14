@@ -1,6 +1,6 @@
 // Shared renderers used across views.
 import { el, flag } from './dom.js'
-import { fmtTime, fmtDay, relativeHint, REGION } from './time.js'
+import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
@@ -28,28 +28,37 @@ export function matchRow(m, { showRound = false } = {}) {
         ? el('span', { class: 'venue' }, `${m.venue.stadium} · ${m.venue.city}`)
         : null,
     ]),
-    startPartyLink(m),
+    shareScoreLink(m),
     highlightLink(m),
   ])
 }
 
-// "Start a party": a WhatsApp share for upcoming/in-play matches so anyone can rally a
-// group to watch together. Pure share link — nothing is stored on our side.
-function startPartyLink(m) {
-  if (m.finished) return null
-  // All match details live in the message text (rendered in the sharer's local time); the
-  // shared link carries the one generic preview card.
-  const when = m.kickoff ? `${fmtDay(m.kickoff)}, ${fmtTime(m.kickoff)}` : 'time TBD'
+// Score share for FINISHED matches: send a friend the final result plus a highlights
+// link. Upcoming matches have no location to coordinate around — that "watch together"
+// job now lives entirely in the Watch tab — so they carry no share button. Plain text +
+// link (no og card): the highlight URL is the point of the message.
+function shareScoreLink(m) {
+  if (!m.finished) return null
   const stage = m.roundName || 'Group stage'
   const text =
-    `⚽ ${m.home} vs ${m.away}\n` +
-    `Match ${m.id} · ${stage} · ${when}\n` +
-    `Let's watch this one together!`
+    `⚽ ${m.home} ${m.homeGoals}–${m.awayGoals} ${m.away}\n` +
+    `${stage} · Full time\n` +
+    `▶ Highlights: ${highlightUrl(m)}`
   return el(
     'a',
-    { class: 'match__share', ...shareAnchor(text) },
-    '↗ Share',
+    { class: 'match__share', ...shareAnchor(text, { image: false }) },
+    '↗ Share result',
   )
+}
+
+// Highlight URL for sharing, mirroring what the sharer sees on the card: the exact US
+// video when known (and the viewer is in the US), else a region-safe YouTube search that
+// resolves a playable clip anywhere.
+function highlightUrl(m) {
+  const h = m.highlights?.US
+  if (REGION === 'US' && h) return `https://www.youtube.com/watch?v=${h.videoId}`
+  const q = encodeURIComponent(`${m.home} vs ${m.away} 2026 World Cup highlights`)
+  return `https://www.youtube.com/results?search_query=${q}`
 }
 
 // Goal scorers grouped by side: home goals left, away goals right ("Player min'").

@@ -20,6 +20,34 @@ export async function geocodeZip(zip) {
   }
 }
 
+// Forward-geocode a free-text street address via Photon (komoot). Photon runs on
+// OpenStreetMap data, so it's worldwide, keyless, and CORS-friendly — unlike geocodeZip,
+// which is US-only. Used by the Watch tab's "host at my place" flow to validate the typed
+// address and build a tidy invite line + map link. Throws if nothing matches.
+export async function geocodeAddress(query) {
+  const q = String(query).trim()
+  if (q.length < 4) throw new Error('Enter a street address')
+  const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=1`)
+  if (!res.ok) throw new Error("Couldn't find that address")
+  const data = await res.json()
+  const f = data.features?.[0]
+  const [lng, lat] = f?.geometry?.coordinates || []
+  if (lat == null || lng == null) throw new Error("Couldn't find that address")
+  // International results are often partial — build the label defensively so a sparse hit
+  // still reads cleanly instead of "undefined, undefined".
+  const p = f.properties || {}
+  const street = [p.housenumber, p.street].filter(Boolean).join(' ')
+  const label = [
+    street || p.name,
+    p.city || p.town || p.village || p.county,
+    p.state,
+    p.country,
+  ]
+    .filter(Boolean)
+    .join(', ')
+  return { lat: +lat, lng: +lng, label: label || q }
+}
+
 // Resolve the device's current position. Rejects if denied/unavailable.
 export function getMyLocation() {
   return new Promise((resolve, reject) => {
