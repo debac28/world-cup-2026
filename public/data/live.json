@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-13T19:05:59.194Z",
+  "updated": "2026-06-14T02:32:32.978Z",
   "season": "2026",
   "results": {
     "1": {
@@ -129,9 +129,9 @@
     "5": {
       "home": "Haiti",
       "away": "Scotland",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "status": "2H",
       "kickoff": "2026-06-14T01:00:00Z"
     },
     "6": {
@@ -145,18 +145,50 @@
     "7": {
       "home": "Brazil",
       "away": "Morocco",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-13T22:00:00Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-13T22:00:00Z",
+      "goals": [
+        {
+          "player": "Vinícius",
+          "minute": "32",
+          "pen": false,
+          "og": false,
+          "team": "Brazil"
+        },
+        {
+          "player": "Saibari",
+          "minute": "21",
+          "pen": false,
+          "og": false,
+          "team": "Morocco"
+        }
+      ]
     },
     "8": {
       "home": "Qatar",
       "away": "Switzerland",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "2H",
-      "kickoff": "2026-06-13T19:00:00Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-13T19:00:00Z",
+      "goals": [
+        {
+          "player": "Muheim",
+          "minute": "90+4",
+          "pen": false,
+          "og": true,
+          "team": "Qatar"
+        },
+        {
+          "player": "Embolo",
+          "minute": "17",
+          "pen": false,
+          "og": false,
+          "team": "Switzerland"
+        }
+      ]
     },
     "9": {
       "home": "Ivory Coast",
@@ -729,6 +761,36 @@
     {
       "player": "Gio Reyna",
       "team": "United States",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Breel Embolo",
+      "team": "Switzerland",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Boualem Khoukhi",
+      "team": "Qatar",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Ismael Saibari",
+      "team": "Morocco",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Vinicius Junior",
+      "team": "Brazil",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "John McGinn",
+      "team": "Scotland",
       "goals": 1,
       "assists": 0
     }
