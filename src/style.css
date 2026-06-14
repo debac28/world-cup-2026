@@ -119,7 +119,9 @@ html, body {
 .team--win::after { content: '✓'; color: var(--green); font-size: 0.7rem; }
 .team--away.team--win { flex-direction: row-reverse; }
 .team__id { display: flex; flex-direction: column; min-width: 0; }
-.team--away .team__id { align-items: flex-end; }
+/* Stretch (not flex-end) so a long away name stays width-constrained and ellipsizes
+   instead of overflowing the score; text-align:right (from .team--away) keeps it right-aligned. */
+.team--away .team__id { align-items: stretch; }
 .team__rank { font-size: 0.68rem; font-weight: 600; color: var(--muted); line-height: 1.1; }
 
 .scorers-line {
