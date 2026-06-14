@@ -165,7 +165,7 @@ html, body {
 .pill { font-size: 0.62rem; background: var(--gold); color: #1a1300; padding: 1px 7px; border-radius: 999px; font-weight: 800; }
 
 /* Filter chips */
-.filterbar { display: flex; gap: 8px; }
+.filterbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .chip { background: var(--panel); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
 .chip--on { background: var(--gold); color: #1a1300; border-color: var(--gold); }
 .country-select { margin-left: auto; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; max-width: 52%; }
@@ -208,6 +208,9 @@ table.standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
 .bslot__score { font-weight: 800; }
 .bslot--tbd .bslot__name { color: var(--muted); font-size: 0.72rem; }
 .bslot--win .bslot__name { color: var(--gold); font-weight: 700; }
+.bcard--dim { opacity: 0.38; }
+.bslot--hl { background: var(--panel-2); border-radius: 6px; }
+.bslot--hl .bslot__name { color: var(--gold); font-weight: 800; }
 
 /* Watch Together */
 .wp-search { padding: 12px; display: flex; flex-direction: column; gap: 10px; }

@@ -3,17 +3,15 @@ import { load, refresh } from './lib/data.js'
 import { initAnalytics } from './lib/analytics.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
-import { renderMatches } from './views/matches.js'
+import { renderMatches, setMatchesMode } from './views/matches.js'
 import { renderGroups } from './views/groups.js'
 import { renderScorers } from './views/scorers.js'
-import { renderBracket } from './views/bracket.js'
 import { renderWatch } from './views/watch.js'
 
 const TABS = [
   { id: 'today', label: 'Today', render: renderToday },
   { id: 'matches', label: 'Matches', render: renderMatches },
   { id: 'groups', label: 'Groups', render: renderGroups },
-  { id: 'bracket', label: 'Bracket', render: renderBracket },
   { id: 'scorers', label: 'Scorers', render: renderScorers },
   { id: 'watch', label: 'Watch', render: renderWatch },
 ]
@@ -43,6 +41,12 @@ function renderTabs(active) {
 }
 
 function renderView() {
+  // Bracket is no longer a top-level tab — redirect legacy #bracket links/bookmarks to
+  // the Matches tab with its Bracket sub-tab preselected.
+  if (location.hash === '#bracket') {
+    setMatchesMode('bracket')
+    history.replaceState(null, '', '#matches')
+  }
   const tab = currentTab()
   renderTabs(tab)
   clear(viewEl)

@@ -1,17 +1,25 @@
 import { el, empty } from '../lib/dom.js'
 import { matchRow } from '../lib/components.js'
+import { renderBracket } from './bracket.js'
 import { fmtFullDay, localDayKey, todayKey } from '../lib/time.js'
 
-// Two modes:
+// Three sub-tabs:
 //   results  — finished + live matches, newest first (latest score on top)
 //   fixtures — upcoming matches, soonest first
+//   bracket  — the knockout tree (lives here, not in the bottom bar, until it has content)
 const MODES = [
   { id: 'results', label: 'Results' },
   { id: 'fixtures', label: 'Fixtures' },
+  { id: 'bracket', label: 'Bracket' },
 ]
 
 let mode = null // chosen on first render based on what data exists
 let country = '' // '' = all countries
+
+// Let the router preselect a sub-tab (used to redirect legacy #bracket links here).
+export function setMatchesMode(m) {
+  if (MODES.some((mo) => mo.id === m)) mode = m
+}
 
 export function renderMatches(model) {
   const hasResults = model.matches.some((m) => m.finished || m.live)
@@ -37,6 +45,13 @@ export function renderMatches(model) {
       countryDropdown(model, wrap),
     ]),
   )
+
+  // Bracket sub-tab: render the knockout tree (with the country dropdown highlighting that
+  // team's path) instead of the day-grouped match list.
+  if (mode === 'bracket') {
+    wrap.appendChild(renderBracket(model, { highlight: country }))
+    return wrap
+  }
 
   const isResult = (m) => m.finished || m.live
   const list = model.matches
