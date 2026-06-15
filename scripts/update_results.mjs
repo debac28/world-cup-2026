@@ -22,6 +22,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from './lib/espn.mjs'
+import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL } from './lib/fifa.mjs'
 import { youtubeHighlight } from './lib/highlights.mjs'
 import { fetchMatchGoals } from './lib/scorers.mjs'
 
@@ -119,7 +120,8 @@ async function enrichHighlights(results, existing) {
 }
 
 // Carry forward already-known goals (a finished match never changes), then fetch goals for
-// any finished match still missing them. The shared module validates count vs scoreline.
+// any finished match still missing them. FIFA's structured goal events are the primary
+// source; Wikipedia (scorers.mjs) is the fallback. Both validate count vs scoreline.
 async function attachMatchGoals(seed, results, existing) {
   const prev = existing.results || {}
   const existingGoals = {}
@@ -129,21 +131,30 @@ async function attachMatchGoals(seed, results, existing) {
       existingGoals[id] = prev[id].goals
     }
   }
-  let goalsById = {}
+
+  const collected = {}
+  // Primary: FIFA structured goal events.
   try {
-    goalsById = await fetchMatchGoals(seed, results, { existingGoals })
+    Object.assign(collected, await fetchFifaMatchGoals(seed, results, { existingGoals }))
+  } catch (e) {
+    console.warn('FIFA scorers fetch failed:', e.message)
+  }
+  // Fallback: Wikipedia for finished matches FIFA didn't cover.
+  try {
+    const seen = { ...existingGoals, ...collected }
+    Object.assign(collected, await fetchMatchGoals(seed, results, { existingGoals: seen }))
   } catch (e) {
     console.warn('Wikipedia scorers fetch failed:', e.message)
-    return
   }
+
   let count = 0
-  for (const [id, goals] of Object.entries(goalsById)) {
+  for (const [id, goals] of Object.entries(collected)) {
     if (results[id] && goals.length) {
       results[id].goals = goals
       count += goals.length
     }
   }
-  console.log(`Attached ${count} goal events across ${Object.keys(goalsById).length} matches.`)
+  console.log(`Attached ${count} goal events across ${Object.keys(collected).length} matches.`)
 }
 
 async function main() {
@@ -174,6 +185,21 @@ async function main() {
     }
   } catch (e) {
     console.warn('ESPN merge failed:', e.message)
+  }
+
+  // Overlay FIFA's canonical feed last — highest precedence (FIFA > ESPN > football-data),
+  // so it wins live ties. Additive: on any failure the prior results stand untouched.
+  try {
+    const fifaResp = await fetch(FIFA_MATCHES_URL)
+    if (fifaResp.ok) {
+      const fifa = await fifaResp.json()
+      results = mergeResults(results, buildFifaResults(seed, fifa.Results || []))
+      console.log(`Merged FIFA calendar (${(fifa.Results || []).length} matches).`)
+    } else {
+      console.warn(`FIFA fetch -> ${fifaResp.status}; skipping FIFA merge.`)
+    }
+  } catch (e) {
+    console.warn('FIFA merge failed:', e.message)
   }
 
   // --- Top scorers ---

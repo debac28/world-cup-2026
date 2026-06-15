@@ -41,13 +41,24 @@ Two data sources are merged **in the browser** at load time:
 
 **The Cloudflare Worker (`worker/src/index.js`) is the live backend.** Its `fetch`
 handler serves `/live`: fresh scores + scorers from football-data.org, mapped via the
-shared `scripts/lib/map.mjs` (`buildResults`), with highlight links merged from **Workers
-KV** — CORS, ~60s Cache-API cache. Its `scheduled` handler (hourly cron) searches YouTube
-for finished matches missing a US highlight (shared `scripts/lib/highlights.mjs`) and
-writes them to KV — this replaces GitHub's unreliable scheduler. The app's `PRIMARY_LIVE`
-is the Worker URL (`VITE_LIVE_URL`), with raw GitHub `live.json` as fallback. Two shared
-modules are imported by both the Node updater and the Worker: `map.mjs` (fixtures mapping)
-and `highlights.mjs` (YouTube search). The GitHub `update-results` workflow is now only a
+shared `scripts/lib/map.mjs` (`buildResults`), then overlaid with two more free, keyless
+live sources via `mergeResults` — **ESPN** (`scripts/lib/espn.mjs`) and **FIFA's own data
+API** (`scripts/lib/fifa.mjs`) — and highlight links merged from **Workers KV** — CORS,
+~60s Cache-API cache. Precedence is **FIFA > ESPN > football-data** (each is merged in that
+order; `mergeResults` lets the later overlay win live ties); every overlay is additive, so
+if a source fails the prior results stand. All three sources join onto the seed by team
+pair / nearest kickoff, NOT by FIFA's `MatchNumber` (it disagrees with this seed for a
+couple of matches, e.g. #31/#32). Its `scheduled` handler (hourly cron) does two things,
+both writing to KV (which replaces GitHub's unreliable scheduler): (1) searches YouTube for
+finished matches missing a US highlight (`scripts/lib/highlights.mjs`); (2) collects
+per-match goal scorers — **FIFA's structured goal events** (`fetchFifaMatchGoals` in
+`fifa.mjs`, one per-match call each, capped per run) are the primary source, with the
+**Wikipedia** scrape (`scripts/lib/scorers.mjs`) as the fallback for any match FIFA didn't
+cover. Both validate goal count vs scoreline before storing. The app's `PRIMARY_LIVE`
+is the Worker URL (`VITE_LIVE_URL`), with raw GitHub `live.json` as fallback. Shared
+modules imported by both the Node updater and the Worker: `map.mjs` (football-data
+mapping), `espn.mjs` + `fifa.mjs` (the two overlay sources), and `highlights.mjs` (YouTube
+search). The GitHub `update-results` workflow is now only a
 best-effort fallback-base refresher (results+scorers, no highlights).
 
 Operational note: changing `worker/` requires `npm run worker:deploy` — it is NOT
