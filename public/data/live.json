@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-15T02:37:40.094Z",
+  "updated": "2026-06-15T11:43:05.682Z",
   "season": "2026",
   "results": {
     "1": {
@@ -339,43 +339,86 @@
     "12": {
       "home": "Sweden",
       "away": "Tunisia",
-      "homeGoals": 2,
-      "awayGoals": 0,
-      "status": "1H",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-15T02:00:00Z",
-      "minute": "37"
+      "goals": [
+        {
+          "player": "Yasin AYARI",
+          "team": "Sweden",
+          "minute": "7",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Alexander Isak",
+          "team": "Sweden",
+          "minute": "30",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Viktor GYOKERES",
+          "team": "Sweden",
+          "minute": "59",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mattias SVANBERG",
+          "team": "Sweden",
+          "minute": "84",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Yasin AYARI",
+          "team": "Sweden",
+          "minute": "90+6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Omar Rekik",
+          "team": "Tunisia",
+          "minute": "43",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "13": {
       "home": "Saudi Arabia",
       "away": "Uruguay",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-15T22:00:00Z"
+      "kickoff": "2026-06-15T22:00Z"
     },
     "14": {
       "home": "Spain",
       "away": "Cape Verde",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-15T16:00:00Z"
+      "kickoff": "2026-06-15T16:00Z"
     },
     "15": {
       "home": "Iran",
       "away": "New Zealand",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-16T01:00:00Z"
+      "kickoff": "2026-06-16T01:00Z"
     },
     "16": {
       "home": "Belgium",
       "away": "Egypt",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-15T19:00:00Z"
+      "kickoff": "2026-06-15T19:00Z"
     },
     "17": {
       "home": "France",
@@ -840,6 +883,12 @@
       "assists": 0
     },
     {
+      "player": "Yasin Ayari",
+      "team": "Sweden",
+      "goals": 2,
+      "assists": 0
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -998,12 +1047,6 @@
     {
       "player": "Amad Diallo",
       "team": "Ivory Coast",
-      "goals": 1,
-      "assists": 0
-    },
-    {
-      "player": "Yasin Ayari",
-      "team": "Sweden",
       "goals": 1,
       "assists": 0
     }
