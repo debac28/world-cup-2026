@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-14T19:07:31.809Z",
+  "updated": "2026-06-15T00:11:40.303Z",
   "season": "2026",
   "results": {
     "1": {
@@ -218,10 +218,10 @@
     "9": {
       "home": "Ivory Coast",
       "away": "Ecuador",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-14T23:00:00Z"
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "status": "2H",
+      "kickoff": "2026-06-14T23:00Z"
     },
     "10": {
       "home": "Germany",
@@ -234,18 +234,48 @@
     "11": {
       "home": "Netherlands",
       "away": "Japan",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-14T20:00:00Z"
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-14T20:00:00Z",
+      "goals": [
+        {
+          "player": "van Dijk",
+          "minute": "51",
+          "pen": false,
+          "og": false,
+          "team": "Netherlands"
+        },
+        {
+          "player": "Summerville",
+          "minute": "64",
+          "pen": false,
+          "og": false,
+          "team": "Netherlands"
+        },
+        {
+          "player": "Nakamura",
+          "minute": "57",
+          "pen": false,
+          "og": false,
+          "team": "Japan"
+        },
+        {
+          "player": "Kamada",
+          "minute": "88",
+          "pen": false,
+          "og": false,
+          "team": "Japan"
+        }
+      ]
     },
     "12": {
       "home": "Sweden",
       "away": "Tunisia",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-15T02:00:00Z"
+      "kickoff": "2026-06-15T02:00Z"
     },
     "13": {
       "home": "Saudi Arabia",
@@ -872,6 +902,30 @@
       "team": "Germany",
       "goals": 1,
       "assists": 2
+    },
+    {
+      "player": "Virgil van Dijk",
+      "team": "Netherlands",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Keito Nakamura",
+      "team": "Japan",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Crysencio Summerville",
+      "team": "Netherlands",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Daichi Kamada",
+      "team": "Japan",
+      "goals": 1,
+      "assists": 0
     }
   ]
 }
