@@ -15,6 +15,7 @@
 import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
+import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL } from '../../scripts/lib/fifa.mjs'
 import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
@@ -91,6 +92,12 @@ async function espnEvents() {
   return data.events || []
 }
 
+// FIFA's own free, keyless calendar feed — the canonical source (highest precedence).
+async function fifaMatches() {
+  const data = await fetchJSON(FIFA_MATCHES_URL)
+  return data.Results || []
+}
+
 async function fdScorers(env) {
   const { comp, season } = compQuery(env)
   const data = await fetchJSON(
@@ -157,6 +164,15 @@ async function buildPayload(env) {
     console.log('espn merge failed:', e.message)
   }
 
+  // Overlay FIFA last — the canonical source, so it wins live ties (FIFA > ESPN >
+  // football-data). Additive: if FIFA fails or geoblocks, the prior results stand.
+  try {
+    results = mergeResults(results, buildFifaResults(seed, await fifaMatches()))
+    sources.push('fifa')
+  } catch (e) {
+    console.log('fifa merge failed:', e.message)
+  }
+
   // Merge highlight links from KV.
   const map = await readHighlights(env)
   for (const [id, r] of Object.entries(results)) {
@@ -213,30 +229,66 @@ async function refreshHighlights(env) {
   if (changed) await env.KV.put(HL_KEY, JSON.stringify(map))
 }
 
-// Scheduled: parse goal scorers from Wikipedia for finished matches missing them, cache in
-// KV forever (a finished match never changes). The shared module validates count vs score.
+// Scheduled: collect per-match goal scorers for finished matches and cache in KV forever (a
+// finished match never changes). FIFA's structured goal events are the primary source;
+// Wikipedia (scorers.mjs) is the fallback for any match FIFA didn't cover. Both validate
+// goal count vs scoreline so a partial feed is never stored.
+const FIFA_GOALS_PER_RUN = 20 // cap per-match FIFA calls/run (Workers subrequest budget)
+
 async function refreshGoals(env) {
-  if (!env.KV || !env.FOOTBALL_DATA_TOKEN) {
-    console.log('refreshGoals: missing KV / token — skipping.')
+  if (!env.KV) {
+    console.log('refreshGoals: missing KV — skipping.')
     return
   }
-  let results
+  // Base scores from football-data (if available), then overlay FIFA's canonical status/score
+  // — also reused to address FIFA's per-match goal endpoint.
+  let results = {}
+  if (env.FOOTBALL_DATA_TOKEN) {
+    try {
+      results = buildResults(seed, await fdMatches(env))
+    } catch (e) {
+      console.log('refreshGoals fd matches failed:', e.message)
+    }
+  }
+  let fifaCal = []
   try {
-    results = buildResults(seed, await fdMatches(env))
+    fifaCal = await fifaMatches()
+    results = mergeResults(results, buildFifaResults(seed, fifaCal))
   } catch (e) {
-    console.log('refreshGoals matches failed:', e.message)
+    console.log('refreshGoals FIFA overlay failed:', e.message)
+  }
+  if (!Object.keys(results).length) {
+    console.log('refreshGoals: no results — skipping.')
     return
   }
+
   const have = await readGoals(env)
-  let found
+  const collected = {}
+
+  // Primary: FIFA structured goal events.
   try {
-    found = await fetchMatchGoals(seed, results, { existingGoals: have })
+    Object.assign(
+      collected,
+      await fetchFifaMatchGoals(seed, results, {
+        existingGoals: have,
+        calendar: fifaCal,
+        limit: FIFA_GOALS_PER_RUN,
+      }),
+    )
+  } catch (e) {
+    console.log('refreshGoals FIFA goals failed:', e.message)
+  }
+
+  // Fallback: Wikipedia for finished matches FIFA didn't cover this run.
+  try {
+    const seen = { ...have, ...collected }
+    Object.assign(collected, await fetchMatchGoals(seed, results, { existingGoals: seen }))
   } catch (e) {
     console.log('refreshGoals Wikipedia failed:', e.message)
-    return
   }
+
   let changed = false
-  for (const [id, goals] of Object.entries(found)) {
+  for (const [id, goals] of Object.entries(collected)) {
     if (goals.length) {
       have[id] = goals
       changed = true
