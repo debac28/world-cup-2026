@@ -105,6 +105,11 @@ function buildModel(seed, live) {
       status,
       homeGoals: hasScore ? r.homeGoals : null,
       awayGoals: hasScore ? r.awayGoals : null,
+      // Penalty-shootout score (knockout only); null unless a shootout happened.
+      homePens: r.homePens ?? null,
+      awayPens: r.awayPens ?? null,
+      // Elapsed minute from FIFA, shown on the live badge ("● 87'"); null when not live.
+      minute: status === 'live' ? r.minute || null : null,
       // Per-region highlights {US, IN}; migrate the legacy single `highlight` -> US.
       highlights: r.highlights || (r.highlight ? { US: r.highlight } : null),
       // Per-match goal scorers (parsed from Wikipedia), assigned to a side by team name so

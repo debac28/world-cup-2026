@@ -134,17 +134,23 @@ function side(name, code, winner, which, rank, prob) {
 
 function scoreCell(m) {
   if (m.homeGoals != null && m.awayGoals != null) {
+    const pens = m.homePens != null && m.awayPens != null
     return el('div', { class: 'score' }, [
       el('span', { class: 'score__n' }, String(m.homeGoals)),
       el('span', { class: 'score__sep' }, '–'),
       el('span', { class: 'score__n' }, String(m.awayGoals)),
+      // Shootout result on knockout matches that went to penalties.
+      pens ? el('span', { class: 'score__pens' }, `(${m.homePens}–${m.awayPens} pens)`) : null,
     ])
   }
   return el('div', { class: 'score score--time' }, fmtTime(m.kickoff))
 }
 
 function metaText(m) {
-  if (m.live) return el('span', { class: 'badge badge--live' }, '● LIVE')
+  // Live badge shows the elapsed minute from FIFA when we have it ("● 87'"), else "● LIVE".
+  if (m.live) {
+    return el('span', { class: 'badge badge--live' }, m.minute ? `● ${m.minute}'` : '● LIVE')
+  }
   if (m.finished) return el('span', { class: 'badge badge--ft' }, 'Full time')
   const hint = relativeHint(m.kickoff)
   return el('span', { class: 'badge' }, hint || fmtTime(m.kickoff))

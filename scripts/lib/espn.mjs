@@ -144,6 +144,9 @@ export function mergeResults(base, overlay) {
       awayGoals: ov.awayGoals,
       status: ov.status,
       kickoff: ov.kickoff ?? cur.kickoff,
+      // Live minute only comes from FIFA; carry it when the overlay wins, drop it otherwise
+      // (a finished/non-FIFA winner has no minute to show).
+      ...(ov.minute != null ? { minute: ov.minute } : { minute: undefined }),
       ...(ov.homePens != null ? { homePens: ov.homePens } : {}),
       ...(ov.awayPens != null ? { awayPens: ov.awayPens } : {}),
     }
