@@ -15,7 +15,7 @@
 import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
-import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL } from '../../scripts/lib/fifa.mjs'
+import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
 import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
@@ -94,7 +94,7 @@ async function espnEvents() {
 
 // FIFA's own free, keyless calendar feed — the canonical source (highest precedence).
 async function fifaMatches() {
-  const data = await fetchJSON(FIFA_MATCHES_URL)
+  const data = await fetchJSON(FIFA_MATCHES_URL, { headers: FIFA_HEADERS })
   return data.Results || []
 }
 

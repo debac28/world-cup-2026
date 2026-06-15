@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from './lib/espn.mjs'
-import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL } from './lib/fifa.mjs'
+import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from './lib/fifa.mjs'
 import { youtubeHighlight } from './lib/highlights.mjs'
 import { fetchMatchGoals } from './lib/scorers.mjs'
 
@@ -190,7 +190,7 @@ async function main() {
   // Overlay FIFA's canonical feed last — highest precedence (FIFA > ESPN > football-data),
   // so it wins live ties. Additive: on any failure the prior results stand untouched.
   try {
-    const fifaResp = await fetch(FIFA_MATCHES_URL)
+    const fifaResp = await fetch(FIFA_MATCHES_URL, { headers: FIFA_HEADERS })
     if (fifaResp.ok) {
       const fifa = await fifaResp.json()
       results = mergeResults(results, buildFifaResults(seed, fifa.Results || []))
