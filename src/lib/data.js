@@ -85,7 +85,11 @@ function buildModel(seed, live) {
       home = r.home
       away = r.away
     }
-    const hasScore = r.homeGoals != null && r.awayGoals != null
+    // Only treat goals as a real score once the match is under way. Scheduled fixtures
+    // arrive from the live feeds carrying 0–0 placeholders; without this guard an
+    // upcoming match would render "0 – 0" instead of its kickoff time.
+    const hasScore =
+      status !== 'scheduled' && r.homeGoals != null && r.awayGoals != null
     return {
       id: fix.id,
       stage: fix.stage,
