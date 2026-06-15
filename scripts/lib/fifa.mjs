@@ -28,6 +28,14 @@ export const FIFA_MATCHES_URL =
   `https://api.fifa.com/api/v3/calendar/matches?idCompetition=${FIFA_COMPETITION}` +
   `&idSeason=${FIFA_SEASON}&language=en&count=104`
 
+// A descriptive User-Agent so FIFA's Akamai front-end treats us as a known client rather
+// than an anonymous bot — the most likely way our (otherwise tiny) request volume could get
+// a 403. Attach to EVERY FIFA fetch (the calendar overlay in the Worker/updater too).
+export const FIFA_HEADERS = {
+  'User-Agent': 'worldcup26-pwa/1.0 (+https://fifa2026.scoreit.fyi)',
+  Accept: 'application/json',
+}
+
 // FIFA numeric MatchStatus -> our short codes (same vocabulary as map.mjs statusShort).
 // We can't reliably detect half-time from the calendar feed, so live splits into 1H/2H by
 // the elapsed minute (both rank as "live" in mergeResults, so the exact half only affects
@@ -206,7 +214,7 @@ export async function fetchFifaMatchGoals(seed, results, opts = {}) {
   let matches = calendar
   if (!matches) {
     try {
-      const res = await fetchImpl(FIFA_MATCHES_URL)
+      const res = await fetchImpl(FIFA_MATCHES_URL, { headers: FIFA_HEADERS })
       matches = res.ok ? (await res.json()).Results || [] : []
     } catch {
       return {}
@@ -225,7 +233,7 @@ export async function fetchFifaMatchGoals(seed, results, opts = {}) {
     budget--
     let doc
     try {
-      const res = await fetchImpl(FIFA_LIVE_URL(j.idStage, j.idMatch))
+      const res = await fetchImpl(FIFA_LIVE_URL(j.idStage, j.idMatch), { headers: FIFA_HEADERS })
       if (!res.ok) continue
       doc = await res.json()
     } catch {
