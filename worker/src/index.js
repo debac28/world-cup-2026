@@ -29,6 +29,7 @@ const CACHE_SECONDS = 60
 const HL_KEY = 'highlights' // KV: { [matchId]: { US: {...} } }
 const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og}, ... ] }
 const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
+const LIVE_GOALS_CAP = 8 // max in-progress matches fetched for live scorers per /live build
 const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
 
 export default {
@@ -101,7 +102,7 @@ async function fifaMatches() {
 async function fdScorers(env) {
   const { comp, season } = compQuery(env)
   const data = await fetchJSON(
-    `${FD_BASE}/competitions/${comp}/scorers?limit=30${season}`,
+    `${FD_BASE}/competitions/${comp}/scorers?limit=100${season}`,
     { headers: fdHeaders(env) },
   )
   return (data.scorers || [])
@@ -165,9 +166,12 @@ async function buildPayload(env) {
   }
 
   // Overlay FIFA last — the canonical source, so it wins live ties (FIFA > ESPN >
-  // football-data). Additive: if FIFA fails or geoblocks, the prior results stand.
+  // football-data). Additive: if FIFA fails or geoblocks, the prior results stand. Keep the
+  // calendar around so the live-goals overlay below can reuse it (no extra fetch).
+  let fifaCal = null
   try {
-    results = mergeResults(results, buildFifaResults(seed, await fifaMatches()))
+    fifaCal = await fifaMatches()
+    results = mergeResults(results, buildFifaResults(seed, fifaCal))
     sources.push('fifa')
   } catch (e) {
     console.log('fifa merge failed:', e.message)
@@ -183,6 +187,30 @@ async function buildPayload(env) {
   const goalsMap = await readGoals(env)
   for (const [id, r] of Object.entries(results)) {
     if (goalsMap[id]) r.goals = goalsMap[id]
+  }
+
+  // Live scorers: KV only holds finished matches, so fetch FIFA's per-match goal events for
+  // in-progress matches directly. Budget-safe — the ~60s /live cache means at most ~one
+  // fetch per live match per minute, and LIVE_GOALS_CAP bounds a single run.
+  if (fifaCal) {
+    try {
+      const liveGoals = await fetchFifaMatchGoals(seed, results, {
+        calendar: fifaCal,
+        statuses: ['1H', '2H', 'HT', 'ET'],
+        requireComplete: false,
+        limit: LIVE_GOALS_CAP,
+      })
+      let any = false
+      for (const [id, goals] of Object.entries(liveGoals)) {
+        if (goals.length) {
+          results[id].goals = goals
+          any = true
+        }
+      }
+      if (any) sources.push('fifa-live-goals')
+    } catch (e) {
+      console.log('live goals failed:', e.message)
+    }
   }
 
   return {

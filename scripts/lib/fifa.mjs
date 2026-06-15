@@ -207,14 +207,28 @@ function goalsFromMatchDoc(doc) {
   return out
 }
 
-// Returns { [seedMatchId]: [{player, team, minute, pen, og}] } for FINISHED matches, from
-// FIFA's per-match endpoint. Mirrors fetchMatchGoals (Wikipedia): only finished matches
-// missing goals are fetched (one HTTP call each), and a match is accepted only if its goal
-// count equals the scoreline (so an in-progress/partial feed is never stored). Callers cache
-// the result permanently. Pass `calendar` (the calendar/matches Results array) to avoid an
-// extra fetch; `limit` caps per-match calls per run.
+// Returns { [seedMatchId]: [{player, team, minute, pen, og}] } from FIFA's per-match
+// endpoint, one HTTP call per match. Pass `calendar` (the calendar/matches Results array) to
+// avoid an extra fetch; `limit` caps per-match calls per run.
+//
+// Two modes, by options:
+//  - FINISHED (default: statuses=['FT'], requireComplete=true) — mirrors fetchMatchGoals
+//    (Wikipedia): only finished matches missing goals are fetched, and a match is accepted
+//    only if its goal count equals the scoreline, so a partial feed is never stored. Callers
+//    cache the result permanently.
+//  - LIVE (e.g. statuses=['1H','2H','HT'], requireComplete=false) — fetch in-progress
+//    matches and accept whatever goals FIFA has entered so far (the scoreline guard would
+//    reject a still-changing match). Callers must NOT cache this permanently.
 export async function fetchFifaMatchGoals(seed, results, opts = {}) {
-  const { fetchImpl = fetch, existingGoals = {}, calendar = null, limit = Infinity } = opts
+  const {
+    fetchImpl = fetch,
+    existingGoals = {},
+    calendar = null,
+    limit = Infinity,
+    statuses = ['FT'],
+    requireComplete = true,
+  } = opts
+  const wanted = new Set(statuses)
 
   let matches = calendar
   if (!matches) {
@@ -231,7 +245,7 @@ export async function fetchFifaMatchGoals(seed, results, opts = {}) {
   let budget = limit
   for (const [id, r] of Object.entries(results)) {
     if (budget <= 0) break
-    if (r.status !== 'FT' || !r.home || !r.away) continue
+    if (!wanted.has(r.status) || !r.home || !r.away) continue
     if (existingGoals[id]?.length) continue
     const j = joined[id]
     if (!j?.idMatch || !j?.idStage) continue
@@ -245,8 +259,9 @@ export async function fetchFifaMatchGoals(seed, results, opts = {}) {
       continue
     }
     const goals = goalsFromMatchDoc(doc)
-    // Integrity guard: only accept a fully-entered match (same as the Wikipedia path).
-    if (goals.length !== (r.homeGoals ?? 0) + (r.awayGoals ?? 0)) continue
+    // Integrity guard (finished only): accept a match only when fully entered. Live matches
+    // are intentionally exempt — their goal count legitimately trails the live scoreline.
+    if (requireComplete && goals.length !== (r.homeGoals ?? 0) + (r.awayGoals ?? 0)) continue
     out[id] = goals
   }
   return out

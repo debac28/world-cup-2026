@@ -205,7 +205,7 @@ async function main() {
   // --- Top scorers ---
   let scorers = []
   try {
-    const ts = await api(`/competitions/${COMP}/scorers${SEASON ? `?season=${SEASON}&limit=30` : '?limit=30'}`)
+    const ts = await api(`/competitions/${COMP}/scorers${SEASON ? `?season=${SEASON}&limit=100` : '?limit=100'}`)
     scorers = (ts.scorers || []).map((s) => ({
       player: s.player?.name,
       team: norm(s.team?.name),
