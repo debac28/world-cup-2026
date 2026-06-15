@@ -14,6 +14,7 @@
 
 import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
+import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
 import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
@@ -84,6 +85,12 @@ async function fdMatches(env) {
   return data.matches || []
 }
 
+// ESPN's free, keyless scoreboard — a fresher second source (football-data's free tier lags).
+async function espnEvents() {
+  const data = await fetchJSON(ESPN_SCOREBOARD_URL)
+  return data.events || []
+}
+
 async function fdScorers(env) {
   const { comp, season } = compQuery(env)
   const data = await fetchJSON(
@@ -116,10 +123,12 @@ async function readGoals(env) {
 async function buildPayload(env) {
   let results = {}
   let scorers = []
+  const sources = []
 
   if (env.FOOTBALL_DATA_TOKEN) {
     try {
       results = buildResults(seed, await fdMatches(env))
+      sources.push('football-data')
     } catch (e) {
       console.log('matches fetch failed:', e.message)
     }
@@ -136,7 +145,16 @@ async function buildPayload(env) {
     if (base) {
       results = base.results || {}
       if (!scorers.length) scorers = base.scorers || []
+      sources.push('github-base')
     }
+  }
+
+  // Overlay ESPN's fresher live data per match. Additive: if ESPN fails, results stand.
+  try {
+    results = mergeResults(results, buildEspnResults(seed, await espnEvents()))
+    sources.push('espn')
+  } catch (e) {
+    console.log('espn merge failed:', e.message)
   }
 
   // Merge highlight links from KV.
@@ -154,6 +172,7 @@ async function buildPayload(env) {
   return {
     updated: new Date().toISOString(),
     source: 'cloudflare-worker',
+    sources,
     results,
     scorers,
   }

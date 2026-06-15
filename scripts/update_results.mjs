@@ -21,6 +21,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
+import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from './lib/espn.mjs'
 import { youtubeHighlight } from './lib/highlights.mjs'
 import { fetchMatchGoals } from './lib/scorers.mjs'
 
@@ -158,7 +159,22 @@ async function main() {
   const matches = matchesResp.matches || []
   console.log(`Fetched ${matches.length} matches from football-data.org.`)
 
-  const results = buildResults(seed, matches)
+  let results = buildResults(seed, matches)
+
+  // Overlay ESPN's fresher live data (football-data's free tier lags). Additive: on any
+  // failure the football-data results stand untouched.
+  try {
+    const espnResp = await fetch(ESPN_SCOREBOARD_URL)
+    if (espnResp.ok) {
+      const espn = await espnResp.json()
+      results = mergeResults(results, buildEspnResults(seed, espn.events || []))
+      console.log(`Merged ESPN scoreboard (${(espn.events || []).length} events).`)
+    } else {
+      console.warn(`ESPN fetch -> ${espnResp.status}; skipping ESPN merge.`)
+    }
+  } catch (e) {
+    console.warn('ESPN merge failed:', e.message)
+  }
 
   // --- Top scorers ---
   let scorers = []
