@@ -69,6 +69,9 @@ function readMatch(m) {
     homePens: m.HomeTeamPenaltyScore ?? null,
     awayPens: m.AwayTeamPenaltyScore ?? null,
     status: fifaStatusShort(m),
+    // Elapsed minute, only while live ("87'" -> "87", "45'+2'" -> "45+2"). FIFA carries it
+    // in the calendar feed, so the live match minute costs us no extra request.
+    minute: m.MatchStatus === 3 ? cleanMinute(m.MatchTime) || null : null,
     kickoff: m.Date || null,
     idMatch: m.IdMatch,
     idStage: m.IdStage,
@@ -136,6 +139,7 @@ export function buildFifaResults(seed, matches) {
         awayGoals: sameOrder ? e.awayGoals : e.homeGoals,
         status: e.status,
         kickoff: e.kickoff,
+        ...(e.minute ? { minute: e.minute } : {}),
       }
     } else {
       results[id] = {
@@ -145,6 +149,7 @@ export function buildFifaResults(seed, matches) {
         awayGoals: e.awayGoals,
         status: e.status,
         kickoff: e.kickoff,
+        ...(e.minute ? { minute: e.minute } : {}),
         ...(e.homePens != null ? { homePens: e.homePens } : {}),
         ...(e.awayPens != null ? { awayPens: e.awayPens } : {}),
       }
