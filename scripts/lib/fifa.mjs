@@ -165,6 +165,11 @@ export function buildFifaResults(seed, matches) {
 const FIFA_LIVE_URL = (idStage, idMatch) =>
   `https://api.fifa.com/api/v3/live/football/${FIFA_COMPETITION}/${FIFA_SEASON}/${idStage}/${idMatch}?language=en`
 
+// In-progress statuses whose goal count legitimately trails the scoreline, so the
+// completeness guard below must not apply to them. Keyed off status (not just the
+// requireComplete flag) so a single call can mix live and finished matches.
+const LIVE_GOAL_STATUSES = new Set(['1H', '2H', 'HT', 'ET'])
+
 // Goal Type enum (confirmed against the timeline text): 1 = penalty, 3 = own goal, else
 // a normal goal. An own goal sits in the BENEFITING side's Goals array, and its IdPlayer is
 // a player on the OTHER side — so player names are resolved across both squads.
@@ -216,9 +221,11 @@ function goalsFromMatchDoc(doc) {
 //    (Wikipedia): only finished matches missing goals are fetched, and a match is accepted
 //    only if its goal count equals the scoreline, so a partial feed is never stored. Callers
 //    cache the result permanently.
-//  - LIVE (e.g. statuses=['1H','2H','HT'], requireComplete=false) — fetch in-progress
-//    matches and accept whatever goals FIFA has entered so far (the scoreline guard would
-//    reject a still-changing match). Callers must NOT cache this permanently.
+//  - LIVE (e.g. statuses=['1H','2H','HT','FT'], requireComplete=true) — fetch in-progress
+//    matches and accept whatever goals FIFA has entered so far (the scoreline guard exempts
+//    live statuses, so a still-changing match isn't rejected). Adding 'FT' lets the caller
+//    also cover a match that has just gone final but isn't cached yet — there the guard
+//    still applies, so only a complete scoreline is served. Callers must NOT cache this.
 export async function fetchFifaMatchGoals(seed, results, opts = {}) {
   const {
     fetchImpl = fetch,
@@ -259,9 +266,16 @@ export async function fetchFifaMatchGoals(seed, results, opts = {}) {
       continue
     }
     const goals = goalsFromMatchDoc(doc)
-    // Integrity guard (finished only): accept a match only when fully entered. Live matches
-    // are intentionally exempt — their goal count legitimately trails the live scoreline.
-    if (requireComplete && goals.length !== (r.homeGoals ?? 0) + (r.awayGoals ?? 0)) continue
+    // Integrity guard (finished only): accept a match only when fully entered. In-progress
+    // matches are intentionally exempt — their goal count legitimately trails the live
+    // scoreline — so the guard keys off status, letting a single call mix live and freshly
+    // finished matches: live ones stream partial goals, finished ones wait until complete.
+    if (
+      requireComplete &&
+      !LIVE_GOAL_STATUSES.has(r.status) &&
+      goals.length !== (r.homeGoals ?? 0) + (r.awayGoals ?? 0)
+    )
+      continue
     out[id] = goals
   }
   return out

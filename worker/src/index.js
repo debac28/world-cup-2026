@@ -31,6 +31,12 @@ const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og},
 const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
 const LIVE_GOALS_CAP = 8 // max in-progress matches fetched for live scorers per /live build
 const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
+// In-progress statuses the live-goals overlay always covers.
+const LIVE_MATCH_STATUSES = new Set(['1H', '2H', 'HT', 'ET'])
+// How long after kickoff a finished match stays eligible for the live-goals overlay, so a
+// match that goes final between hourly cron runs still gets its scorers from FIFA directly
+// (a game runs ~2h; this comfortably covers extra time + shootouts, and excludes older days).
+const RECENT_FT_WINDOW_MS = 4 * 60 * 60 * 1000
 
 export default {
   async fetch(request, env, ctx) {
@@ -189,15 +195,32 @@ async function buildPayload(env) {
     if (goalsMap[id]) r.goals = goalsMap[id]
   }
 
-  // Live scorers: KV only holds finished matches, so fetch FIFA's per-match goal events for
-  // in-progress matches directly. Budget-safe — the ~60s /live cache means at most ~one
-  // fetch per live match per minute, and LIVE_GOALS_CAP bounds a single run.
+  // Live & freshly-finished scorers: KV only holds matches the hourly cron has already
+  // backfilled, so fetch FIFA's per-match goal events directly for (a) in-progress matches
+  // and (b) matches that have just gone final but aren't in KV yet. (b) closes the handoff
+  // gap where a stoppage-time goal and full-time land in the same minute — without it,
+  // scorers blink out the instant a match ends and stay blank until the next hourly cron.
+  // Matches the cron has already stored are skipped (existingGoals), and the recency window
+  // keeps us from re-fetching long-finished matches every build. Budget-safe: the ~60s /live
+  // cache means at most ~one fetch per eligible match per minute, and LIVE_GOALS_CAP bounds a
+  // single run. The completeness guard is status-aware (requireComplete), so live matches
+  // still stream partial goals while a freshly finished one only shows once complete.
   if (fifaCal) {
     try {
-      const liveGoals = await fetchFifaMatchGoals(seed, results, {
+      const now = Date.now()
+      const eligible = {}
+      for (const [id, r] of Object.entries(results)) {
+        const isLive = LIVE_MATCH_STATUSES.has(r.status)
+        const isRecentFt =
+          r.status === 'FT' &&
+          (!r.kickoff || now - Date.parse(r.kickoff) < RECENT_FT_WINDOW_MS)
+        if (isLive || isRecentFt) eligible[id] = r
+      }
+      const liveGoals = await fetchFifaMatchGoals(seed, eligible, {
         calendar: fifaCal,
-        statuses: ['1H', '2H', 'HT', 'ET'],
-        requireComplete: false,
+        statuses: ['1H', '2H', 'HT', 'ET', 'FT'],
+        requireComplete: true,
+        existingGoals: goalsMap,
         limit: LIVE_GOALS_CAP,
       })
       let any = false
