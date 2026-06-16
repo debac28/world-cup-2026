@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-15T20:44:03.111Z",
+  "updated": "2026-06-16T02:39:38.207Z",
   "season": "2026",
   "results": {
     "1": {
@@ -391,10 +391,26 @@
     "13": {
       "home": "Saudi Arabia",
       "away": "Uruguay",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-15T22:00Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-15T22:00:00Z",
+      "goals": [
+        {
+          "player": "Abdulelah ALAMRI",
+          "team": "Saudi Arabia",
+          "minute": "41",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Maxi ARAUJO",
+          "team": "Uruguay",
+          "minute": "80",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "14": {
       "home": "Spain",
@@ -407,19 +423,35 @@
     "15": {
       "home": "Iran",
       "away": "New Zealand",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-16T01:00Z"
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "status": "2H",
+      "kickoff": "2026-06-16T01:00:00Z",
+      "minute": "72"
     },
     "16": {
       "home": "Belgium",
       "away": "Egypt",
       "homeGoals": 1,
       "awayGoals": 1,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-06-15T19:00:00Z",
-      "minute": "81"
+      "goals": [
+        {
+          "player": "MOHAMED HANY",
+          "team": "Belgium",
+          "minute": "66",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "EMAM ASHOUR",
+          "team": "Egypt",
+          "minute": "19",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "17": {
       "home": "France",
@@ -890,6 +922,12 @@
       "assists": 0
     },
     {
+      "player": "Elijah Just",
+      "team": "New Zealand",
+      "goals": 2,
+      "assists": 0
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -1048,6 +1086,60 @@
     {
       "player": "Amad Diallo",
       "team": "Ivory Coast",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Alexander Isak",
+      "team": "Sweden",
+      "goals": 1,
+      "assists": 2
+    },
+    {
+      "player": "Omar Rekik",
+      "team": "Tunisia",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Viktor Gyökeres",
+      "team": "Sweden",
+      "goals": 1,
+      "assists": 1
+    },
+    {
+      "player": "Mattias Svanberg",
+      "team": "Sweden",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Emam Ashour",
+      "team": "Egypt",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Abdulelah Al Amri",
+      "team": "Saudi Arabia",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Maximiliano Araújo",
+      "team": "Uruguay",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Ramin Rezaeian",
+      "team": "Iran",
+      "goals": 1,
+      "assists": 1
+    },
+    {
+      "player": "Mohammad Mohebi",
+      "team": "Iran",
       "goals": 1,
       "assists": 0
     }
