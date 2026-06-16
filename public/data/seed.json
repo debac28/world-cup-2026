@@ -653,7 +653,7 @@
       "stage": "group",
       "home": "United States",
       "away": "Australia",
-      "kickoff": "2026-06-20T03:00:00Z",
+      "kickoff": "2026-06-19T19:00:00Z",
       "venue": {
         "stadium": "Lumen Field",
         "city": "Seattle"
@@ -664,7 +664,7 @@
       "stage": "group",
       "home": "Turkey",
       "away": "Paraguay",
-      "kickoff": "2026-06-19T19:00:00Z",
+      "kickoff": "2026-06-20T03:00:00Z",
       "venue": {
         "stadium": "Levi's Stadium",
         "city": "San Francisco Bay Area"
@@ -774,7 +774,7 @@
       "stage": "group",
       "home": "France",
       "away": "Iraq",
-      "kickoff": "2026-06-22T20:00:00Z",
+      "kickoff": "2026-06-22T21:00:00Z",
       "venue": {
         "stadium": "Lincoln Financial Field",
         "city": "Philadelphia"
