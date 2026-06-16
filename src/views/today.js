@@ -5,12 +5,14 @@ import { LOCAL_TZ, fmtFullDay, todayKey, localDayKey } from '../lib/time.js'
 export function renderToday(model) {
   const now = new Date()
   const key = todayKey(now)
-  // Live matches first (so an in-progress game is always at the top, even if it kicked
-  // off late in the day); within each group, order by kickoff. That kickoff order is also
-  // the tiebreaker when two matches are live in parallel — both stay pinned to the top.
+  // Three tiers, top to bottom: live, then upcoming, then finished — so an in-progress game
+  // is always at the top, the next kickoff sits just below it (or at the very top once nothing
+  // is live), and already-played matches drop to the bottom. Within each tier, order by
+  // kickoff (also the tiebreaker when two games are live in parallel — both stay pinned up top).
+  const tier = (m) => (m.live ? 0 : m.finished ? 2 : 1)
   const today = model.matches
     .filter((m) => m.kickoff && localDayKey(m.kickoff) === key)
-    .sort((a, b) => (b.live ? 1 : 0) - (a.live ? 1 : 0) || a.kickoff - b.kickoff)
+    .sort((a, b) => tier(a) - tier(b) || a.kickoff - b.kickoff)
 
   const frag = el('div', { class: 'stack' })
   frag.appendChild(
