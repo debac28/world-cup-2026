@@ -1,6 +1,7 @@
 import './style.css'
 import { load, refresh } from './lib/data.js'
 import { initAnalytics } from './lib/analytics.js'
+import { initFeedback } from './lib/feedback.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
 import { renderMatches, setMatchesMode } from './views/matches.js'
@@ -143,4 +144,5 @@ async function init() {
 }
 
 initAnalytics()
+initFeedback()
 init()
