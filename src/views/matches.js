@@ -4,12 +4,12 @@ import { renderBracket } from './bracket.js'
 import { fmtFullDay, localDayKey, todayKey } from '../lib/time.js'
 
 // Three sub-tabs:
-//   results  — finished + live matches, newest first (latest score on top)
 //   fixtures — upcoming matches, soonest first
+//   results  — finished + live matches, newest first (latest score on top)
 //   bracket  — the knockout tree (lives here, not in the bottom bar, until it has content)
 const MODES = [
-  { id: 'results', label: 'Results' },
   { id: 'fixtures', label: 'Fixtures' },
+  { id: 'results', label: 'Results' },
   { id: 'bracket', label: 'Bracket' },
 ]
 
@@ -22,8 +22,7 @@ export function setMatchesMode(m) {
 }
 
 export function renderMatches(model) {
-  const hasResults = model.matches.some((m) => m.finished || m.live)
-  if (mode === null) mode = hasResults ? 'results' : 'fixtures'
+  if (mode === null) mode = 'fixtures'
 
   const wrap = el('div', { class: 'stack' })
 
