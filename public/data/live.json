@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16T02:39:38.207Z",
+  "updated": "2026-06-16T10:51:54.926Z",
   "season": "2026",
   "results": {
     "1": {
@@ -425,9 +425,38 @@
       "away": "New Zealand",
       "homeGoals": 2,
       "awayGoals": 2,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-06-16T01:00:00Z",
-      "minute": "72"
+      "goals": [
+        {
+          "player": "Ramin REZAEIAN",
+          "team": "Iran",
+          "minute": "32",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mohammad MOHEBBI",
+          "team": "Iran",
+          "minute": "64",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Elijah JUST",
+          "team": "New Zealand",
+          "minute": "7",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Elijah JUST",
+          "team": "New Zealand",
+          "minute": "54",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "16": {
       "home": "Belgium",
@@ -456,26 +485,26 @@
     "17": {
       "home": "France",
       "away": "Senegal",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-16T19:00:00Z"
+      "kickoff": "2026-06-16T19:00Z"
     },
     "18": {
       "home": "Iraq",
       "away": "Norway",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-16T22:00:00Z"
+      "kickoff": "2026-06-16T22:00Z"
     },
     "19": {
       "home": "Argentina",
       "away": "Algeria",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-17T01:00:00Z"
+      "kickoff": "2026-06-17T01:00Z"
     },
     "20": {
       "home": "Austria",
