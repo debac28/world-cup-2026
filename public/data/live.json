@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16T16:20:55.185Z",
+  "updated": "2026-06-16T20:35:56.362Z",
   "season": "2026",
   "results": {
     "1": {
@@ -485,10 +485,11 @@
     "17": {
       "home": "France",
       "away": "Senegal",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-16T19:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-16T19:00:00Z",
+      "minute": "72"
     },
     "18": {
       "home": "Iraq",
@@ -1169,6 +1170,12 @@
     {
       "player": "Mohammad Mohebi",
       "team": "Iran",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Kylian Mbappé",
+      "team": "France",
       "goals": 1,
       "assists": 0
     }
