@@ -12,7 +12,8 @@ export function matchRow(m, { showRound = false, showPrediction = false } = {}) 
   // Elo win % sits next to each team's rank, only on upcoming matches where opted in.
   const prob = showPrediction && !m.finished && !m.live ? m.winProb : null
 
-  return el('article', { class: `match ${m.live ? 'match--live' : ''}` }, [
+  const state = m.live ? 'match--live' : m.finished ? 'match--done' : ''
+  return el('article', { class: `match ${state}` }, [
     el('div', { class: 'match__top' }, [
       el('span', { class: 'match__num' }, `Match ${m.id}`),
       showRound && m.roundName

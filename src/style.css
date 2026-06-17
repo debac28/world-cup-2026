@@ -103,6 +103,12 @@ html, body {
   padding: 12px 14px;
 }
 .match--live { border-color: var(--live); box-shadow: 0 0 0 1px var(--live) inset; }
+/* Finished matches: a slight green-tinted border so a completed result reads as "done" at a
+   glance — far subtler than the red live treatment. */
+.match--done {
+  border-color: color-mix(in srgb, var(--green) 45%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--green) 16%, transparent) inset;
+}
 .match__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .match__num { font-size: 0.64rem; color: var(--muted); font-weight: 700; letter-spacing: 0.3px; }
 .match__round { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
