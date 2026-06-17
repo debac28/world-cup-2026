@@ -24,6 +24,16 @@ export function officialBrand(channel) {
   return OFFICIAL.get((channel || '').trim().toLowerCase()) || null
 }
 
+// The genuinely worldwide official channel among the four — FOX/ESPN/Telemundo are US
+// broadcasters that geo-lock outside the US, so FIFA is the one source that gives an
+// international viewer a directly-playable clip. The nightly catch-up tries to land one of
+// these as the "+1" alongside the (US) primary so non-US viewers have a real video, not just
+// the search-link fallback.
+const GLOBAL = new Set(['fifa'])
+export function isGlobalChannel(channel) {
+  return GLOBAL.has((channel || '').trim().toLowerCase())
+}
+
 // Fold a string for loose comparison: drop diacritics, lowercase, collapse punctuation to
 // spaces ("Côte d'Ivoire" -> "cote d ivoire", "Türkiye" -> "turkiye").
 function fold(s) {
@@ -155,18 +165,51 @@ export async function youtubeHighlight(home, away, regionCode, key) {
   return top || null
 }
 
-// Given a results map and the highlights already known (id -> {US:[...]}), return the list
-// of [id, result] still needing US highlight candidates, most-recent first, within maxAgeMs.
-// A match is "done" only once its US entry holds at least one VALID candidate — so legacy
-// single-object entries ({US:{...}}) and entries whose stored clips fail validation (wrong-
-// match titles, scraped junk channels) are re-processed and replaced.
-export function matchesNeedingHighlights(results, known, maxAgeMs, now = Date.now()) {
+// All VALID, deduped clips for a match across both region buckets of a stored entry. Legacy
+// single-object shapes ({US:{...}}) and clips that fail validation (wrong-match titles, scraped
+// junk channels) are dropped here, so callers reason only about trustworthy candidates.
+export function validClipsFor(entry, home, away) {
+  const seen = new Set()
+  return [...(entry?.US || []), ...(entry?.INTL || [])].filter(
+    (c) => validCandidate(c, home, away) && !seen.has(c.videoId) && seen.add(c.videoId),
+  )
+}
+
+// Merge freshly-found clips into an existing region list, deduped by videoId and capped at
+// `max`, existing clips kept first. Lets the nightly catch-up ADD a source (e.g. FIFA) to a
+// match that already has one (e.g. FOX) without dropping what's stored.
+export function mergeClips(existing = [], found = [], home, away, max = 3) {
+  const out = []
+  const seen = new Set()
+  for (const c of [...existing, ...found]) {
+    if (!validCandidate(c, home, away) || seen.has(c.videoId)) continue
+    seen.add(c.videoId)
+    out.push(c)
+    if (out.length >= max) break
+  }
+  return out
+}
+
+// Return [id, result] pairs that still need a highlight search, most-recent first, within
+// maxAgeMs of kickoff. Two targets:
+//   'first'  — match has NO valid clip yet (the hourly run: land the US clip fast).
+//   'global' — match lacks a globally-playable (FIFA) clip yet (the nightly catch-up: add the
+//              "+1" once FIFA has had the evening to upload). 'global' also re-queues matches
+//              with no clip at all, so the nightly run backfills anything the hourly missed.
+export function matchesNeedingHighlights(
+  results,
+  known,
+  { target = 'first', maxAgeMs, now = Date.now() } = {},
+) {
   return Object.entries(results)
     .filter(([id, r]) => {
       if (r.status !== 'FT' || !r.kickoff || !r.home || !r.away) return false
-      const us = known[id]?.US
-      const ok = Array.isArray(us) && us.some((c) => validCandidate(c, r.home, r.away))
-      if (ok) return false
+      const clips = validClipsFor(known[id], r.home, r.away)
+      const satisfied =
+        target === 'global'
+          ? clips.length > 0 && clips.some((c) => isGlobalChannel(c.channel))
+          : clips.length > 0
+      if (satisfied) return false
       const age = now - new Date(r.kickoff).getTime()
       return age > 0 && age < maxAgeMs
     })

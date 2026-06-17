@@ -16,7 +16,7 @@ import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
-import { youtubeHighlights, matchesNeedingHighlights, sanitizeHighlights } from '../../scripts/lib/highlights.mjs'
+import { youtubeHighlights, matchesNeedingHighlights, sanitizeHighlights, mergeClips } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 import { attachWikiLinks } from '../../scripts/lib/wikilinks.mjs'
 
@@ -31,10 +31,18 @@ const HL_KEY = 'highlights' // KV: { [matchId]: { US: [...], INTL: [...] } } (ca
 const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og, wiki}, ... ] }
 const WIKI_KEY = 'wikilinks' // KV: { [playerName]: "Article Title" | "" } ("" = verified no-article)
 const WIKI_PER_RUN = 40 // Wikipedia title lookups per cron run
-const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
+const HL_BUDGET = 4 // YouTube searches per hourly run (100 units each / 10k daily)
 const HL_PER_REGION = 3 // candidate videos kept per region (primary + geo-block fallbacks)
 const LIVE_GOALS_CAP = 8 // max in-progress matches fetched for live scorers per /live build
 const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
+// Nightly catch-up: one run ~30 min before YouTube's midnight-Pacific quota reset, where the
+// day's leftover quota (otherwise wasted) tops up each match to FOX + a globally-playable
+// (FIFA) "+1" so non-US viewers get a real clip, not just the search link. Uncapped in
+// practice (the budget just bounds a runaway); we only chase the +1 for ~36h after kickoff,
+// then freeze. Cron is UTC: '30 6 * * *' = 23:30 in PDT (the tournament runs Jun–Jul).
+const HL_NIGHTLY_CRON = '30 6 * * *'
+const HL_NIGHTLY_BUDGET = 30
+const HL_GLOBAL_MAX_AGE_MS = 36 * 60 * 60 * 1000
 // In-progress statuses the live-goals overlay always covers.
 const LIVE_MATCH_STATUSES = new Set(['1H', '2H', 'HT', 'ET'])
 // How long after kickoff a finished match stays eligible for the live-goals overlay, so a
@@ -64,7 +72,17 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(refreshHighlights(env))
+    // Hourly run: land the (US) clip fast. Nightly run: top up to a FOX + global (FIFA) pair,
+    // spending the day's leftover quota right before the midnight-Pacific reset.
+    const nightly = event.cron === HL_NIGHTLY_CRON
+    ctx.waitUntil(
+      refreshHighlights(
+        env,
+        nightly
+          ? { budget: HL_NIGHTLY_BUDGET, target: 'global', maxAgeMs: HL_GLOBAL_MAX_AGE_MS }
+          : { budget: HL_BUDGET, target: 'first', maxAgeMs: HL_MAX_AGE_MS },
+      ),
+    )
     // Collect goals first, then resolve Wikipedia links over the freshly-stored goals + the
     // Golden Boot list (both share one name cache, so run them in sequence to avoid a KV race).
     ctx.waitUntil(refreshGoals(env).then(() => refreshWikiLinks(env)))
@@ -274,8 +292,14 @@ async function buildPayload(env) {
   }
 }
 
-// Hourly: find US highlight videos for finished matches that don't have one yet.
-async function refreshHighlights(env) {
+// Find official highlight videos for finished matches and store them in KV. `target` selects
+// what counts as "done": 'first' (hourly — any one clip) or 'global' (nightly — also a FIFA
+// clip). New clips are MERGED into the stored entry, so the nightly run adds FIFA without
+// dropping the FOX clip the hourly run already found.
+async function refreshHighlights(
+  env,
+  { budget = HL_BUDGET, target = 'first', maxAgeMs = HL_MAX_AGE_MS } = {},
+) {
   if (!env.KV || !env.YOUTUBE_API_KEY || !env.FOOTBALL_DATA_TOKEN) {
     console.log('refreshHighlights: missing KV / YOUTUBE_API_KEY / token — skipping.')
     return
@@ -301,8 +325,7 @@ async function refreshHighlights(env) {
     changed = true
   }
 
-  const todo = matchesNeedingHighlights(results, map, HL_MAX_AGE_MS)
-  let budget = HL_BUDGET
+  const todo = matchesNeedingHighlights(results, map, { target, maxAgeMs })
   for (const [id, r] of todo) {
     if (budget <= 0) break
     try {
@@ -317,12 +340,17 @@ async function refreshHighlights(env) {
         budget--
       }
       if (us.length || intl.length) {
+        const prev = map[id] || {}
         const entry = {}
-        if (us.length) entry.US = us
-        if (intl.length) entry.INTL = intl
-        map[id] = entry
-        changed = true
-        console.log(`highlight #${id} ${r.home} v ${r.away} -> US:${us.length} INTL:${intl.length}`)
+        const usM = mergeClips(prev.US, us, r.home, r.away, HL_PER_REGION)
+        const intlM = mergeClips(prev.INTL, intl, r.home, r.away, HL_PER_REGION)
+        if (usM.length) entry.US = usM
+        if (intlM.length) entry.INTL = intlM
+        if (JSON.stringify(entry) !== JSON.stringify(map[id])) {
+          map[id] = entry
+          changed = true
+          console.log(`highlight #${id} ${r.home} v ${r.away} -> US:${usM.length} INTL:${intlM.length}`)
+        }
       }
     } catch (e) {
       console.log('YouTube search failed:', e.message)

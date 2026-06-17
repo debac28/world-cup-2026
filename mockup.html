@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Highlight mockup</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    body { background: #0a1410; margin: 0; padding: 16px; }
+    .wrap { max-width: 420px; margin: 0 auto; }
+    .region-tag { color: #8fb3a4; font: 700 13px system-ui; margin: 0 4px 12px; letter-spacing: .4px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="region-tag" id="tag"></div>
+    <div id="card"></div>
+  </div>
+  <script type="module">
+    import { matchRow } from '/src/lib/components.js'
+    import { REGION } from '/src/lib/time.js'
+
+    const m = {
+      id: 23,
+      home: 'Portugal', away: 'DR Congo',
+      homeFlag: 'pt', awayFlag: 'cd',
+      homeGoals: 1, awayGoals: 1,
+      homeRank: 5, awayRank: 46,
+      finished: true, live: false,
+      kickoff: new Date('2026-06-17T17:00:00Z'),
+      venue: { stadium: 'NRG Stadium', city: 'Houston' },
+      goals: [
+        { player: 'JOAO NEVES', minute: '6', home: true },
+        { player: 'Yoane WISSA', minute: '45+5', home: false },
+      ],
+      highlights: {
+        US: [
+          { videoId: 'dQw4w9WgXcQ', channel: 'FOX Sports', title: 'Portugal vs DR Congo Extended Highlights 2026 FIFA World Cup', thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg' },
+          { videoId: 'bbbbbbbbbbb', channel: 'FIFA', title: 'Portugal vs DR Congo | Highlights | FIFA World Cup 2026' },
+          { videoId: 'ccccccccccc', channel: 'ESPN FC', title: 'Portugal vs DR Congo Highlights | 2026 World Cup' },
+        ],
+        INTL: [
+          { videoId: 'bbbbbbbbbbb', channel: 'FIFA', title: 'Portugal vs DR Congo | Highlights | FIFA World Cup 2026' },
+          { videoId: 'ccccccccccc', channel: 'ESPN FC', title: 'Portugal vs DR Congo Highlights | 2026 World Cup' },
+        ],
+      },
+    }
+
+    document.getElementById('tag').textContent = 'REGION = ' + REGION
+    document.getElementById('card').appendChild(matchRow(m, { showRound: false }))
+  </script>
+</body>
+</html>

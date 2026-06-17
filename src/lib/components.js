@@ -2,7 +2,7 @@
 import { el, flag } from './dom.js'
 import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
-import { officialBrand, validCandidate } from '../../scripts/lib/highlights.mjs'
+import { officialBrand, validCandidate, isGlobalChannel } from '../../scripts/lib/highlights.mjs'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
 export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
@@ -66,9 +66,16 @@ function shareScoreLink(m) {
 // too, plus a YouTube search-link fallback for clips that are geo-blocked where they are.
 function officialClips(m) {
   const seen = new Set()
-  return [...(m.highlights?.US || []), ...(m.highlights?.INTL || [])].filter(
+  const clips = [...(m.highlights?.US || []), ...(m.highlights?.INTL || [])].filter(
     (c) => validCandidate(c, m.home, m.away) && !seen.has(c.videoId) && seen.add(c.videoId),
   )
+  // International viewers can't play the US broadcasters (FOX/ESPN/Telemundo geo-lock), so put
+  // a globally-playable clip (FIFA) first — it becomes their primary "Watch highlights" CTA.
+  // US viewers keep FOX first (their broadcaster, free to them).
+  if (REGION !== 'US') {
+    clips.sort((a, b) => Number(isGlobalChannel(b.channel)) - Number(isGlobalChannel(a.channel)))
+  }
+  return clips
 }
 
 // Highlight URL for sharing, mirroring what the sharer sees on the card: the top official
