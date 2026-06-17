@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-17T02:36:56.536Z",
+  "updated": "2026-06-17T10:24:03.414Z",
   "season": "2026",
   "results": {
     "1": {
@@ -568,51 +568,103 @@
     "19": {
       "home": "Argentina",
       "away": "Algeria",
-      "homeGoals": 2,
+      "homeGoals": 3,
       "awayGoals": 0,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-06-17T01:00:00Z",
-      "minute": "73"
+      "goals": [
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "17",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "60",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "76",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "20": {
       "home": "Austria",
       "away": "Jordan",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-17T04:00:00Z"
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-17T04:00:00Z",
+      "goals": [
+        {
+          "player": "Romano SCHMID",
+          "team": "Austria",
+          "minute": "20",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "YAZAN ALARAB",
+          "team": "Austria",
+          "minute": "76",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "Marko ARNAUTOVIC",
+          "team": "Austria",
+          "minute": "90+12",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "ALI OLWAN",
+          "team": "Jordan",
+          "minute": "50",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "21": {
       "home": "Ghana",
       "away": "Panama",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-17T23:00:00Z"
+      "kickoff": "2026-06-17T23:00Z"
     },
     "22": {
       "home": "England",
       "away": "Croatia",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-17T20:00:00Z"
+      "kickoff": "2026-06-17T20:00Z"
     },
     "23": {
       "home": "Portugal",
       "away": "DR Congo",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-17T17:00:00Z"
+      "kickoff": "2026-06-17T17:00Z"
     },
     "24": {
       "home": "Uzbekistan",
       "away": "Colombia",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-18T02:00:00Z"
+      "kickoff": "2026-06-18T02:00Z"
     },
     "25": {
       "home": "Czech Republic",
@@ -1001,6 +1053,12 @@
   },
   "scorers": [
     {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 3,
+      "assists": 0
+    },
+    {
       "player": "Folarin Balogun",
       "team": "United States",
       "goals": 2,
@@ -1033,12 +1091,6 @@
     {
       "player": "Erling Haaland",
       "team": "Norway",
-      "goals": 2,
-      "assists": 0
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
       "goals": 2,
       "assists": 0
     },
@@ -1279,6 +1331,24 @@
     {
       "player": "Leo Østigård",
       "team": "Norway",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Romano Schmid",
+      "team": "Austria",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Ali Olwan",
+      "team": "Jordan",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Marko Arnautovic",
+      "team": "Austria",
       "goals": 1,
       "assists": 0
     }
