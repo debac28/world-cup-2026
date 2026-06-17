@@ -23,7 +23,7 @@ import { dirname, join } from 'node:path'
 import { buildResults, norm } from './lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from './lib/espn.mjs'
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from './lib/fifa.mjs'
-import { youtubeHighlight } from './lib/highlights.mjs'
+import { youtubeHighlights } from './lib/highlights.mjs'
 import { fetchMatchGoals } from './lib/scorers.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -91,7 +91,9 @@ async function enrichHighlights(results, existing) {
   const todo = Object.entries(results)
     .filter(([, r]) => {
       if (r.status !== 'FT' || !r.kickoff || !r.home || !r.away) return false
-      const missing = HIGHLIGHT_REGIONS.some((rg) => !r.highlights?.[rg])
+      const missing = HIGHLIGHT_REGIONS.some(
+        (rg) => !(Array.isArray(r.highlights?.[rg]) && r.highlights[rg].length),
+      )
       const age = now - new Date(r.kickoff).getTime()
       return missing && age > 0 && age < YT_MAX_AGE_MS
     })
@@ -101,13 +103,13 @@ async function enrichHighlights(results, existing) {
   outer: for (const [id, r] of todo) {
     for (const region of HIGHLIGHT_REGIONS) {
       if (budget <= 0) break outer
-      if (r.highlights?.[region]) continue // already have this region
+      if (Array.isArray(r.highlights?.[region]) && r.highlights[region].length) continue // already have this region
       budget--
       try {
-        const h = await youtubeHighlight(r.home, r.away, region, YT_KEY)
-        if (h) {
-          r.highlights = { ...(r.highlights || {}), [region]: h }
-          console.log(`  highlight #${id} [${region}] ${r.home} v ${r.away} -> ${h.videoId} (${h.channel})`)
+        const vids = await youtubeHighlights(r.home, r.away, region, YT_KEY, 3)
+        if (vids.length) {
+          r.highlights = { ...(r.highlights || {}), [region]: vids }
+          console.log(`  highlight #${id} [${region}] ${r.home} v ${r.away} -> ${vids.length} (${vids[0].channel})`)
         } else {
           console.log(`  no [${region}] highlight yet #${id} ${r.home} v ${r.away}`)
         }
