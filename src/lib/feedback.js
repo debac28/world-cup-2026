@@ -18,7 +18,7 @@
 // Global on/off feature flag. Set to false and ship a PR to turn the feedback
 // collector off for ALL users; set back to true to re-enable. This is the simple
 // app-level kill switch (separate from per-browser window.disableFeedback()).
-const FEEDBACK_ENABLED = true
+const FEEDBACK_ENABLED = false
 
 // Tally form id — the slug in tally.so/r/<id> (here: tally.so/r/vGW5pg).
 const TALLY_FORM_ID = 'vGW5pg'

@@ -26,6 +26,11 @@ export function matchRow(m, { showRound = false, showPrediction = false } = {}) 
     scorerList(m),
     el('div', { class: 'match__meta' }, [
       metaText(m),
+      // Finished cards show the score in the middle (not the kickoff time), so surface
+      // the local kickoff time here too — otherwise you can't tell when it started.
+      m.finished
+        ? el('span', { class: 'kickoff-note' }, `Kicked off ${fmtTime(m.kickoff)}`)
+        : null,
       m.venue
         ? el('span', { class: 'venue' }, `${m.venue.stadium} · ${m.venue.city}`)
         : null,

@@ -14,8 +14,10 @@ const BASE = import.meta.env.BASE_URL
 // the local file.
 const RAW_LIVE =
   'https://raw.githubusercontent.com/debac28/world-cup-2026/main/public/data/live.json'
+// In dev, if VITE_LIVE_URL is set (see .env.local) we read the live Worker so local
+// shows exactly what production shows; otherwise we fall back to the local file.
 const PRIMARY_LIVE = import.meta.env.DEV
-  ? `${BASE}data/live.json`
+  ? import.meta.env.VITE_LIVE_URL || `${BASE}data/live.json`
   : import.meta.env.VITE_LIVE_URL || RAW_LIVE
 // Only worth a fallback when the primary isn't already raw/local.
 const FALLBACK_LIVE = PRIMARY_LIVE === RAW_LIVE ? null : RAW_LIVE
