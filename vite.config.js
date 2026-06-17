@@ -44,7 +44,26 @@ export default defineConfig(({ command }) => ({
         // data into installed PWAs for days. Both are served network-first below instead,
         // so edits (e.g. kickoff fixes in seed.json) reach users on the next online load.
         globIgnores: ['**/data/live.json', '**/data/seed.json'],
+        // The entry index.html hard-references content-hashed JS/CSS. Workbox's default
+        // navigation route serves the *precached* index.html cache-first, so an installed app
+        // keeps booting the OLD bundle until the whole service worker happens to self-update
+        // and reload — which can lag for days on home-screen PWAs (a "tap to refresh" only
+        // refetches the data JSON, never the shell). So we disable that cache-first fallback
+        // and serve navigations NETWORK-FIRST below: every online open pulls the latest
+        // index.html (hence the latest JS), with the last good copy used only when offline.
+        // Code freshness no longer depends on the SW update/reload cycle.
+        navigateFallback: null,
         runtimeCaching: [
+          {
+            // App shell: newest code when online, last cached HTML as the offline fallback.
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'app-shell',
+              networkTimeoutSeconds: 4,
+              expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
           {
             // Schedule skeleton: fresh when online (so kickoff/data fixes propagate),
             // falls back to the last cached copy offline.
