@@ -213,5 +213,13 @@ export function matchesNeedingHighlights(
       const age = now - new Date(r.kickoff).getTime()
       return age > 0 && age < maxAgeMs
     })
-    .sort((a, b) => new Date(b[1].kickoff) - new Date(a[1].kickoff))
+    // Matches with NO clip at all come first — having nothing is worse than missing only the
+    // global "+1" — so a tight nightly budget is spent backfilling empties before topping up.
+    // Within each tier, most recent first.
+    .sort(([idA, a], [idB, b]) => {
+      const emptyA = validClipsFor(known[idA], a.home, a.away).length === 0
+      const emptyB = validClipsFor(known[idB], b.home, b.away).length === 0
+      if (emptyA !== emptyB) return emptyA ? -1 : 1
+      return new Date(b.kickoff) - new Date(a.kickoff)
+    })
 }
