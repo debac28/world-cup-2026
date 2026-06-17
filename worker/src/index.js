@@ -16,7 +16,7 @@ import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
-import { youtubeHighlight, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
+import { youtubeHighlights, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 
 const FD_BASE = 'https://api.football-data.org/v4'
@@ -26,9 +26,10 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 const CACHE_SECONDS = 60
-const HL_KEY = 'highlights' // KV: { [matchId]: { US: {...} } }
+const HL_KEY = 'highlights' // KV: { [matchId]: { US: [...], INTL: [...] } } (candidate arrays)
 const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og}, ... ] }
 const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
+const HL_PER_REGION = 3 // candidate videos kept per region (primary + geo-block fallbacks)
 const LIVE_GOALS_CAP = 8 // max in-progress matches fetched for live scorers per /live build
 const HL_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000
 // In-progress statuses the live-goals overlay always covers.
@@ -264,13 +265,24 @@ async function refreshHighlights(env) {
   let changed = false
   for (const [id, r] of todo) {
     if (budget <= 0) break
-    budget--
     try {
-      const h = await youtubeHighlight(r.home, r.away, 'US', env.YOUTUBE_API_KEY)
-      if (h) {
-        map[id] = { US: h }
+      // US viewers get the exact official clips (region-biased search). Everyone else gets
+      // the YouTube *search* link in-app, so for them we just collect a few region-neutral
+      // direct links as extras — fetched only when budget remains.
+      const us = await youtubeHighlights(r.home, r.away, 'US', env.YOUTUBE_API_KEY, HL_PER_REGION)
+      budget--
+      let intl = []
+      if (budget > 0) {
+        intl = await youtubeHighlights(r.home, r.away, '', env.YOUTUBE_API_KEY, HL_PER_REGION)
+        budget--
+      }
+      if (us.length || intl.length) {
+        const entry = {}
+        if (us.length) entry.US = us
+        if (intl.length) entry.INTL = intl
+        map[id] = entry
         changed = true
-        console.log(`highlight #${id} ${r.home} v ${r.away} -> ${h.videoId}`)
+        console.log(`highlight #${id} ${r.home} v ${r.away} -> US:${us.length} INTL:${intl.length}`)
       }
     } catch (e) {
       console.log('YouTube search failed:', e.message)

@@ -58,14 +58,32 @@ function shareScoreLink(m) {
   )
 }
 
-// Highlight URL for sharing, mirroring what the sharer sees on the card: the exact US
+// Highlight URL for sharing, mirroring what the sharer sees on the card: the top US
 // video when known (and the viewer is in the US), else a region-safe YouTube search that
 // resolves a playable clip anywhere.
 function highlightUrl(m) {
-  const h = m.highlights?.US
-  if (REGION === 'US' && h) return `https://www.youtube.com/watch?v=${h.videoId}`
+  const top = m.highlights?.US?.[0]
+  if (REGION === 'US' && top) return ytWatchUrl(top)
+  return ytSearchUrl(m)
+}
+
+function ytWatchUrl(c) {
+  return `https://www.youtube.com/watch?v=${c.videoId}`
+}
+function ytSearchUrl(m) {
   const q = encodeURIComponent(`${m.home} vs ${m.away} 2026 World Cup highlights`)
   return `https://www.youtube.com/results?search_query=${q}`
+}
+
+// Short source label for a fallback chip, derived from the YouTube channel name.
+function highlightSource(c) {
+  const ch = (c.channel || '').toLowerCase()
+  if (ch.includes('fox')) return 'FOX'
+  if (ch.includes('espn')) return 'ESPN'
+  if (ch.includes('fifa')) return 'FIFA'
+  if (ch.includes('one football') || ch.includes('onefootball')) return 'OneFootball'
+  const first = (c.channel || 'Watch').split(/\s+/)[0]
+  return first.length > 11 ? first.slice(0, 11) : first
 }
 
 // Goal scorers grouped by side: home goals left, away goals right ("Player min'").
@@ -83,44 +101,67 @@ function scorerList(m) {
   ])
 }
 
-// Highlights link for finished matches:
-//  - Outside the US: a YouTube *search* link (the US clip is geo-blocked, so the
-//    viewer's own YouTube app surfaces a region-playable highlight).
-//  - In the US: the exact official video found by the updater.
-function highlightLink(m) {
-  if (!m.finished) return null
-
-  if (REGION !== 'US') {
-    const q = encodeURIComponent(`${m.home} vs ${m.away} 2026 World Cup highlights`)
-    return el(
-      'a',
-      {
-        class: 'highlight',
-        href: `https://www.youtube.com/results?search_query=${q}`,
-        target: '_blank',
-        rel: 'noopener',
-      },
-      [el('span', { class: 'highlight__label' }, '▶ Find highlights on YouTube')],
-    )
-  }
-
-  const h = m.highlights?.US
-  if (!h) return null
+// A single alternate-source chip linking to one YouTube video.
+function altChip(c) {
   return el(
     'a',
     {
-      class: 'highlight',
-      href: `https://www.youtube.com/watch?v=${h.videoId}`,
+      class: 'chip',
+      href: ytWatchUrl(c),
       target: '_blank',
       rel: 'noopener',
+      title: c.title || c.channel || 'Highlights',
     },
-    [
-      h.thumbnail
-        ? el('img', { class: 'highlight__thumb', src: h.thumbnail, alt: '', loading: 'lazy' })
-        : null,
-      el('span', { class: 'highlight__label' }, '▶ Watch highlights'),
-    ],
+    `▸ ${highlightSource(c)}`,
   )
+}
+
+// Highlights for finished matches, in two buckets:
+//  - International (everyone outside the US): the YouTube *search* link is the always-present
+//    anchor — the viewer's own app resolves it to a clip playable in their country — plus any
+//    direct links we found, offered as extras. No per-country targeting.
+//  - US: the exact official clip(s); the first is the primary CTA and the rest are visible
+//    fallbacks for when a video turns out to be geo-blocked.
+function highlightLink(m) {
+  if (!m.finished) return null
+  const cands = m.highlights?.[REGION] || []
+
+  if (REGION !== 'US') {
+    return el('div', { class: 'highlights' }, [
+      el(
+        'a',
+        { class: 'highlight', href: ytSearchUrl(m), target: '_blank', rel: 'noopener' },
+        [el('span', { class: 'highlight__label' }, '▶ Find highlights on YouTube')],
+      ),
+      cands.length
+        ? el('div', { class: 'highlight-alts' }, [
+            el('span', { class: 'highlight-alts__label' }, 'More:'),
+            ...cands.map(altChip),
+          ])
+        : null,
+    ])
+  }
+
+  if (!cands.length) return null
+  const [primary, ...alts] = cands
+  return el('div', { class: 'highlights' }, [
+    el(
+      'a',
+      { class: 'highlight', href: ytWatchUrl(primary), target: '_blank', rel: 'noopener' },
+      [
+        primary.thumbnail
+          ? el('img', { class: 'highlight__thumb', src: primary.thumbnail, alt: '', loading: 'lazy' })
+          : null,
+        el('span', { class: 'highlight__label' }, '▶ Watch highlights'),
+      ],
+    ),
+    alts.length
+      ? el('div', { class: 'highlight-alts' }, [
+          el('span', { class: 'highlight-alts__label' }, "Won't play?"),
+          ...alts.map(altChip),
+        ])
+      : null,
+  ])
 }
 
 function side(name, code, winner, which, rank, prob) {

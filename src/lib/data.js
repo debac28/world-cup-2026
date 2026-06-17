@@ -9,6 +9,20 @@ import { winProbability } from './predict.js'
 
 const BASE = import.meta.env.BASE_URL
 
+// Normalize per-region highlights into arrays of candidates so a geo-blocked clip has
+// fallbacks. Accepts the new shape {US:[...], INTL:[...]}, the older single-object form
+// {US:{...}}, and the legacy top-level `highlight`. Always returns {region:[...]} or null.
+function normalizeHighlights(highlights, legacy) {
+  const src = highlights || (legacy ? { US: legacy } : null)
+  if (!src) return null
+  const out = {}
+  for (const [region, val] of Object.entries(src)) {
+    const list = (Array.isArray(val) ? val : [val]).filter((v) => v && v.videoId)
+    if (list.length) out[region] = list
+  }
+  return Object.keys(out).length ? out : null
+}
+
 // Live results come from the Cloudflare Worker (VITE_LIVE_URL) for near-real-time
 // scores, with raw GitHub as a fallback if the Worker is unreachable. In dev we read
 // the local file.
@@ -113,8 +127,9 @@ function buildModel(seed, live) {
       awayPens: r.awayPens ?? null,
       // Elapsed minute from FIFA, shown on the live badge ("● 87'"); null when not live.
       minute: status === 'live' ? r.minute || null : null,
-      // Per-region highlights {US, IN}; migrate the legacy single `highlight` -> US.
-      highlights: r.highlights || (r.highlight ? { US: r.highlight } : null),
+      // Per-region highlight candidates {US:[...], INTL:[...]} — multiple so a geo-blocked
+      // clip has fallbacks; legacy single forms are coerced to a 1-element array.
+      highlights: normalizeHighlights(r.highlights, r.highlight),
       // Per-match goal scorers (parsed from Wikipedia), assigned to a side by team name so
       // orientation never matters. Empty until the match finishes and its article fills in.
       goals: (r.goals || []).map((g) => ({ ...g, home: g.team === home })),
