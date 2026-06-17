@@ -25,6 +25,7 @@ import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from './lib/espn.
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from './lib/fifa.mjs'
 import { youtubeHighlights } from './lib/highlights.mjs'
 import { fetchMatchGoals } from './lib/scorers.mjs'
+import { attachWikiLinks } from './lib/wikilinks.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
@@ -231,11 +232,22 @@ async function main() {
   // Attach YouTube highlight links to finished matches (no-op without a key).
   await enrichHighlights(finalResults, existing)
 
+  // Verify-and-link players to Wikipedia. A name->title cache is carried forward in live.json
+  // (with "" for verified-no-article names) so each name is looked up at most once. Goals
+  // parsed from Wikipedia already carry an exact `wiki`; this fills in FIFA-sourced goals and
+  // the Golden Boot list, attaching a link only when a real article exists.
+  const wikiCache = existing.wikiLinks || {}
+  const goalItems = Object.values(finalResults).flatMap((r) => r.goals || [])
+  await attachWikiLinks(goalItems, wikiCache)
+  await attachWikiLinks(finalScorers, wikiCache)
+  console.log(`Wikipedia links: ${Object.values(wikiCache).filter(Boolean).length}/${Object.keys(wikiCache).length} names resolved.`)
+
   const out = {
     updated: new Date().toISOString(),
     season: SEASON || matchesResp.filters?.season || null,
     results: finalResults,
     scorers: finalScorers,
+    wikiLinks: wikiCache,
   }
   await writeFile(OUT_PATH, JSON.stringify(out, null, 2) + '\n')
   console.log(

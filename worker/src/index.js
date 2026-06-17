@@ -18,6 +18,7 @@ import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scrip
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
 import { youtubeHighlights, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
+import { attachWikiLinks } from '../../scripts/lib/wikilinks.mjs'
 
 const FD_BASE = 'https://api.football-data.org/v4'
 const CORS = {
@@ -27,7 +28,9 @@ const CORS = {
 }
 const CACHE_SECONDS = 60
 const HL_KEY = 'highlights' // KV: { [matchId]: { US: [...], INTL: [...] } } (candidate arrays)
-const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og}, ... ] }
+const GOALS_KEY = 'goals' // KV: { [matchId]: [ {player, team, minute, pen, og, wiki}, ... ] }
+const WIKI_KEY = 'wikilinks' // KV: { [playerName]: "Article Title" | "" } ("" = verified no-article)
+const WIKI_PER_RUN = 40 // Wikipedia title lookups per cron run
 const HL_BUDGET = 4 // YouTube searches per cron run (100 units each / 10k daily)
 const HL_PER_REGION = 3 // candidate videos kept per region (primary + geo-block fallbacks)
 const LIVE_GOALS_CAP = 8 // max in-progress matches fetched for live scorers per /live build
@@ -62,7 +65,9 @@ export default {
 
   async scheduled(event, env, ctx) {
     ctx.waitUntil(refreshHighlights(env))
-    ctx.waitUntil(refreshGoals(env))
+    // Collect goals first, then resolve Wikipedia links over the freshly-stored goals + the
+    // Golden Boot list (both share one name cache, so run them in sequence to avoid a KV race).
+    ctx.waitUntil(refreshGoals(env).then(() => refreshWikiLinks(env)))
   },
 }
 
@@ -130,6 +135,15 @@ async function readGoals(env) {
   if (!env.KV) return {}
   try {
     return JSON.parse((await env.KV.get(GOALS_KEY)) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+async function readWiki(env) {
+  if (!env.KV) return {}
+  try {
+    return JSON.parse((await env.KV.get(WIKI_KEY)) || '{}')
   } catch {
     return {}
   }
@@ -235,6 +249,16 @@ async function buildPayload(env) {
     } catch (e) {
       console.log('live goals failed:', e.message)
     }
+  }
+
+  // Attach verified Wikipedia titles from the KV cache (populated hourly by refreshWikiLinks).
+  // Cache-only here — no Wikipedia calls on the hot /live path. Covers the Golden Boot list
+  // and any freshly-fetched live goals whose title isn't already stored on the goal.
+  const wikiMap = await readWiki(env)
+  if (Object.keys(wikiMap).length) {
+    for (const s of scorers) if (!s.wiki && wikiMap[s.player]) s.wiki = wikiMap[s.player]
+    for (const r of Object.values(results))
+      for (const g of r.goals || []) if (!g.wiki && wikiMap[g.player]) g.wiki = wikiMap[g.player]
   }
 
   return {
@@ -359,4 +383,41 @@ async function refreshGoals(env) {
     }
   }
   if (changed) await env.KV.put(GOALS_KEY, JSON.stringify(have))
+}
+
+// Scheduled: resolve VERIFIED Wikipedia article titles for goal scorers (per-match goals in
+// KV) and the Golden Boot list, caching name->title in KV ("" = verified no-article) so each
+// name is looked up at most once. A link is attached only when a real article exists; the app
+// renders everyone else as plain text. Budget-capped per run to stay polite to Wikipedia.
+async function refreshWikiLinks(env) {
+  if (!env.KV) {
+    console.log('refreshWikiLinks: missing KV — skipping.')
+    return
+  }
+  const cache = await readWiki(env)
+  const cacheBefore = JSON.stringify(cache)
+  let budget = WIKI_PER_RUN
+
+  // (a) Per-match goals already in KV — fill in any goal still lacking a title, persisting the
+  //     enriched goals so the hot /live path serves them without any Wikipedia call.
+  const goalsMap = await readGoals(env)
+  const goalsBefore = JSON.stringify(goalsMap)
+  const goalItems = Object.values(goalsMap).flat()
+  budget -= await attachWikiLinks(goalItems, cache, { limit: budget })
+  if (JSON.stringify(goalsMap) !== goalsBefore) await env.KV.put(GOALS_KEY, JSON.stringify(goalsMap))
+
+  // (b) Golden Boot scorers — resolve their names into the cache (applied to the live list in
+  //     buildPayload), using whatever budget remains.
+  if (budget > 0 && env.FOOTBALL_DATA_TOKEN) {
+    try {
+      await attachWikiLinks(await fdScorers(env), cache, { limit: budget })
+    } catch (e) {
+      console.log('refreshWikiLinks scorers failed:', e.message)
+    }
+  }
+
+  if (JSON.stringify(cache) !== cacheBefore) {
+    await env.KV.put(WIKI_KEY, JSON.stringify(cache))
+    console.log(`wikilinks: ${Object.values(cache).filter(Boolean).length}/${Object.keys(cache).length} names resolved.`)
+  }
 }

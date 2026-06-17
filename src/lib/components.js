@@ -86,12 +86,32 @@ function highlightSource(c) {
   return first.length > 11 ? first.slice(0, 11) : first
 }
 
+// Exact Wikipedia article URL from a verified title (spaces -> underscores).
+export function playerWikiUrl(wiki) {
+  return `https://en.wikipedia.org/wiki/${encodeURIComponent(wiki.replace(/ /g, '_'))}`
+}
+
+// A player name. Linked to Wikipedia ONLY when the data pipeline verified a real article
+// (`wiki` = the canonical title); otherwise rendered as plain text, so we never send anyone
+// to a dead search page for a player who has no article.
+export function playerLink(name, wiki, cls = 'player-link') {
+  if (!wiki) return el('span', { class: 'player-name' }, name)
+  return el(
+    'a',
+    { class: cls, href: playerWikiUrl(wiki), target: '_blank', rel: 'noopener' },
+    name,
+  )
+}
+
 // Goal scorers grouped by side: home goals left, away goals right ("Player min'").
 // Only rendered once a match has goal data; absent for scheduled/in-progress matches.
 function scorerList(m) {
   if (!m.goals?.length) return null
   const fmt = (g) =>
-    el('li', {}, `${g.player}${g.og ? ' (OG)' : ''}${g.pen ? ' (P)' : ''} ${g.minute}'`.trim())
+    el('li', {}, [
+      playerLink(g.player, g.wiki),
+      `${g.og ? ' (OG)' : ''}${g.pen ? ' (P)' : ''} ${g.minute}'`,
+    ])
   const home = m.goals.filter((g) => g.home).map(fmt)
   const away = m.goals.filter((g) => !g.home).map(fmt)
   return el('div', { class: 'scorers-line' }, [

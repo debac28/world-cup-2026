@@ -58,7 +58,7 @@ function param(parts, name) {
   return null
 }
 
-// Parse a goals block into [{player, minute, pen, og}]. Wikipedia editors mix two styles:
+// Parse a goals block into [{player, minute, pen, og, wiki}]. Wikipedia editors mix two styles:
 // `{{goal|67}}` templates and plain `31', 45+5'` text; lines may or may not be bulleted.
 // `minute` is kept as a string to preserve stoppage time (e.g. "45+5").
 function parseGoals(block) {
@@ -69,6 +69,9 @@ function parseGoals(block) {
     if (!line.includes('[[')) continue
     const nm = line.match(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/)
     const player = nm ? (nm[2] || nm[1]).trim() : 'Unknown'
+    // The `[[Article|Display]]` link target is an exact Wikipedia article title — a free,
+    // never-404 player link. Keep it (display name may be a nickname) so the app can link.
+    const wiki = nm ? nm[1].trim() : null
     const og = /o\.g\.|own goal/i.test(line)
     const pen = /\(pen/i.test(line)
     const mins = []
@@ -81,7 +84,7 @@ function parseGoals(block) {
     } else {
       for (const mm of line.matchAll(/(\d+(?:\+\d+)?)\s*['’]/g)) mins.push(mm[1])
     }
-    for (const minute of mins) out.push({ player, minute, pen, og })
+    for (const minute of mins) out.push({ player, minute, pen, og, wiki })
   }
   return out
 }
@@ -127,7 +130,7 @@ async function fetchArticle(title, fetchImpl) {
   }
 }
 
-// Returns { [seedMatchId]: [{player, team, minute, pen, og}] } for finished matches.
+// Returns { [seedMatchId]: [{player, team, minute, pen, og, wiki}] } for finished matches.
 // Only matches whose parsed goal count equals their scoreline are included. `existingGoals`
 // (a {id: goals} map) is skipped so already-known matches aren't refetched.
 export async function fetchMatchGoals(seed, results, opts = {}) {

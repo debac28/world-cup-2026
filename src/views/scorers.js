@@ -1,5 +1,5 @@
 import { el, flag, empty } from '../lib/dom.js'
-import { sectionTitle } from '../lib/components.js'
+import { sectionTitle, playerLink } from '../lib/components.js'
 
 export function renderScorers(model) {
   const wrap = el('div', { class: 'stack' })
@@ -19,7 +19,7 @@ export function renderScorers(model) {
       el('td', { class: 'rank' }, String(i + 1)),
       el('td', { class: 'left' }, [
         el('div', { class: 'scorer' }, [
-          el('span', { class: 'scorer__name' }, s.player),
+          el('span', { class: 'scorer__name' }, [playerLink(s.player, s.wiki, 'player-link player-link--name')]),
           el('span', { class: 'scorer__team' }, [
             flag(model.flagOf.get(s.team), s.team),
             s.team,
