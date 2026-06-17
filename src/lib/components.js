@@ -2,7 +2,7 @@
 import { el, flag } from './dom.js'
 import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
-import { officialBrand } from '../../scripts/lib/highlights.mjs'
+import { officialBrand, validCandidate } from '../../scripts/lib/highlights.mjs'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
 export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
@@ -59,11 +59,22 @@ function shareScoreLink(m) {
   )
 }
 
-// Highlight URL for sharing, mirroring what the sharer sees on the card: the top US
+// All captured official clips for a match — the US- and INTL-region searches combined and
+// de-duped by video id. The data layer keeps only the four official channels, so the same set
+// is safe to show every region: US viewers play them directly; international viewers get them
+// too, plus a YouTube search-link fallback for clips that are geo-blocked where they are.
+function officialClips(m) {
+  const seen = new Set()
+  return [...(m.highlights?.US || []), ...(m.highlights?.INTL || [])].filter(
+    (c) => validCandidate(c, m.home, m.away) && !seen.has(c.videoId) && seen.add(c.videoId),
+  )
+}
+
+// Highlight URL for sharing, mirroring what the sharer sees on the card: the top official
 // video when known (and the viewer is in the US), else a region-safe YouTube search that
 // resolves a playable clip anywhere.
 function highlightUrl(m) {
-  const top = m.highlights?.US?.[0]
+  const top = officialClips(m)[0]
   if (REGION === 'US' && top) return ytWatchUrl(top)
   return ytSearchUrl(m)
 }
@@ -121,7 +132,7 @@ function scorerList(m) {
   ])
 }
 
-// A single alternate-source chip linking to one YouTube video.
+// A single alternate-source chip linking to one official YouTube clip.
 function altChip(c) {
   return el(
     'a',
@@ -136,34 +147,42 @@ function altChip(c) {
   )
 }
 
-// Highlights for finished matches, in two buckets:
-//  - International (everyone outside the US): the YouTube *search* link is the always-present
-//    anchor — the viewer's own app resolves it to a clip playable in their country — plus any
-//    direct links we found, offered as extras. No per-country targeting.
-//  - US: the exact official clip(s); the first is the primary CTA and the rest are visible
-//    fallbacks for when a video turns out to be geo-blocked.
+// Fallback chip linking to a YouTube *search* — shown to international viewers so they can find
+// a clip playable in their country when the official ones are geo-blocked.
+function searchChip(m) {
+  return el(
+    'a',
+    { class: 'chip', href: ytSearchUrl(m), target: '_blank', rel: 'noopener', title: 'Search YouTube' },
+    '▸ Search YouTube',
+  )
+}
+
+// Highlights for finished matches — official clips only (FOX / FIFA / ESPN / Telemundo; the
+// data layer has dropped everything else). The first clip is the primary CTA, the rest are
+// fallback chips for a geo-blocked clip. US viewers can watch their broadcaster's clip for
+// free, so they get no search link; international viewers also get a YouTube *search* link,
+// since the official clips may be geo-blocked where they are.
 function highlightLink(m) {
   if (!m.finished) return null
-  const cands = m.highlights?.[REGION] || []
+  const cands = officialClips(m)
+  const intl = REGION !== 'US'
 
-  if (REGION !== 'US') {
+  if (!cands.length) {
+    // No official clip captured: international viewers still get the search link; US gets nothing.
+    if (!intl) return null
     return el('div', { class: 'highlights' }, [
       el(
         'a',
         { class: 'highlight', href: ytSearchUrl(m), target: '_blank', rel: 'noopener' },
         [el('span', { class: 'highlight__label' }, '▶ Find highlights on YouTube')],
       ),
-      cands.length
-        ? el('div', { class: 'highlight-alts' }, [
-            el('span', { class: 'highlight-alts__label' }, 'More:'),
-            ...cands.map(altChip),
-          ])
-        : null,
     ])
   }
 
-  if (!cands.length) return null
   const [primary, ...alts] = cands
+  const extras = alts.map(altChip)
+  if (intl) extras.push(searchChip(m))
+
   return el('div', { class: 'highlights' }, [
     el(
       'a',
@@ -175,10 +194,10 @@ function highlightLink(m) {
         el('span', { class: 'highlight__label' }, '▶ Watch highlights'),
       ],
     ),
-    alts.length
+    extras.length
       ? el('div', { class: 'highlight-alts' }, [
           el('span', { class: 'highlight-alts__label' }, "Won't play?"),
-          ...alts.map(altChip),
+          ...extras,
         ])
       : null,
   ])

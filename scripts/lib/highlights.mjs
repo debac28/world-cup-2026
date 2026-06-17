@@ -1,21 +1,25 @@
 // YouTube highlights search — shared by the Node updater and the Cloudflare Worker.
 // Pure (uses global fetch, available in Node 18+ and Workers); no runtime-specific APIs.
 
-// Official rights-holders we trust for highlights, matched as the WHOLE channel name (never a
-// substring, and NEVER the video title — that is where spam farms bury bait keywords like
-// "FIFA World Cup"). So a look-alike upload channel such as "FIFA Highlights HD" does not pass
-// as official. Maps the channel name -> the short brand shown on the source chip.
+// The ONLY channels we will ever link to — the four official rights-holders we agreed on,
+// matched as the WHOLE channel name (never a substring, and NEVER the video title, where spam
+// farms bury bait keywords like "FIFA World Cup"). So look-alike upload channels ("FIFA
+// Highlights HD", "RedaNova", "Match Highlights", "Goal Journey") never pass. A clip from
+// anything not in this map is dropped — we'd rather show only the official clip(s), or just a
+// YouTube search link, than pad the list with random reuploads. Same set for every region:
+// FIFA/ESPN are global, FOX/Telemundo are the US broadcasters; non-US viewers get whichever of
+// these are playable plus the search-link fallback. Maps channel name -> the chip brand.
 const OFFICIAL = new Map([
   ['fox soccer', 'FOX'],
   ['fox sports', 'FOX'],
   ['fifa', 'FIFA'],
+  ['espn', 'ESPN'],
+  ['espn fc', 'ESPN'],
   ['telemundo deportes', 'Telemundo'],
-  ['onefootball', 'OneFootball'],
-  ['one football', 'OneFootball'],
 ])
 
-// The broadcaster brand for a channel, or null if it isn't an official rights-holder. Always
-// keyed off the structured channel name from the API — never the title.
+// The broadcaster brand for a channel, or null if it isn't one of the four official
+// rights-holders. Always keyed off the structured channel name from the API — never the title.
 export function officialBrand(channel) {
   return OFFICIAL.get((channel || '').trim().toLowerCase()) || null
 }
@@ -74,9 +78,17 @@ function cleanChannel(channel) {
 }
 
 // A stored/looked-up highlight candidate is trustworthy for this match only if it has a video
-// id, a clean (un-scraped) channel, and a title that actually names both teams.
+// id, comes from one of the four official channels (exact name, never the title), and has a
+// title that actually names both teams. cleanChannel is a redundant-but-cheap guard against
+// scraped byline blobs ("FIFA • 1.1M views • …") that could never be an exact channel anyway.
 export function validCandidate(c, home, away) {
-  return !!(c && c.videoId && cleanChannel(c.channel) && titleMatchesTeams(c.title, home, away))
+  return !!(
+    c &&
+    c.videoId &&
+    cleanChannel(c.channel) &&
+    officialBrand(c.channel) &&
+    titleMatchesTeams(c.title, home, away)
+  )
 }
 
 // Drop every untrustworthy candidate from a stored {US:[...], INTL:[...]} entry (also accepts
