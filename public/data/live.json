@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-16T20:35:56.362Z",
+  "updated": "2026-06-17T02:36:56.536Z",
   "season": "2026",
   "results": {
     "1": {
@@ -485,27 +485,94 @@
     "17": {
       "home": "France",
       "away": "Senegal",
-      "homeGoals": 1,
-      "awayGoals": 0,
-      "status": "2H",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-16T19:00:00Z",
-      "minute": "72"
+      "goals": [
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "66",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Bradley BARCOLA",
+          "team": "France",
+          "minute": "82",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "90+6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ibrahim MBAYE",
+          "team": "Senegal",
+          "minute": "90+5",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "18": {
       "home": "Iraq",
       "away": "Norway",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-16T22:00Z"
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "status": "FT",
+      "kickoff": "2026-06-16T22:00:00Z",
+      "goals": [
+        {
+          "player": "AYMEN HUSSEIN",
+          "team": "Iraq",
+          "minute": "39",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "29",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "43",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Leo OSTIGARD",
+          "team": "Norway",
+          "minute": "76",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "AYMEN HUSSEIN",
+          "team": "Norway",
+          "minute": "90+6",
+          "pen": false,
+          "og": true
+        }
+      ]
     },
     "19": {
       "home": "Argentina",
       "away": "Algeria",
-      "homeGoals": 0,
+      "homeGoals": 2,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-17T01:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-17T01:00:00Z",
+      "minute": "73"
     },
     "20": {
       "home": "Austria",
@@ -958,6 +1025,24 @@
       "assists": 0
     },
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "goals": 2,
+      "assists": 0
+    },
+    {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "goals": 2,
+      "assists": 0
+    },
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 2,
+      "assists": 0
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -1174,8 +1259,26 @@
       "assists": 0
     },
     {
-      "player": "Kylian Mbappé",
+      "player": "Bradley Barcola",
       "team": "France",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Ibrahim M'Baye",
+      "team": "Senegal",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Aymen Hussein",
+      "team": "Iraq",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Leo Østigård",
+      "team": "Norway",
       "goals": 1,
       "assists": 0
     }
