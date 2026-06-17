@@ -69,13 +69,10 @@ function normStatus(s) {
 function buildModel(seed, live) {
   const flagOf = new Map(seed.teams.map((t) => [t.name, t.flag]))
   const rankOf = new Map(seed.teams.map((t) => [t.name, t.rankPoints]))
-  // FIFA ranking position (1 = highest), derived by sorting all teams on their
-  // stored FIFA points. The seed only carries points, not positions.
-  const rankPosOf = new Map(
-    [...seed.teams]
-      .sort((a, b) => b.rankPoints - a.rankPoints)
-      .map((t, i) => [t.name, i + 1]),
-  )
+  // True FIFA world ranking position stored per team in the seed (e.g. New Zealand 85),
+  // shown as the #N badge on cards. This is the real global rank — NOT a seeding among
+  // the 48 qualified teams — so people aren't confused by inflated positions.
+  const rankPosOf = new Map(seed.teams.map((t) => [t.name, t.fifaRank || null]))
   const results = live.results || {}
 
   function withResult(fix, home, away) {

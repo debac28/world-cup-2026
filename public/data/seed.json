@@ -5,242 +5,290 @@
     {
       "name": "Algeria",
       "flag": "dz",
-      "rankPoints": 1564.26
+      "rankPoints": 1564.26,
+      "fifaRank": 28
     },
     {
       "name": "Argentina",
       "flag": "ar",
-      "rankPoints": 1874.82
+      "rankPoints": 1874.82,
+      "fifaRank": 1
     },
     {
       "name": "Australia",
       "flag": "au",
-      "rankPoints": 1580.67
+      "rankPoints": 1580.67,
+      "fifaRank": 27
     },
     {
       "name": "Austria",
       "flag": "at",
-      "rankPoints": 1593.45
+      "rankPoints": 1593.45,
+      "fifaRank": 24
     },
     {
       "name": "Belgium",
       "flag": "be",
-      "rankPoints": 1734.71
+      "rankPoints": 1734.71,
+      "fifaRank": 9
     },
     {
       "name": "Bosnia and Herzegovina",
       "flag": "ba",
-      "rankPoints": 1385.84
+      "rankPoints": 1385.84,
+      "fifaRank": 64
     },
     {
       "name": "Brazil",
       "flag": "br",
-      "rankPoints": 1761.16
+      "rankPoints": 1761.16,
+      "fifaRank": 6
     },
     {
       "name": "Canada",
       "flag": "ca",
-      "rankPoints": 1556.48
+      "rankPoints": 1556.48,
+      "fifaRank": 30
     },
     {
       "name": "Cape Verde",
       "flag": "cv",
-      "rankPoints": 1366.13
+      "rankPoints": 1366.13,
+      "fifaRank": 67
     },
     {
       "name": "Colombia",
       "flag": "co",
-      "rankPoints": 1693.09
+      "rankPoints": 1693.09,
+      "fifaRank": 13
     },
     {
       "name": "Croatia",
       "flag": "hr",
-      "rankPoints": 1717.07
+      "rankPoints": 1717.07,
+      "fifaRank": 11
     },
     {
       "name": "Curaçao",
       "flag": "cw",
-      "rankPoints": 1294.65
+      "rankPoints": 1294.65,
+      "fifaRank": 82
     },
     {
       "name": "Czech Republic",
       "flag": "cz",
-      "rankPoints": 1501.38
+      "rankPoints": 1501.38,
+      "fifaRank": 40
     },
     {
       "name": "DR Congo",
       "flag": "cd",
-      "rankPoints": 1478.35
+      "rankPoints": 1478.35,
+      "fifaRank": 46
     },
     {
       "name": "Ecuador",
       "flag": "ec",
-      "rankPoints": 1594.78
+      "rankPoints": 1594.78,
+      "fifaRank": 23
     },
     {
       "name": "Egypt",
       "flag": "eg",
-      "rankPoints": 1563.24
+      "rankPoints": 1563.24,
+      "fifaRank": 29
     },
     {
       "name": "England",
       "flag": "gb-eng",
-      "rankPoints": 1825.97
+      "rankPoints": 1825.97,
+      "fifaRank": 4
     },
     {
       "name": "France",
       "flag": "fr",
-      "rankPoints": 1877.32
+      "rankPoints": 1877.32,
+      "fifaRank": 3
     },
     {
       "name": "Germany",
       "flag": "de",
-      "rankPoints": 1730.37
+      "rankPoints": 1730.37,
+      "fifaRank": 10
     },
     {
       "name": "Ghana",
       "flag": "gh",
-      "rankPoints": 1346.31
+      "rankPoints": 1346.31,
+      "fifaRank": 73
     },
     {
       "name": "Haiti",
       "flag": "ht",
-      "rankPoints": 1291.71
+      "rankPoints": 1291.71,
+      "fifaRank": 83
     },
     {
       "name": "Iran",
       "flag": "ir",
-      "rankPoints": 1615.3
+      "rankPoints": 1615.3,
+      "fifaRank": 20
     },
     {
       "name": "Iraq",
       "flag": "iq",
-      "rankPoints": 1447.14
+      "rankPoints": 1447.14,
+      "fifaRank": 57
     },
     {
       "name": "Ivory Coast",
       "flag": "ci",
-      "rankPoints": 1532.98
+      "rankPoints": 1532.98,
+      "fifaRank": 33
     },
     {
       "name": "Japan",
       "flag": "jp",
-      "rankPoints": 1660.43
+      "rankPoints": 1660.43,
+      "fifaRank": 18
     },
     {
       "name": "Jordan",
       "flag": "jo",
-      "rankPoints": 1391.45
+      "rankPoints": 1391.45,
+      "fifaRank": 63
     },
     {
       "name": "Korea Republic",
       "flag": "kr",
-      "rankPoints": 1588.66
+      "rankPoints": 1588.66,
+      "fifaRank": 25
     },
     {
       "name": "Mexico",
       "flag": "mx",
-      "rankPoints": 1681.03
+      "rankPoints": 1681.03,
+      "fifaRank": 14
     },
     {
       "name": "Morocco",
       "flag": "ma",
-      "rankPoints": 1755.87
+      "rankPoints": 1755.87,
+      "fifaRank": 7
     },
     {
       "name": "Netherlands",
       "flag": "nl",
-      "rankPoints": 1757.87
+      "rankPoints": 1757.87,
+      "fifaRank": 8
     },
     {
       "name": "New Zealand",
       "flag": "nz",
-      "rankPoints": 1281.57
+      "rankPoints": 1281.57,
+      "fifaRank": 85
     },
     {
       "name": "Norway",
       "flag": "no",
-      "rankPoints": 1550.94
+      "rankPoints": 1550.94,
+      "fifaRank": 31
     },
     {
       "name": "Panama",
       "flag": "pa",
-      "rankPoints": 1540.64
+      "rankPoints": 1540.64,
+      "fifaRank": 34
     },
     {
       "name": "Paraguay",
       "flag": "py",
-      "rankPoints": 1503.5
+      "rankPoints": 1503.5,
+      "fifaRank": 41
     },
     {
       "name": "Portugal",
       "flag": "pt",
-      "rankPoints": 1763.83
+      "rankPoints": 1763.83,
+      "fifaRank": 5
     },
     {
       "name": "Qatar",
       "flag": "qa",
-      "rankPoints": 1454.96
+      "rankPoints": 1454.96,
+      "fifaRank": 56
     },
     {
       "name": "Saudi Arabia",
       "flag": "sa",
-      "rankPoints": 1421.43
+      "rankPoints": 1421.43,
+      "fifaRank": 61
     },
     {
       "name": "Scotland",
       "flag": "gb-sct",
-      "rankPoints": 1498.35
+      "rankPoints": 1498.35,
+      "fifaRank": 42
     },
     {
       "name": "Senegal",
       "flag": "sn",
-      "rankPoints": 1688.99
+      "rankPoints": 1688.99,
+      "fifaRank": 15
     },
     {
       "name": "South Africa",
       "flag": "za",
-      "rankPoints": 1429.73
+      "rankPoints": 1429.73,
+      "fifaRank": 60
     },
     {
       "name": "Spain",
       "flag": "es",
-      "rankPoints": 1876.4
+      "rankPoints": 1876.4,
+      "fifaRank": 2
     },
     {
       "name": "Sweden",
       "flag": "se",
-      "rankPoints": 1514.77
+      "rankPoints": 1514.77,
+      "fifaRank": 38
     },
     {
       "name": "Switzerland",
       "flag": "ch",
-      "rankPoints": 1649.4
+      "rankPoints": 1649.4,
+      "fifaRank": 19
     },
     {
       "name": "Tunisia",
       "flag": "tn",
-      "rankPoints": 1483.05
+      "rankPoints": 1483.05,
+      "fifaRank": 45
     },
     {
       "name": "Turkey",
       "flag": "tr",
-      "rankPoints": 1599.04
+      "rankPoints": 1599.04,
+      "fifaRank": 22
     },
     {
       "name": "United States",
       "flag": "us",
-      "rankPoints": 1673.13
+      "rankPoints": 1673.13,
+      "fifaRank": 17
     },
     {
       "name": "Uruguay",
       "flag": "uy",
-      "rankPoints": 1673.07
+      "rankPoints": 1673.07,
+      "fifaRank": 16
     },
     {
       "name": "Uzbekistan",
       "flag": "uz",
-      "rankPoints": 1465.34
+      "rankPoints": 1465.34,
+      "fifaRank": 50
     }
   ],
   "groups": {

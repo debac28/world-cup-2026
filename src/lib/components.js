@@ -125,7 +125,7 @@ function highlightLink(m) {
 
 function side(name, code, winner, which, rank, prob) {
   const meta = []
-  if (rank) meta.push(el('span', { class: 'team__rank', title: 'World Cup seeding (rank among the 48 qualified teams, by FIFA points)' }, `#${rank}`))
+  if (rank) meta.push(el('span', { class: 'team__rank', title: 'FIFA World Ranking' }, `#${rank}`))
   if (prob != null)
     meta.push(el('span', { class: 'team__prob', title: 'Win chance (Elo, from FIFA points)' }, `${prob}%`))
   return el('div', { class: `team team--${which} ${winner ? 'team--win' : ''}` }, [
