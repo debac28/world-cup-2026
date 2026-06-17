@@ -2,6 +2,7 @@
 import { el, flag } from './dom.js'
 import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
+import { officialBrand } from '../../scripts/lib/highlights.mjs'
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
 export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
@@ -75,13 +76,12 @@ function ytSearchUrl(m) {
   return `https://www.youtube.com/results?search_query=${q}`
 }
 
-// Short source label for a fallback chip, derived from the YouTube channel name.
+// Short source label for a fallback chip. Official rights-holders get their broadcaster brand
+// (matched on the exact channel name, so a bait channel can't pose as one); anyone else shows
+// their real, truncated channel name — never anything derived from the video title.
 function highlightSource(c) {
-  const ch = (c.channel || '').toLowerCase()
-  if (ch.includes('fox')) return 'FOX'
-  if (ch.includes('espn')) return 'ESPN'
-  if (ch.includes('fifa')) return 'FIFA'
-  if (ch.includes('one football') || ch.includes('onefootball')) return 'OneFootball'
+  const brand = officialBrand(c.channel)
+  if (brand) return brand
   const first = (c.channel || 'Watch').split(/\s+/)[0]
   return first.length > 11 ? first.slice(0, 11) : first
 }

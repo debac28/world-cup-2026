@@ -16,7 +16,7 @@ import seed from '../../public/data/seed.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
-import { youtubeHighlights, matchesNeedingHighlights } from '../../scripts/lib/highlights.mjs'
+import { youtubeHighlights, matchesNeedingHighlights, sanitizeHighlights } from '../../scripts/lib/highlights.mjs'
 import { fetchMatchGoals } from '../../scripts/lib/scorers.mjs'
 import { attachWikiLinks } from '../../scripts/lib/wikilinks.mjs'
 
@@ -198,10 +198,14 @@ async function buildPayload(env) {
     console.log('fifa merge failed:', e.message)
   }
 
-  // Merge highlight links from KV.
+  // Merge highlight links from KV, validated against this match: drop any candidate whose
+  // title doesn't name both teams (a different match's clip) or whose channel is scraped junk,
+  // so bad data is never served even before the hourly cron rewrites KV.
   const map = await readHighlights(env)
   for (const [id, r] of Object.entries(results)) {
-    if (map[id]) r.highlights = map[id]
+    if (!map[id]) continue
+    const clean = sanitizeHighlights(map[id], r.home, r.away)
+    if (clean) r.highlights = clean
   }
 
   // Merge per-match goal scorers from KV (populated by the scheduled Wikipedia refresh).
@@ -284,9 +288,21 @@ async function refreshHighlights(env) {
     return
   }
   const map = await readHighlights(env)
+  // Repair stored entries first (costs no quota): strip any candidate that fails validation —
+  // wrong-match titles or scraped-junk channels left by an older code path. An entry left with
+  // no valid US candidate is dropped so the search loop below refetches it cleanly.
+  let changed = false
+  for (const [id, r] of Object.entries(results)) {
+    if (!map[id]) continue
+    const clean = sanitizeHighlights(map[id], r.home, r.away)
+    if (JSON.stringify(clean) === JSON.stringify(map[id])) continue
+    if (clean) map[id] = clean
+    else delete map[id]
+    changed = true
+  }
+
   const todo = matchesNeedingHighlights(results, map, HL_MAX_AGE_MS)
   let budget = HL_BUDGET
-  let changed = false
   for (const [id, r] of todo) {
     if (budget <= 0) break
     try {

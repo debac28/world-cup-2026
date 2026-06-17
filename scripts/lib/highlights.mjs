@@ -1,8 +1,96 @@
 // YouTube highlights search — shared by the Node updater and the Cloudflare Worker.
 // Pure (uses global fetch, available in Node 18+ and Workers); no runtime-specific APIs.
 
-// Channels we trust for official highlights.
-export const YT_PREFERRED = /fox soccer|fox sports|fifa|one football|fox/i
+// Official rights-holders we trust for highlights, matched as the WHOLE channel name (never a
+// substring, and NEVER the video title — that is where spam farms bury bait keywords like
+// "FIFA World Cup"). So a look-alike upload channel such as "FIFA Highlights HD" does not pass
+// as official. Maps the channel name -> the short brand shown on the source chip.
+const OFFICIAL = new Map([
+  ['fox soccer', 'FOX'],
+  ['fox sports', 'FOX'],
+  ['fifa', 'FIFA'],
+  ['telemundo deportes', 'Telemundo'],
+  ['onefootball', 'OneFootball'],
+  ['one football', 'OneFootball'],
+])
+
+// The broadcaster brand for a channel, or null if it isn't an official rights-holder. Always
+// keyed off the structured channel name from the API — never the title.
+export function officialBrand(channel) {
+  return OFFICIAL.get((channel || '').trim().toLowerCase()) || null
+}
+
+// Fold a string for loose comparison: drop diacritics, lowercase, collapse punctuation to
+// spaces ("Côte d'Ivoire" -> "cote d ivoire", "Türkiye" -> "turkiye").
+function fold(s) {
+  return (s || '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+}
+
+// Seed team name (folded) -> the substrings a YouTube title might actually use. Keeps the
+// shortest unambiguous token so e.g. "South Korea", "Korea Republic" and "Korea" all match,
+// and Spanish/Portuguese feeds ("Jordania", "Czechia") still resolve.
+const TITLE_ALIASES = {
+  'korea republic': ['korea'],
+  'czech republic': ['czech'],
+  'bosnia and herzegovina': ['bosnia'],
+  'ivory coast': ['ivory coast', 'cote d ivoire'],
+  'cape verde': ['cape verde', 'cabo verde'],
+  'dr congo': ['congo'],
+  'united states': ['united states', 'usa'],
+  'turkey': ['turkey', 'turkiye'],
+  'saudi arabia': ['saudi'],
+  jordan: ['jordan'], // matches "Jordan" and "Jordania"
+}
+
+function teamVariants(team) {
+  const f = fold(team)
+  return TITLE_ALIASES[f] || [f]
+}
+
+// True only if the title names BOTH teams — the guard against YouTube's relevance search
+// returning a different match's clip (e.g. an Argentina–Algeria video for an Austria–Jordan
+// query). Both team names must appear, so a single shared word can't cross-match.
+export function titleMatchesTeams(title, home, away) {
+  const t = fold(title)
+  const has = (team) => teamVariants(team).some((v) => t.includes(v))
+  return has(home) && has(away)
+}
+
+// A clean channel name is a short, single-line broadcaster/creator name. The fingerprint of the
+// old scrape path is a byline blob like "FIFA • 1.1M views • 3 hours ago\n\n\n…", which both
+// pollutes the source chip and lets junk pose as an official channel — reject it.
+function cleanChannel(channel) {
+  return (
+    typeof channel === 'string' &&
+    channel.length > 0 &&
+    channel.length <= 60 &&
+    !/[\n•]|\bviews\b|\bago\b/i.test(channel)
+  )
+}
+
+// A stored/looked-up highlight candidate is trustworthy for this match only if it has a video
+// id, a clean (un-scraped) channel, and a title that actually names both teams.
+export function validCandidate(c, home, away) {
+  return !!(c && c.videoId && cleanChannel(c.channel) && titleMatchesTeams(c.title, home, away))
+}
+
+// Drop every untrustworthy candidate from a stored {US:[...], INTL:[...]} entry (also accepts
+// the legacy single-object {US:{...}} shape). Returns a cleaned entry, or null if nothing
+// survives. Used both to serve-filter KV and to self-heal it.
+export function sanitizeHighlights(entry, home, away) {
+  if (!entry) return null
+  const out = {}
+  for (const [region, val] of Object.entries(entry)) {
+    const list = (Array.isArray(val) ? val : [val]).filter((c) => validCandidate(c, home, away))
+    if (list.length) out[region] = list
+  }
+  return Object.keys(out).length ? out : null
+}
 
 function toVideo(it) {
   return {
@@ -13,9 +101,10 @@ function toVideo(it) {
   }
 }
 
-// Find up to `max` official highlight videos for the match, trusted channels first, deduped
-// by videoId. Only videos whose title actually says "highlights" are kept (avoids linking
-// re-uploads/streams). `regionCode` biases availability/ranking; pass a falsy value for a
+// Find up to `max` highlight videos for the match, official rights-holders first, deduped by
+// videoId. A video is kept only if its title says "highlights" AND names both teams (so a
+// different match's clip can never sneak in), with official-channel clips ranked ahead of
+// other creators. `regionCode` biases availability/ranking; pass a falsy value for a
 // region-neutral search. A single search costs 100 quota units regardless of `maxResults`,
 // so we ask for more and keep the best — this is what gives geo-blocked clips a fallback.
 export async function youtubeHighlights(home, away, regionCode, key, max = 3) {
@@ -31,15 +120,17 @@ export async function youtubeHighlights(home, away, regionCode, key, max = 3) {
     throw new Error(`YouTube ${res.status} ${body.slice(0, 160)}`)
   }
   const items = ((await res.json()).items || []).filter((it) => it.id?.videoId)
-  const isHi = (it) => /highlight/i.test(it.snippet?.title || '')
-  const preferred = items.filter((it) => isHi(it) && YT_PREFERRED.test(it.snippet?.channelTitle || ''))
-  const other = items.filter((it) => isHi(it) && !preferred.includes(it))
+  const keep = items
+    .map(toVideo)
+    .filter((v) => /highlight/i.test(v.title || '') && validCandidate(v, home, away))
+  const preferred = keep.filter((v) => officialBrand(v.channel))
+  const other = keep.filter((v) => !officialBrand(v.channel))
   const out = []
   const seen = new Set()
-  for (const it of [...preferred, ...other]) {
-    if (seen.has(it.id.videoId)) continue
-    seen.add(it.id.videoId)
-    out.push(toVideo(it))
+  for (const v of [...preferred, ...other]) {
+    if (seen.has(v.videoId)) continue
+    seen.add(v.videoId)
+    out.push(v)
     if (out.length >= max) break
   }
   return out
@@ -54,14 +145,16 @@ export async function youtubeHighlight(home, away, regionCode, key) {
 
 // Given a results map and the highlights already known (id -> {US:[...]}), return the list
 // of [id, result] still needing US highlight candidates, most-recent first, within maxAgeMs.
-// A match is "done" only once its US entry is a populated array — so legacy single-object
-// entries ({US:{...}}) are re-processed and upgraded to the multi-candidate array shape.
+// A match is "done" only once its US entry holds at least one VALID candidate — so legacy
+// single-object entries ({US:{...}}) and entries whose stored clips fail validation (wrong-
+// match titles, scraped junk channels) are re-processed and replaced.
 export function matchesNeedingHighlights(results, known, maxAgeMs, now = Date.now()) {
   return Object.entries(results)
     .filter(([id, r]) => {
       if (r.status !== 'FT' || !r.kickoff || !r.home || !r.away) return false
       const us = known[id]?.US
-      if (Array.isArray(us) && us.length) return false
+      const ok = Array.isArray(us) && us.some((c) => validCandidate(c, r.home, r.away))
+      if (ok) return false
       const age = now - new Date(r.kickoff).getTime()
       return age > 0 && age < maxAgeMs
     })
