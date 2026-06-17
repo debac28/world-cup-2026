@@ -75,12 +75,23 @@ function setStatus(state) {
   }
 }
 
+// Set once the service worker registers (see initServiceWorker); forces a check for newly
+// deployed app code. Kept at module scope so doRefresh can call it before the SW registers.
+let checkForNewVersion = null
+
 // Re-fetch live data and re-render. Guarded so overlapping triggers don't stack.
 let refreshing = false
 async function doRefresh() {
   if (refreshing) return
   refreshing = true
   setStatus('refreshing')
+  // "Tap to refresh" must get the latest CODE, not just the latest data — otherwise an
+  // installed PWA keeps running a stale bundle no matter how often the user refreshes. Force a
+  // service-worker update check: if a new version is deployed, autoUpdate activates it and
+  // reloads the page (pulling the new index.html + JS). registration.update() fetches sw.js
+  // from the network directly, so this works even for a client still on an old cache-first SW
+  // that a plain reload could never dislodge.
+  checkForNewVersion?.()
   try {
     model = await refresh()
     renderView()
@@ -155,6 +166,8 @@ function initServiceWorker() {
     onRegisteredSW(_swUrl, registration) {
       if (!registration) return
       const check = () => registration.update().catch(() => {})
+      // Expose to doRefresh so an explicit "tap to refresh" also checks for new app code.
+      checkForNewVersion = check
       setInterval(check, 30 * 60 * 1000)
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') check()
