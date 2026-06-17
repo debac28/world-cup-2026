@@ -18,6 +18,10 @@ export default defineConfig(({ command }) => ({
     ...(command === 'serve' && process.env.HTTPS ? [basicSsl()] : []),
     VitePWA({
       registerType: 'autoUpdate',
+      // We register the service worker ourselves in main.js so we can force frequent
+      // update checks (interval + on refocus) — otherwise installed PWAs run stale code
+      // for days. Disable the auto-injected registration to avoid registering twice.
+      injectRegister: false,
       includeAssets: ['favicon.svg', 'icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
         name: 'World Cup 2026',
@@ -35,12 +39,23 @@ export default defineConfig(({ command }) => ({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,json}'],
-        // Never precache live results — it must always come from the network
-        // (NetworkFirst rule below), or a stale copy gets baked into the app shell.
-        // seed.json is still precached for offline use.
-        globIgnores: ['**/data/live.json'],
-        // Live results JSON: serve fast from cache, refresh in the background.
+        // Never precache the data JSON — precached files are served cache-first and only
+        // refresh when the whole service worker updates, which baked stale schedule/score
+        // data into installed PWAs for days. Both are served network-first below instead,
+        // so edits (e.g. kickoff fixes in seed.json) reach users on the next online load.
+        globIgnores: ['**/data/live.json', '**/data/seed.json'],
         runtimeCaching: [
+          {
+            // Schedule skeleton: fresh when online (so kickoff/data fixes propagate),
+            // falls back to the last cached copy offline.
+            urlPattern: ({ url }) => url.pathname.endsWith('/data/seed.json'),
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'seed-data',
+              networkTimeoutSeconds: 4,
+              expiration: { maxEntries: 1, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
           {
             // Network-first so a refresh fetches the latest results when online,
             // falling back to the last cached copy when offline.

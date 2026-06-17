@@ -1,4 +1,5 @@
 import './style.css'
+import { registerSW } from 'virtual:pwa-register'
 import { load, refresh } from './lib/data.js'
 import { initAnalytics } from './lib/analytics.js'
 import { initFeedback } from './lib/feedback.js'
@@ -143,6 +144,27 @@ async function init() {
   }
 }
 
+// Keep installed PWAs fresh. autoUpdate activates a new service worker and reloads as
+// soon as one is found, but the browser rarely *checks* on its own — especially when an
+// iOS home-screen app is resumed from its frozen state. So we proactively check for a new
+// SW on an interval and every time the app regains focus/visibility, so new deploys and
+// seed fixes reach home-screen users in minutes instead of days.
+function initServiceWorker() {
+  const updateSW = registerSW({
+    immediate: true,
+    onRegisteredSW(_swUrl, registration) {
+      if (!registration) return
+      const check = () => registration.update().catch(() => {})
+      setInterval(check, 30 * 60 * 1000)
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') check()
+      })
+      window.addEventListener('focus', check)
+    },
+  })
+}
+
+initServiceWorker()
 initAnalytics()
 initFeedback()
 init()
