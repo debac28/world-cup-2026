@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-17T14:48:13.427Z",
+  "updated": "2026-06-17T19:57:45.443Z",
   "season": "2026",
   "results": {
     "1": {
@@ -39,14 +39,16 @@
           "minute": "67",
           "pen": false,
           "og": false,
-          "team": "Korea Republic"
+          "team": "Korea Republic",
+          "wiki": "Hwang In-beom"
         },
         {
           "player": "Oh Hyeon-gyu",
           "minute": "80",
           "pen": false,
           "og": false,
-          "team": "Korea Republic"
+          "team": "Korea Republic",
+          "wiki": "Oh Hyeon-gyu"
         },
         {
           "player": "Krejčí",
@@ -156,7 +158,8 @@
           "minute": "27",
           "pen": false,
           "og": false,
-          "team": "Australia"
+          "team": "Australia",
+          "wiki": "Nestory Irankunda"
         },
         {
           "player": "Metcalfe",
@@ -187,7 +190,8 @@
           "minute": "21",
           "pen": false,
           "og": false,
-          "team": "Morocco"
+          "team": "Morocco",
+          "wiki": "Ismael Saibari"
         }
       ]
     },
@@ -211,7 +215,8 @@
           "minute": "17",
           "pen": false,
           "og": false,
-          "team": "Switzerland"
+          "team": "Switzerland",
+          "wiki": "Breel Embolo"
         }
       ]
     },
@@ -356,7 +361,8 @@
           "team": "Sweden",
           "minute": "30",
           "pen": false,
-          "og": false
+          "og": false,
+          "wiki": "Alexander Isak"
         },
         {
           "player": "Viktor GYOKERES",
@@ -384,7 +390,8 @@
           "team": "Tunisia",
           "minute": "43",
           "pen": false,
-          "og": false
+          "og": false,
+          "wiki": "Omar Rekik"
         }
       ]
     },
@@ -653,10 +660,26 @@
     "23": {
       "home": "Portugal",
       "away": "DR Congo",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-17T17:00Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-17T17:00:00Z",
+      "goals": [
+        {
+          "player": "JOAO NEVES",
+          "team": "Portugal",
+          "minute": "6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Yoane WISSA",
+          "team": "DR Congo",
+          "minute": "45+5",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "24": {
       "home": "Uzbekistan",
@@ -1056,55 +1079,64 @@
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 3,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Lionel Messi"
     },
     {
       "player": "Folarin Balogun",
       "team": "United States",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Folarin Balogun"
     },
     {
       "player": "Kai Havertz",
       "team": "Germany",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Kai Havertz"
     },
     {
       "player": "Yasin Ayari",
       "team": "Sweden",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Yasin Ayari"
     },
     {
       "player": "Elijah Just",
       "team": "New Zealand",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Elijah Just"
     },
     {
       "player": "Kylian Mbappé",
       "team": "France",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Kylian Mbappé"
     },
     {
       "player": "Erling Haaland",
       "team": "Norway",
       "goals": 2,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Erling Haaland"
     },
     {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Julián Quiñones"
     },
     {
       "player": "Raúl Jiménez",
       "team": "Mexico",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Raúl Jiménez"
     },
     {
       "player": "Ladislav Krejčí",
@@ -1128,13 +1160,15 @@
       "player": "Jovo Lukić",
       "team": "Bosnia and Herzegovina",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Jovo Lukić"
     },
     {
       "player": "Cyle Larin",
       "team": "Canada",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Cyle Larin"
     },
     {
       "player": "Mauricio",
@@ -1146,73 +1180,85 @@
       "player": "Gio Reyna",
       "team": "United States",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Giovanni Reyna"
     },
     {
       "player": "Breel Embolo",
       "team": "Switzerland",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Breel Embolo"
     },
     {
       "player": "Boualem Khoukhi",
       "team": "Qatar",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Boualem Khoukhi"
     },
     {
       "player": "Ismael Saibari",
       "team": "Morocco",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Ismael Saibari"
     },
     {
       "player": "Vinicius Junior",
       "team": "Brazil",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Vinícius Júnior"
     },
     {
       "player": "John McGinn",
       "team": "Scotland",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "John McGinn"
     },
     {
       "player": "Nestor Irankunda",
       "team": "Australia",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Nestory Irankunda"
     },
     {
       "player": "Connor Metcalfe",
       "team": "Australia",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Connor Metcalfe"
     },
     {
       "player": "Felix Kalu Nmecha",
       "team": "Germany",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Felix Nmecha"
     },
     {
       "player": "Livano Comenencia",
       "team": "Curaçao",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Livano Comenencia"
     },
     {
       "player": "Nico Schlotterbeck",
       "team": "Germany",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Nico Schlotterbeck"
     },
     {
       "player": "Jamal Musiala",
       "team": "Germany",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Jamal Musiala"
     },
     {
       "player": "Nathaniel Brown",
@@ -1224,67 +1270,78 @@
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 1,
-      "assists": 2
+      "assists": 2,
+      "wiki": "Deniz Undav"
     },
     {
       "player": "Virgil van Dijk",
       "team": "Netherlands",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Virgil van Dijk"
     },
     {
       "player": "Keito Nakamura",
       "team": "Japan",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Keito Nakamura"
     },
     {
       "player": "Crysencio Summerville",
       "team": "Netherlands",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Crysencio Summerville"
     },
     {
       "player": "Daichi Kamada",
       "team": "Japan",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Daichi Kamada"
     },
     {
       "player": "Amad Diallo",
       "team": "Ivory Coast",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Amad Diallo"
     },
     {
       "player": "Alexander Isak",
       "team": "Sweden",
       "goals": 1,
-      "assists": 2
+      "assists": 2,
+      "wiki": "Alexander Isak"
     },
     {
       "player": "Omar Rekik",
       "team": "Tunisia",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Omar Rekik"
     },
     {
       "player": "Viktor Gyökeres",
       "team": "Sweden",
       "goals": 1,
-      "assists": 1
+      "assists": 1,
+      "wiki": "Viktor Gyökeres"
     },
     {
       "player": "Mattias Svanberg",
       "team": "Sweden",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Mattias Svanberg"
     },
     {
       "player": "Emam Ashour",
       "team": "Egypt",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Emam Ashour"
     },
     {
       "player": "Abdulelah Al Amri",
@@ -1296,25 +1353,29 @@
       "player": "Maximiliano Araújo",
       "team": "Uruguay",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Maximiliano Araújo"
     },
     {
       "player": "Ramin Rezaeian",
       "team": "Iran",
       "goals": 1,
-      "assists": 1
+      "assists": 1,
+      "wiki": "Ramin Rezaeian"
     },
     {
       "player": "Mohammad Mohebi",
       "team": "Iran",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Mohammad Mohebi"
     },
     {
       "player": "Bradley Barcola",
       "team": "France",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Bradley Barcola"
     },
     {
       "player": "Ibrahim M'Baye",
@@ -1326,31 +1387,157 @@
       "player": "Aymen Hussein",
       "team": "Iraq",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Aymen Hussein"
     },
     {
       "player": "Leo Østigård",
       "team": "Norway",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Leo Østigård"
     },
     {
       "player": "Romano Schmid",
       "team": "Austria",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Romano Schmid"
     },
     {
       "player": "Ali Olwan",
       "team": "Jordan",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Ali Olwan"
     },
     {
       "player": "Marko Arnautovic",
       "team": "Austria",
       "goals": 1,
-      "assists": 0
+      "assists": 0,
+      "wiki": "Marko Arnautović"
+    },
+    {
+      "player": "Joao Neves",
+      "team": "Portugal",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "João Neves"
+    },
+    {
+      "player": "Yoane Wissa",
+      "team": "DR Congo",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Yoane Wissa"
     }
-  ]
+  ],
+  "wikiLinks": {
+    "Quiñones": "",
+    "Jiménez": "",
+    "Hwang In-beom": "Hwang In-beom",
+    "Oh Hyeon-gyu": "Oh Hyeon-gyu",
+    "Krejčí": "",
+    "Larin": "",
+    "Lukić": "",
+    "Bobadilla": "",
+    "Balogun": "",
+    "Reyna": "",
+    "Maurício": "",
+    "McGinn": "",
+    "Irankunda": "Nestory Irankunda",
+    "Metcalfe": "",
+    "Vinícius": "",
+    "Saibari": "Ismael Saibari",
+    "Muheim": "",
+    "Embolo": "Breel Embolo",
+    "Amad DIALLO": "",
+    "Felix NMECHA": "",
+    "Nico SCHLOTTERBECK": "",
+    "Kai HAVERTZ": "",
+    "Jamal MUSIALA": "",
+    "Nathaniel BROWN": "",
+    "Deniz UNDAV": "",
+    "Livano COMENENCIA": "",
+    "van Dijk": "",
+    "Summerville": "",
+    "Nakamura": "",
+    "Kamada": "",
+    "Yasin AYARI": "",
+    "Alexander Isak": "Alexander Isak",
+    "Viktor GYOKERES": "",
+    "Mattias SVANBERG": "",
+    "Omar Rekik": "Omar Rekik",
+    "Abdulelah ALAMRI": "",
+    "Maxi ARAUJO": "",
+    "Ramin REZAEIAN": "",
+    "Mohammad MOHEBBI": "",
+    "Elijah JUST": "",
+    "MOHAMED HANY": "",
+    "EMAM ASHOUR": "",
+    "Kylian MBAPPE": "",
+    "Bradley BARCOLA": "",
+    "Ibrahim MBAYE": "",
+    "AYMEN HUSSEIN": "",
+    "Erling HAALAND": "",
+    "Leo OSTIGARD": "",
+    "Lionel MESSI": "",
+    "Romano SCHMID": "",
+    "YAZAN ALARAB": "",
+    "Marko ARNAUTOVIC": "",
+    "ALI OLWAN": "",
+    "JOAO NEVES": "",
+    "Yoane WISSA": "",
+    "Lionel Messi": "Lionel Messi",
+    "Folarin Balogun": "Folarin Balogun",
+    "Kai Havertz": "Kai Havertz",
+    "Yasin Ayari": "Yasin Ayari",
+    "Elijah Just": "Elijah Just",
+    "Kylian Mbappé": "Kylian Mbappé",
+    "Erling Haaland": "Erling Haaland",
+    "Julián Quiñones": "Julián Quiñones",
+    "Raúl Jiménez": "Raúl Jiménez",
+    "Ladislav Krejčí": "",
+    "In-beom Hwang": "",
+    "Hyun-Gyu Oh": "",
+    "Jovo Lukić": "Jovo Lukić",
+    "Cyle Larin": "Cyle Larin",
+    "Mauricio": "",
+    "Gio Reyna": "Giovanni Reyna",
+    "Breel Embolo": "Breel Embolo",
+    "Boualem Khoukhi": "Boualem Khoukhi",
+    "Ismael Saibari": "Ismael Saibari",
+    "Vinicius Junior": "Vinícius Júnior",
+    "John McGinn": "John McGinn",
+    "Nestor Irankunda": "Nestory Irankunda",
+    "Connor Metcalfe": "Connor Metcalfe",
+    "Felix Kalu Nmecha": "Felix Nmecha",
+    "Livano Comenencia": "Livano Comenencia",
+    "Nico Schlotterbeck": "Nico Schlotterbeck",
+    "Jamal Musiala": "Jamal Musiala",
+    "Nathaniel Brown": "",
+    "Deniz Undav": "Deniz Undav",
+    "Virgil van Dijk": "Virgil van Dijk",
+    "Keito Nakamura": "Keito Nakamura",
+    "Crysencio Summerville": "Crysencio Summerville",
+    "Daichi Kamada": "Daichi Kamada",
+    "Amad Diallo": "Amad Diallo",
+    "Viktor Gyökeres": "Viktor Gyökeres",
+    "Mattias Svanberg": "Mattias Svanberg",
+    "Emam Ashour": "Emam Ashour",
+    "Abdulelah Al Amri": "",
+    "Maximiliano Araújo": "Maximiliano Araújo",
+    "Ramin Rezaeian": "Ramin Rezaeian",
+    "Mohammad Mohebi": "Mohammad Mohebi",
+    "Bradley Barcola": "Bradley Barcola",
+    "Ibrahim M'Baye": "",
+    "Aymen Hussein": "Aymen Hussein",
+    "Leo Østigård": "Leo Østigård",
+    "Romano Schmid": "Romano Schmid",
+    "Ali Olwan": "Ali Olwan",
+    "Marko Arnautovic": "Marko Arnautović",
+    "Joao Neves": "João Neves",
+    "Yoane Wissa": "Yoane Wissa"
+  }
 }
