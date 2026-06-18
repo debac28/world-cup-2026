@@ -1,7 +1,7 @@
 import './style.css'
 import { registerSW } from 'virtual:pwa-register'
 import { load, refresh, onModelUpdate } from './lib/data.js'
-import { initAnalytics } from './lib/analytics.js'
+import { initAnalytics, initGoatCounter } from './lib/analytics.js'
 import { initFeedback } from './lib/feedback.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
@@ -187,5 +187,6 @@ function initServiceWorker() {
 
 initServiceWorker()
 initAnalytics()
+initGoatCounter()
 initFeedback()
 init()
