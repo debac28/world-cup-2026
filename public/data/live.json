@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-17T19:57:45.443Z",
+  "updated": "2026-06-18T02:34:35.774Z",
   "season": "2026",
   "results": {
     "1": {
@@ -644,18 +644,72 @@
     "21": {
       "home": "Ghana",
       "away": "Panama",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-17T23:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-17T23:00:00Z",
+      "goals": [
+        {
+          "player": "Caleb YIRENKYI",
+          "team": "Ghana",
+          "minute": "90+5",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "22": {
       "home": "England",
       "away": "Croatia",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-17T20:00Z"
+      "homeGoals": 4,
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-17T20:00:00Z",
+      "goals": [
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "12",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "42",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "47",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Marcus RASHFORD",
+          "team": "England",
+          "minute": "85",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Martin BATURINA",
+          "team": "Croatia",
+          "minute": "36",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Petar Musa",
+          "team": "Croatia",
+          "minute": "45+5",
+          "pen": false,
+          "og": false,
+          "wiki": "Petar Musa"
+        }
+      ]
     },
     "23": {
       "home": "Portugal",
@@ -686,8 +740,9 @@
       "away": "Colombia",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-18T02:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-18T02:00:00Z",
+      "minute": "34"
     },
     "25": {
       "home": "Czech Republic",
@@ -1125,6 +1180,13 @@
       "wiki": "Erling Haaland"
     },
     {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Harry Kane"
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -1431,6 +1493,41 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Yoane Wissa"
+    },
+    {
+      "player": "Martin Baturina",
+      "team": "Croatia",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Martin Baturina"
+    },
+    {
+      "player": "Petar Musa",
+      "team": "Croatia",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Petar Musa"
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Jude Bellingham"
+    },
+    {
+      "player": "Marcus Rashford",
+      "team": "England",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Marcus Rashford"
+    },
+    {
+      "player": "Caleb Yirenkyi",
+      "team": "Ghana",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Caleb Yirenkyi"
     }
   ],
   "wikiLinks": {
@@ -1538,6 +1635,17 @@
     "Ali Olwan": "Ali Olwan",
     "Marko Arnautovic": "Marko Arnautović",
     "Joao Neves": "João Neves",
-    "Yoane Wissa": "Yoane Wissa"
+    "Yoane Wissa": "Yoane Wissa",
+    "Caleb YIRENKYI": "",
+    "Harry KANE": "",
+    "Jude BELLINGHAM": "",
+    "Marcus RASHFORD": "",
+    "Martin BATURINA": "",
+    "Petar Musa": "Petar Musa",
+    "Harry Kane": "Harry Kane",
+    "Martin Baturina": "Martin Baturina",
+    "Jude Bellingham": "Jude Bellingham",
+    "Marcus Rashford": "Marcus Rashford",
+    "Caleb Yirenkyi": "Caleb Yirenkyi"
   }
 }
