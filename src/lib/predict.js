@@ -16,3 +16,31 @@ export function winProbability(homeRating, awayRating) {
   const home = Math.round(pHome * 100)
   return { home, away: 100 - home }
 }
+
+// American moneyline -> raw implied probability (still carries the bookmaker's margin/vig).
+function moneylineToProb(ml) {
+  if (ml == null || Number.isNaN(Number(ml))) return null
+  const n = Number(ml)
+  return n >= 0 ? 100 / (n + 100) : -n / (-n + 100)
+}
+
+// Two-way win split from a sportsbook's three-way moneyline (home / draw / away). This is
+// the preferred source for the card's win % — a real market price, not our Elo guess. We
+// de-vig across all three outcomes, then fold the draw out the same way `winProbability`
+// does, so the two numbers still sum to 100 and slot straight into the existing badges.
+// Returns { home, away } integer percentages, or null if the line is incomplete.
+export function oddsWinProbability(homeML, drawML, awayML) {
+  const ph = moneylineToProb(homeML)
+  const pd = moneylineToProb(drawML)
+  const pa = moneylineToProb(awayML)
+  if (ph == null || pd == null || pa == null) return null
+  const overround = ph + pd + pa
+  if (overround <= 0) return null
+  // De-vig to true probabilities, then condition on "not a draw": P(home | someone wins).
+  const home = ph / overround
+  const away = pa / overround
+  const decisive = home + away
+  if (decisive <= 0) return null
+  const h = Math.round((home / decisive) * 100)
+  return { home: h, away: 100 - h }
+}

@@ -1,6 +1,6 @@
 import './style.css'
 import { registerSW } from 'virtual:pwa-register'
-import { load, refresh } from './lib/data.js'
+import { load, refresh, onModelUpdate } from './lib/data.js'
 import { initAnalytics } from './lib/analytics.js'
 import { initFeedback } from './lib/feedback.js'
 import { el, clear } from './lib/dom.js'
@@ -113,6 +113,14 @@ function relTime(date) {
 }
 
 window.addEventListener('hashchange', renderView)
+
+// The DraftKings win line is fetched in the background after load; when it arrives, swap the
+// freshly-rebuilt model in and re-render — but only on Today, the lone tab that shows win %,
+// so other tabs aren't needlessly re-rendered (and scroll-reset) for a number they don't use.
+onModelUpdate((updated) => {
+  model = updated
+  if (currentTab().id === 'today') renderView()
+})
 
 // --- Refresh triggers ---------------------------------------------------------
 // 1) Tap the status text.

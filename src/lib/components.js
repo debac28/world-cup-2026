@@ -9,7 +9,8 @@ export function matchRow(m, { showRound = false, showPrediction = false } = {}) 
   const score = scoreCell(m)
   const homeWin = m.finished && m.homeGoals > m.awayGoals
   const awayWin = m.finished && m.awayGoals > m.homeGoals
-  // Elo win % sits next to each team's rank, only on upcoming matches where opted in.
+  // Win % sits next to each team's rank, only on upcoming matches where opted in. Sourced from
+  // the DraftKings line (via ESPN) when available, falling back to an Elo estimate.
   const prob = showPrediction && !m.finished && !m.live ? m.winProb : null
 
   const state = m.live ? 'match--live' : m.finished ? 'match--done' : ''
@@ -215,7 +216,7 @@ function side(name, code, winner, which, rank, prob) {
   const meta = []
   if (rank) meta.push(el('span', { class: 'team__rank', title: 'FIFA World Ranking' }, `#${rank}`))
   if (prob != null)
-    meta.push(el('span', { class: 'team__prob', title: 'Win chance (Elo, from FIFA points)' }, `${prob}%`))
+    meta.push(el('span', { class: 'team__prob', title: 'Win chance (DraftKings line via ESPN)' }, `${prob}%`))
   return el('div', { class: `team team--${which} ${winner ? 'team--win' : ''}` }, [
     flag(code, name),
     el('div', { class: 'team__id' }, [

@@ -6,6 +6,7 @@
 import { parse } from './time.js'
 import { computeStandings, resolveKnockout } from './standings.js'
 import { winProbability } from './predict.js'
+import { fetchEspnOdds } from './odds.js'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -38,9 +39,22 @@ const FALLBACK_LIVE = PRIMARY_LIVE === RAW_LIVE ? null : RAW_LIVE
 
 let model = null
 let seedCache = null
+let liveCache = null
 // Static list of official fan zones + bars, loaded once (like the seed) and carried across
 // refreshes since it never changes per live update.
 let watchCache = null
+// DraftKings win % (via ESPN), keyed by seed match id and oriented to seed home/away. Fetched
+// in the background and cached so the card's win % is a real market line, not the Elo guess;
+// stays null until it resolves (then cards re-render). Refreshed at most every 10 min.
+let oddsCache = null
+let oddsAt = 0
+const ODDS_TTL = 10 * 60 * 1000
+// Set by main.js so a late-arriving odds fetch can swap the Elo numbers for the market line
+// and re-render the current view.
+let updateListener = null
+export function onModelUpdate(fn) {
+  updateListener = fn
+}
 
 async function loadJSON(path, fallback) {
   try {
@@ -114,9 +128,11 @@ function buildModel(seed, live) {
       awayFlag: flagOf.get(away) || null,
       homeRank: rankPosOf.get(home) || null,
       awayRank: rankPosOf.get(away) || null,
-      // Elo-based pre-match win split from FIFA points; null when a team isn't known yet
-      // (unresolved knockout slot). Only surfaced on upcoming Today-tab cards.
-      winProb: winProbability(rankOf.get(home), rankOf.get(away)),
+      // Pre-match win split, only surfaced on upcoming Today-tab cards. Prefer the real
+      // DraftKings market line (via ESPN) when we have it; fall back to the Elo split from
+      // FIFA points (also covers knockout slots ESPN's pair-join doesn't reach). Null when a
+      // team isn't known yet (unresolved knockout slot, no Elo rating).
+      winProb: oddsCache?.get(fix.id) || winProbability(rankOf.get(home), rankOf.get(away)),
       kickoff: parse(fix.kickoff),
       venue: fix.venue || null,
       status,
@@ -171,8 +187,10 @@ export async function load() {
   ])
   if (!seed) throw new Error('Missing seed.json — run `npm run seed`.')
   seedCache = seed
+  liveCache = live
   watchCache = Array.isArray(watch) ? watch : []
   model = buildModel(seed, live)
+  enrichOdds()
   return model
 }
 
@@ -180,8 +198,28 @@ export async function load() {
 export async function refresh() {
   if (!seedCache) return load()
   const live = await fetchLive()
+  liveCache = live
   model = buildModel(seedCache, live)
+  enrichOdds()
   return model
+}
+
+// Best-effort background fetch of the DraftKings line. Refreshes the cache at most once per
+// TTL, then rebuilds the model and asks main.js to re-render so the market numbers swap in
+// for the Elo placeholders. Never throws and never blocks load/refresh.
+async function enrichOdds() {
+  if (!seedCache) return
+  if (oddsCache && Date.now() - oddsAt < ODDS_TTL) return
+  try {
+    const odds = await fetchEspnOdds(seedCache)
+    if (!odds.size) return
+    oddsCache = odds
+    oddsAt = Date.now()
+    model = buildModel(seedCache, liveCache || { results: {}, scorers: [] })
+    updateListener?.(model)
+  } catch (e) {
+    console.warn('Odds enrich failed:', e.message)
+  }
 }
 
 export function matchesOn(model, dayKeyFn, key) {
