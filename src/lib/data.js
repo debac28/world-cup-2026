@@ -143,6 +143,9 @@ function buildModel(seed, live) {
       awayPens: r.awayPens ?? null,
       // Elapsed minute from FIFA, shown on the live badge ("● 87'"); null when not live.
       minute: status === 'live' ? r.minute || null : null,
+      // Raw feed status code (e.g. '2H', 'HT', 'BT'), kept while live so the badge can show
+      // "Half-time" during a paused-clock break instead of a minute-less "LIVE".
+      statusCode: status === 'live' ? r.status || null : null,
       // Per-region highlight candidates {US:[...], INTL:[...]} — multiple so a geo-blocked
       // clip has fallbacks; legacy single forms are coerced to a 1-element array.
       highlights: normalizeHighlights(r.highlights, r.highlight),

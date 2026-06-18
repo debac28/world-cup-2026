@@ -196,7 +196,7 @@ async function main() {
     const fifaResp = await fetch(FIFA_MATCHES_URL, { headers: FIFA_HEADERS })
     if (fifaResp.ok) {
       const fifa = await fifaResp.json()
-      results = mergeResults(results, buildFifaResults(seed, fifa.Results || []))
+      results = mergeResults(results, buildFifaResults(seed, fifa.Results || []), { preserveBreak: true })
       console.log(`Merged FIFA calendar (${(fifa.Results || []).length} matches).`)
     } else {
       console.warn(`FIFA fetch -> ${fifaResp.status}; skipping FIFA merge.`)

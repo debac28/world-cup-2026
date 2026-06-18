@@ -178,6 +178,9 @@ html, body {
 
 .badge { font-size: 0.68rem; color: var(--muted); background: var(--panel-2); padding: 2px 8px; border-radius: 999px; }
 .badge--live { color: #fff; background: var(--live); font-weight: 700; }
+/* Half-time / extra-time break: calm amber (not the alarming red LIVE) — the match is in
+   progress but the clock is paused. */
+.badge--break { color: #1a1a1a; background: #f5b301; font-weight: 700; }
 .badge--ft { color: var(--text); }
 
 .flag { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; flex: none; box-shadow: 0 0 0 1px #0003; }

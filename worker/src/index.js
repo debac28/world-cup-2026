@@ -210,7 +210,7 @@ async function buildPayload(env) {
   let fifaCal = null
   try {
     fifaCal = await fifaMatches()
-    results = mergeResults(results, buildFifaResults(seed, fifaCal))
+    results = mergeResults(results, buildFifaResults(seed, fifaCal), { preserveBreak: true })
     sources.push('fifa')
   } catch (e) {
     console.log('fifa merge failed:', e.message)
@@ -384,7 +384,7 @@ async function refreshGoals(env) {
   let fifaCal = []
   try {
     fifaCal = await fifaMatches()
-    results = mergeResults(results, buildFifaResults(seed, fifaCal))
+    results = mergeResults(results, buildFifaResults(seed, fifaCal), { preserveBreak: true })
   } catch (e) {
     console.log('refreshGoals FIFA overlay failed:', e.message)
   }

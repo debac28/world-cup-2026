@@ -117,10 +117,20 @@ export function buildEspnResults(seed, events) {
 
 const hasGoals = (r) => r && r.homeGoals != null && r.awayGoals != null
 
+// Paused states where the clock isn't running: half-time and the break between extra-time
+// halves. Some sources (FIFA's calendar) can't report these and emit a plain live half
+// instead — `preserveBreak` stops such a source from erasing a break a better source detected.
+const BREAK_STATUSES = new Set(['HT', 'BT'])
+
 // Overlay `overlay` onto `base`, keeping whichever source is further along per match. Returns
 // a new map; base entries not present in overlay are untouched. When overlay wins, only the
 // score/status/kickoff fields overwrite — base-only keys (highlights, goals, pens) are kept.
-export function mergeResults(base, overlay) {
+//
+// `preserveBreak` (used when merging the FIFA layer, which can't express half-time): if the
+// base already shows a break (HT/BT) and this overlay reports a plain live half, take the
+// overlay's score but KEEP the break status and its paused, minute-less clock — otherwise the
+// app would flip "Half-time" back to a running "LIVE" with no minute.
+export function mergeResults(base, overlay, { preserveBreak = false } = {}) {
   const merged = { ...base }
   for (const [id, ov] of Object.entries(overlay || {})) {
     const cur = merged[id]
@@ -136,17 +146,19 @@ export function mergeResults(base, overlay) {
     else if (rOv === 1) takeOverlay = true // both live -> ESPN is the fresher live source
     else takeOverlay = !hasGoals(cur) && hasGoals(ov) // NS/FT tie: only if overlay adds goals
     if (!takeOverlay) continue
+    const keepBreak =
+      preserveBreak && BREAK_STATUSES.has(cur.status) && !BREAK_STATUSES.has(ov.status)
     merged[id] = {
       ...cur,
       home: ov.home ?? cur.home,
       away: ov.away ?? cur.away,
       homeGoals: ov.homeGoals,
       awayGoals: ov.awayGoals,
-      status: ov.status,
+      status: keepBreak ? cur.status : ov.status,
       kickoff: ov.kickoff ?? cur.kickoff,
       // Live minute only comes from FIFA; carry it when the overlay wins, drop it otherwise
-      // (a finished/non-FIFA winner has no minute to show).
-      ...(ov.minute != null ? { minute: ov.minute } : { minute: undefined }),
+      // (a finished/non-FIFA winner, or a preserved break, has no running minute to show).
+      ...(!keepBreak && ov.minute != null ? { minute: ov.minute } : { minute: undefined }),
       ...(ov.homePens != null ? { homePens: ov.homePens } : {}),
       ...(ov.awayPens != null ? { awayPens: ov.awayPens } : {}),
     }

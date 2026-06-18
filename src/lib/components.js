@@ -242,7 +242,12 @@ function scoreCell(m) {
 
 function metaText(m) {
   // Live badge shows the elapsed minute from FIFA when we have it ("● 87'"), else "● LIVE".
+  // During a paused-clock break the minute drops out, so name the break ("⏸ Half-time")
+  // instead — otherwise users see a stalled "LIVE" with no minute and assume it's broken.
   if (m.live) {
+    const BREAKS = { HT: 'Half-time', BT: 'Break' }
+    const brk = BREAKS[m.statusCode]
+    if (brk) return el('span', { class: 'badge badge--break' }, `⏸ ${brk}`)
     return el('span', { class: 'badge badge--live' }, m.minute ? `● ${m.minute}'` : '● LIVE')
   }
   if (m.finished) return el('span', { class: 'badge badge--ft' }, 'Full time')
