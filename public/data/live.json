@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18T14:43:16.296Z",
+  "updated": "2026-06-18T20:08:45.489Z",
   "season": "2026",
   "results": {
     "1": {
@@ -776,18 +776,35 @@
     "25": {
       "home": "Czech Republic",
       "away": "South Africa",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-18T16:00Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-18T16:00:00Z",
+      "goals": [
+        {
+          "player": "Michal SADILEK",
+          "team": "Czech Republic",
+          "minute": "6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Teboho MOKOENA",
+          "team": "South Africa",
+          "minute": "83",
+          "pen": true,
+          "og": false
+        }
+      ]
     },
     "26": {
       "home": "Switzerland",
       "away": "Bosnia and Herzegovina",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-18T19:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-18T19:00:00Z",
+      "minute": "49"
     },
     "27": {
       "home": "Canada",
@@ -1583,6 +1600,19 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Jaminton Campaz"
+    },
+    {
+      "player": "Michal Sadílek",
+      "team": "Czech Republic",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Michal Sadílek"
+    },
+    {
+      "player": "Teboho Mokoena",
+      "team": "South Africa",
+      "goals": 1,
+      "assists": 0
     }
   ],
   "wikiLinks": {
@@ -1709,6 +1739,10 @@
     "Daniel Muñoz": "",
     "Abbosbek Fayzullaev": "Abbosbek Fayzullaev",
     "Luis Díaz": "",
-    "Jaminton Campaz": "Jaminton Campaz"
+    "Jaminton Campaz": "Jaminton Campaz",
+    "Michal SADILEK": "",
+    "Teboho MOKOENA": "",
+    "Michal Sadílek": "Michal Sadílek",
+    "Teboho Mokoena": ""
   }
 }
