@@ -75,6 +75,19 @@ export function titleMatchesTeams(title, home, away) {
   return has(home) && has(away)
 }
 
+const EDITION_YEAR = 2026
+
+// Reject a clip tagged with a PAST World Cup edition. Many fixtures recur across tournaments
+// (England v Croatia is also the 2018 semi-final), and the official FIFA channel hosts those
+// older highlights too — they name both teams and come from a trusted channel, so the only
+// thing telling them apart from this year's match is the year in the title. We reject any
+// World-Cup-era year (1990–2030, so video resolutions like 1080/2160 are ignored) that isn't
+// 2026; a title with no year at all (e.g. "Ghana vs Panama Highlights") is allowed through.
+export function titleIsCurrentEdition(title) {
+  const years = ((title || '').match(/\b(?:19|20)\d{2}\b/g) || []).map(Number)
+  return years.every((y) => y < 1990 || y > 2030 || y === EDITION_YEAR)
+}
+
 // A clean channel name is a short, single-line broadcaster/creator name. The fingerprint of the
 // old scrape path is a byline blob like "FIFA • 1.1M views • 3 hours ago\n\n\n…", which both
 // pollutes the source chip and lets junk pose as an official channel — reject it.
@@ -97,7 +110,8 @@ export function validCandidate(c, home, away) {
     c.videoId &&
     cleanChannel(c.channel) &&
     officialBrand(c.channel) &&
-    titleMatchesTeams(c.title, home, away)
+    titleMatchesTeams(c.title, home, away) &&
+    titleIsCurrentEdition(c.title)
   )
 }
 
