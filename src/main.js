@@ -176,7 +176,11 @@ function initServiceWorker() {
       const check = () => registration.update().catch(() => {})
       // Expose to doRefresh so an explicit "tap to refresh" also checks for new app code.
       checkForNewVersion = check
-      setInterval(check, 30 * 60 * 1000)
+      // Check every 5 min while the app is foregrounded (was 30 min — too slow; a stale
+      // tab left open could lag a deploy by half an hour). registration.update() just
+      // re-fetches sw.js, so this is cheap. The focus/visibility checks below still do the
+      // heavy lifting on iOS, where backgrounded PWAs freeze this timer entirely.
+      setInterval(check, 5 * 60 * 1000)
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') check()
       })
