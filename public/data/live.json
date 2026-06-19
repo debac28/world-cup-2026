@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-19T14:39:35.807Z",
+  "updated": "2026-06-19T19:23:44.095Z",
   "season": "2026",
   "results": {
     "1": {
@@ -930,10 +930,11 @@
     "31": {
       "home": "United States",
       "away": "Australia",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-19T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-19T19:00:00Z",
+      "minute": "23"
     },
     "32": {
       "home": "Turkey",
