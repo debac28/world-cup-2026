@@ -43,7 +43,18 @@ export default defineConfig(({ command }) => ({
         // refresh when the whole service worker updates, which baked stale schedule/score
         // data into installed PWAs for days. Both are served network-first below instead,
         // so edits (e.g. kickoff fixes in seed.json) reach users on the next online load.
-        globIgnores: ['**/data/live.json', '**/data/seed.json'],
+        //
+        // ALSO never precache index.html. Precaching it registers a Workbox precache route
+        // whose default directoryIndex:'index.html' matches navigations to '/', and that
+        // route — registered before our runtimeCaching — wins, serving the home page (and
+        // therefore the content-hashed JS it references) CACHE-FIRST. That shadowed the
+        // NetworkFirst navigation route below entirely, so installed PWAs stayed pinned to
+        // the precached old bundle until the whole SW happened to reinstall AND reload — the
+        // exact stale-shell trap we meant to avoid (users had to delete + re-add the app to
+        // get new features). With index.html out of the precache, '/' falls through to the
+        // NetworkFirst navigate route, so every online launch pulls the latest index.html
+        // (hence the latest JS). Code freshness no longer depends on the SW update cycle.
+        globIgnores: ['**/data/live.json', '**/data/seed.json', '**/index.html'],
         // The entry index.html hard-references content-hashed JS/CSS. Workbox's default
         // navigation route serves the *precached* index.html cache-first, so an installed app
         // keeps booting the OLD bundle until the whole service worker happens to self-update
