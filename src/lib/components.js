@@ -4,6 +4,15 @@ import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
 import { officialBrand, validCandidate, isGlobalChannel } from '../../scripts/lib/highlights.mjs'
 
+// Minimal calendar-with-plus glyph (currentColor stroke), used by the country "add all to
+// calendar" button in the Fixtures tab.
+const CALENDAR_PLUS_SVG =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M12 14.5v4M10 16.5h4"/></svg>'
+
+export function calendarPlusIcon() {
+  return el('span', { class: 'cal-ico', html: CALENDAR_PLUS_SVG })
+}
+
 // One match row: flags + names on each side, score or kickoff time in the middle.
 export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
   const score = scoreCell(m)

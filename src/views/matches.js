@@ -1,5 +1,6 @@
 import { el, empty } from '../lib/dom.js'
-import { matchRow } from '../lib/components.js'
+import { matchRow, calendarPlusIcon } from '../lib/components.js'
+import { addToCalendar } from '../lib/calendar.js'
 import { renderBracket } from './bracket.js'
 import { fmtFullDay, localDayKey, todayKey } from '../lib/time.js'
 
@@ -62,6 +63,25 @@ export function renderMatches(model) {
     const what = mode === 'results' ? 'results' : 'upcoming matches'
     wrap.appendChild(empty(country ? `No ${what} for ${country}.` : `No ${what}.`))
     return wrap
+  }
+
+  // When viewing a single country's upcoming fixtures, offer to add them all to the calendar
+  // in one tap — the headline "follow my team, remind me" flow. One .ics, every match + alarm.
+  if (mode === 'fixtures' && country && list.length) {
+    const slug = country.replace(/\s+/g, '-').toLowerCase()
+    wrap.appendChild(
+      el('div', { class: 'cal-allbar' }, [
+        el(
+          'button',
+          {
+            type: 'button',
+            class: 'cal-all',
+            onclick: () => addToCalendar(list, `wc2026-${slug}.ics`),
+          },
+          [calendarPlusIcon(), `Add ${country}'s matches`],
+        ),
+      ]),
+    )
   }
 
   const today = todayKey()
