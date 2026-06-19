@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18T20:08:45.489Z",
+  "updated": "2026-06-19T02:50:25.802Z",
   "season": "2026",
   "results": {
     "1": {
@@ -800,27 +800,108 @@
     "26": {
       "home": "Switzerland",
       "away": "Bosnia and Herzegovina",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "2H",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-18T19:00:00Z",
-      "minute": "49"
+      "goals": [
+        {
+          "player": "Johan MANZAMBI",
+          "team": "Switzerland",
+          "minute": "74",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ruben VARGAS",
+          "team": "Switzerland",
+          "minute": "84",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Johan MANZAMBI",
+          "team": "Switzerland",
+          "minute": "90",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Granit XHAKA",
+          "team": "Switzerland",
+          "minute": "90+7",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Ermin MAHMIC",
+          "team": "Bosnia and Herzegovina",
+          "minute": "90+3",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "27": {
       "home": "Canada",
       "away": "Qatar",
-      "homeGoals": 0,
+      "homeGoals": 6,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-18T22:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-18T22:00:00Z",
+      "goals": [
+        {
+          "player": "Cyle LARIN",
+          "team": "Canada",
+          "minute": "16",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jonathan DAVID",
+          "team": "Canada",
+          "minute": "29",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jonathan DAVID",
+          "team": "Canada",
+          "minute": "45+3",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Nathan SALIBA",
+          "team": "Canada",
+          "minute": "64",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MOHAMED MANAI",
+          "team": "Canada",
+          "minute": "75",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "Jonathan DAVID",
+          "team": "Canada",
+          "minute": "90+2",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "28": {
       "home": "Mexico",
       "away": "Korea Republic",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-19T01:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-19T01:00:00Z",
+      "minute": "90"
     },
     "29": {
       "home": "Brazil",
@@ -1184,6 +1265,20 @@
       "wiki": "Lionel Messi"
     },
     {
+      "player": "Jonathan David",
+      "team": "Canada",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Jonathan David"
+    },
+    {
+      "player": "Cyle Larin",
+      "team": "Canada",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Cyle Larin"
+    },
+    {
       "player": "Folarin Balogun",
       "team": "United States",
       "goals": 2,
@@ -1233,6 +1328,13 @@
       "wiki": "Harry Kane"
     },
     {
+      "player": "Johan Manzambi",
+      "team": "Switzerland",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Johan Manzambi"
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -1272,13 +1374,6 @@
       "wiki": "Jovo Lukić"
     },
     {
-      "player": "Cyle Larin",
-      "team": "Canada",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Cyle Larin"
-    },
-    {
       "player": "Mauricio",
       "team": "Paraguay",
       "goals": 1,
@@ -1295,7 +1390,7 @@
       "player": "Breel Embolo",
       "team": "Switzerland",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Breel Embolo"
     },
     {
@@ -1613,6 +1708,40 @@
       "team": "South Africa",
       "goals": 1,
       "assists": 0
+    },
+    {
+      "player": "Ruben Vargas",
+      "team": "Switzerland",
+      "goals": 1,
+      "assists": 1,
+      "wiki": "Rubén Vargas"
+    },
+    {
+      "player": "Ermin Mahmic",
+      "team": "Bosnia and Herzegovina",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Granit Xhaka",
+      "team": "Switzerland",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Granit Xhaka"
+    },
+    {
+      "player": "Nathan-Dylan Saliba",
+      "team": "Canada",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Nathan Saliba"
+    },
+    {
+      "player": "Luis Romo",
+      "team": "Mexico",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Luis Romo"
     }
   ],
   "wikiLinks": {
@@ -1743,6 +1872,21 @@
     "Michal SADILEK": "",
     "Teboho MOKOENA": "",
     "Michal Sadílek": "Michal Sadílek",
-    "Teboho Mokoena": ""
+    "Teboho Mokoena": "",
+    "Johan MANZAMBI": "",
+    "Ruben VARGAS": "",
+    "Granit XHAKA": "",
+    "Ermin MAHMIC": "",
+    "Cyle LARIN": "",
+    "Jonathan DAVID": "",
+    "Nathan SALIBA": "",
+    "MOHAMED MANAI": "",
+    "Jonathan David": "Jonathan David",
+    "Johan Manzambi": "Johan Manzambi",
+    "Ruben Vargas": "Rubén Vargas",
+    "Ermin Mahmic": "",
+    "Granit Xhaka": "Granit Xhaka",
+    "Nathan-Dylan Saliba": "Nathan Saliba",
+    "Luis Romo": "Luis Romo"
   }
 }
