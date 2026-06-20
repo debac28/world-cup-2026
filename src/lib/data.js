@@ -141,6 +141,10 @@ function buildModel(seed, live) {
       // Penalty-shootout score (knockout only); null unless a shootout happened.
       homePens: r.homePens ?? null,
       awayPens: r.awayPens ?? null,
+      // Sending-offs from ESPN's live feed (oriented to home/away already), [{name, min}].
+      // Shown as a red-card marker on the team so you can see a side is down a player.
+      redHome: r.redHome || [],
+      redAway: r.redAway || [],
       // Elapsed minute from FIFA, shown on the live badge ("● 87'"); null when not live.
       minute: status === 'live' ? r.minute || null : null,
       // Raw feed status code (e.g. '2H', 'HT', 'BT'), kept while live so the badge can show

@@ -31,9 +31,9 @@ export function matchRow(m, { showRound = false, showPrediction = false } = {}) 
         : null,
     ]),
     el('div', { class: 'match__body' }, [
-      side(m.home, m.homeFlag, homeWin, 'home', m.homeRank, prob?.home),
+      side(m.home, m.homeFlag, homeWin, 'home', m.homeRank, prob?.home, m.redHome),
       score,
-      side(m.away, m.awayFlag, awayWin, 'away', m.awayRank, prob?.away),
+      side(m.away, m.awayFlag, awayWin, 'away', m.awayRank, prob?.away, m.redAway),
     ]),
     scorerList(m),
     el('div', { class: 'match__meta' }, [
@@ -221,11 +221,21 @@ function highlightLink(m) {
   ])
 }
 
-function side(name, code, winner, which, rank, prob) {
+function side(name, code, winner, which, rank, prob, reds) {
   const meta = []
   if (rank) meta.push(el('span', { class: 'team__rank', title: 'FIFA World Ranking' }, `#${rank}`))
   if (prob != null)
     meta.push(el('span', { class: 'team__prob', title: 'Win chance (DraftKings line via ESPN)' }, `${prob}%`))
+  // Red-card marker (one red square per sending-off; a count when a side has more than one).
+  // Player + minute go in the tooltip. Lives on the meta line so it inherits home/away alignment.
+  if (reds?.length) {
+    const tip = reds
+      .map((r) => `Red card${r.name ? ` — ${r.name}` : ''}${r.min ? ` (${r.min})` : ''}`)
+      .join('\n')
+    meta.push(
+      el('span', { class: 'team__red', title: tip }, reds.length > 1 ? String(reds.length) : ''),
+    )
+  }
   return el('div', { class: `team team--${which} ${winner ? 'team--win' : ''}` }, [
     flag(code, name),
     el('div', { class: 'team__id' }, [

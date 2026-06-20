@@ -30,7 +30,28 @@ function statusRank(status) {
   return 0
 }
 
-// Pull the two teams + goals out of an ESPN event, oriented home/away.
+// Undefined (not []) for an empty list so JSON.stringify drops the key — keeps live.json lean
+// and lets mergeResults' `!= null` carry-through treat "no reds" as "don't overwrite".
+const reds = (arr) => (arr && arr.length ? arr : undefined)
+
+// Sending-offs from the scoreboard play list. ESPN labels a dismissal "Red Card" (straight)
+// or "Yellow Red Card" (second yellow) — both contain "Red Card", so one test catches both.
+// Returns [{ name, min }] split by team id. ESPN carries these live in the scoreboard feed
+// itself (no per-match summary call needed), so a red card shows on the ~60s /live cadence.
+function readReds(comp, homeId, awayId) {
+  const home = []
+  const away = []
+  for (const d of comp.details || []) {
+    if (!(d?.type?.text || '').includes('Red Card')) continue
+    const entry = { name: d.athletesInvolved?.[0]?.displayName || '', min: d.clock?.displayValue || '' }
+    const tid = d.team?.id == null ? null : String(d.team.id)
+    if (tid && tid === String(homeId)) home.push(entry)
+    else if (tid && tid === String(awayId)) away.push(entry)
+  }
+  return { home, away }
+}
+
+// Pull the two teams + goals (+ red cards) out of an ESPN event, oriented home/away.
 function readEvent(ev) {
   const comp = ev?.competitions?.[0]
   if (!comp) return null
@@ -43,6 +64,7 @@ function readEvent(ev) {
   const away = norm(awayC.team?.displayName)
   if (!home || !away) return null
   const num = (s) => (s == null || s === '' ? null : Number(s))
+  const r = readReds(comp, homeC.team?.id, awayC.team?.id)
   return {
     home,
     away,
@@ -50,6 +72,8 @@ function readEvent(ev) {
     awayGoals: num(awayC.score),
     status: espnStatusShort(type.state, type.name),
     kickoff: ev.date || comp.date || null,
+    redHome: r.home,
+    redAway: r.away,
   }
 }
 
@@ -78,6 +102,8 @@ export function buildEspnResults(seed, events) {
         awayGoals: sameOrder ? e.awayGoals : e.homeGoals,
         status: e.status,
         kickoff: e.kickoff,
+        redHome: reds(sameOrder ? e.redHome : e.redAway),
+        redAway: reds(sameOrder ? e.redAway : e.redHome),
       }
       continue
     }
@@ -108,6 +134,8 @@ export function buildEspnResults(seed, events) {
         awayGoals: best.awayGoals,
         status: best.status,
         kickoff: best.kickoff,
+        redHome: reds(best.redHome),
+        redAway: reds(best.redAway),
       }
     }
   }
@@ -124,7 +152,7 @@ const BREAK_STATUSES = new Set(['HT', 'BT'])
 
 // Overlay `overlay` onto `base`, keeping whichever source is further along per match. Returns
 // a new map; base entries not present in overlay are untouched. When overlay wins, only the
-// score/status/kickoff fields overwrite — base-only keys (highlights, goals, pens) are kept.
+// score/status/kickoff fields overwrite — base-only keys (highlights, goals, pens, reds) are kept.
 //
 // `preserveBreak` (used when merging the FIFA layer, which can't express half-time): if the
 // base already shows a break (HT/BT) and this overlay reports a plain live half, take the
@@ -161,6 +189,10 @@ export function mergeResults(base, overlay, { preserveBreak = false } = {}) {
       ...(!keepBreak && ov.minute != null ? { minute: ov.minute } : { minute: undefined }),
       ...(ov.homePens != null ? { homePens: ov.homePens } : {}),
       ...(ov.awayPens != null ? { awayPens: ov.awayPens } : {}),
+      // Red cards only come from ESPN's live feed; carry them when this overlay has them, else
+      // `...cur` keeps any the ESPN layer already added (e.g. when FIFA wins a later live tie).
+      ...(ov.redHome != null ? { redHome: ov.redHome } : {}),
+      ...(ov.redAway != null ? { redAway: ov.redAway } : {}),
     }
   }
   return merged

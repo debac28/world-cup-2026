@@ -134,6 +134,15 @@ html, body {
    instead of overflowing the score; text-align:right (from .team--away) keeps it right-aligned. */
 .team--away .team__id { align-items: stretch; }
 .team__rank { font-size: 0.68rem; font-weight: 600; color: var(--muted); line-height: 1.1; }
+/* Red-card marker: a small red card glyph (::before), with an optional count for 2+ reds. */
+.team__red { display: inline-flex; align-items: center; gap: 2px; font-size: 0.66rem; font-weight: 800; color: #e5363b; }
+.team__red::before {
+  content: '';
+  width: 8px; height: 11px;
+  background: #e5363b;
+  border-radius: 1.5px;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.25);
+}
 
 .scorers-line {
   display: grid;
