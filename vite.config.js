@@ -38,6 +38,15 @@ export default defineConfig(({ command }) => ({
         ],
       },
       workbox: {
+        // Force a newly-installed SW to take over IMMEDIATELY instead of parking in "waiting":
+        // skipWaiting promotes it to active on install, clientsClaim makes it control the
+        // already-open page. Without these, vite-plugin-pwa relies on a client-side
+        // message-then-reload dance that iOS home-screen PWAs run unreliably — so a freshly
+        // fetched SW would sit waiting forever and users stayed on old code through repeated
+        // relaunches (only a delete+reinstall dislodged it). With them, the new SW self-activates
+        // and fires controllerchange, which reloads the page onto the new bundle on its own.
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ['**/*.{js,css,html,svg,png,json}'],
         // Never precache the data JSON — precached files are served cache-first and only
         // refresh when the whole service worker updates, which baked stale schedule/score
