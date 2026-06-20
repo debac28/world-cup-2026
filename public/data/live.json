@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-20T02:11:19.108Z",
+  "updated": "2026-06-20T08:38:53.029Z",
   "season": "2026",
   "results": {
     "1": {
@@ -916,9 +916,31 @@
       "away": "Haiti",
       "homeGoals": 3,
       "awayGoals": 0,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-06-20T00:30:00Z",
-      "minute": "76"
+      "goals": [
+        {
+          "player": "MATHEUS CUNHA",
+          "team": "Brazil",
+          "minute": "23",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MATHEUS CUNHA",
+          "team": "Brazil",
+          "minute": "36",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "VINICIUS JUNIOR",
+          "team": "Brazil",
+          "minute": "45+3",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "30": {
       "home": "Scotland",
@@ -965,33 +987,42 @@
       "home": "Turkey",
       "away": "Paraguay",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-20T03:00Z"
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-20T03:00:00Z",
+      "goals": [
+        {
+          "player": "Matias GALARZA",
+          "team": "Paraguay",
+          "minute": "2",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "33": {
       "home": "Germany",
       "away": "Ivory Coast",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-20T20:00:00Z"
+      "kickoff": "2026-06-20T20:00Z"
     },
     "34": {
       "home": "Ecuador",
       "away": "Curaçao",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-21T00:00:00Z"
+      "kickoff": "2026-06-21T00:00Z"
     },
     "35": {
       "home": "Netherlands",
       "away": "Sweden",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-20T17:00:00Z"
+      "kickoff": "2026-06-20T17:00Z"
     },
     "36": {
       "home": "Tunisia",
@@ -1790,6 +1821,12 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Alex Freeman"
+    },
+    {
+      "player": "Matías Galarza",
+      "team": "Paraguay",
+      "goals": 1,
+      "assists": 0
     }
   ],
   "wikiLinks": {
@@ -1941,6 +1978,10 @@
     "Cameron BURGESS": "",
     "Alex FREEMAN": "",
     "Matheus Cunha": "Matheus Cunha",
-    "Alex Freeman": "Alex Freeman"
+    "Alex Freeman": "Alex Freeman",
+    "MATHEUS CUNHA": "",
+    "VINICIUS JUNIOR": "",
+    "Matias GALARZA": "",
+    "Matías Galarza": ""
   }
 }
