@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-20T13:24:46.391Z",
+  "updated": "2026-06-20T19:07:39.967Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1019,10 +1019,54 @@
     "35": {
       "home": "Netherlands",
       "away": "Sweden",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-20T17:00Z"
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-20T17:00:00Z",
+      "goals": [
+        {
+          "player": "Brian BROBBEY",
+          "team": "Netherlands",
+          "minute": "5",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Brian BROBBEY",
+          "team": "Netherlands",
+          "minute": "17",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Cody GAKPO",
+          "team": "Netherlands",
+          "minute": "47",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Cody GAKPO",
+          "team": "Netherlands",
+          "minute": "54",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Crysencio SUMMERVILLE",
+          "team": "Netherlands",
+          "minute": "89",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Anthony ELANGA",
+          "team": "Sweden",
+          "minute": "59",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "36": {
       "home": "Tunisia",
@@ -1421,6 +1465,20 @@
       "wiki": "Matheus Cunha"
     },
     {
+      "player": "Brian Brobbey",
+      "team": "Netherlands",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Brian Brobbey"
+    },
+    {
+      "player": "Cody Gakpo",
+      "team": "Netherlands",
+      "goals": 2,
+      "assists": 2,
+      "wiki": "Cody Gakpo"
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 1,
@@ -1566,7 +1624,7 @@
       "player": "Crysencio Summerville",
       "team": "Netherlands",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Crysencio Summerville"
     },
     {
@@ -1587,7 +1645,7 @@
       "player": "Alexander Isak",
       "team": "Sweden",
       "goals": 1,
-      "assists": 2,
+      "assists": 3,
       "wiki": "Alexander Isak"
     },
     {
@@ -1827,6 +1885,20 @@
       "team": "Paraguay",
       "goals": 1,
       "assists": 0
+    },
+    {
+      "player": "Anthony Elanga",
+      "team": "Sweden",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Anthony Elanga"
+    },
+    {
+      "player": "Memphis Depay",
+      "team": "Netherlands",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Memphis Depay"
     }
   ],
   "wikiLinks": {
@@ -1982,6 +2054,14 @@
     "MATHEUS CUNHA": "",
     "VINICIUS JUNIOR": "",
     "Matias GALARZA": "",
-    "Matías Galarza": ""
+    "Matías Galarza": "",
+    "Brian BROBBEY": "",
+    "Cody GAKPO": "",
+    "Crysencio SUMMERVILLE": "",
+    "Anthony ELANGA": "",
+    "Brian Brobbey": "Brian Brobbey",
+    "Cody Gakpo": "Cody Gakpo",
+    "Anthony Elanga": "Anthony Elanga",
+    "Memphis Depay": "Memphis Depay"
   }
 }
