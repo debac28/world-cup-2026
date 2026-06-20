@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-19T19:23:44.095Z",
+  "updated": "2026-06-20T02:11:19.108Z",
   "season": "2026",
   "results": {
     "1": {
@@ -914,27 +914,52 @@
     "29": {
       "home": "Brazil",
       "away": "Haiti",
-      "homeGoals": 0,
+      "homeGoals": 3,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-20T00:30Z"
+      "status": "2H",
+      "kickoff": "2026-06-20T00:30:00Z",
+      "minute": "76"
     },
     "30": {
       "home": "Scotland",
       "away": "Morocco",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-19T22:00Z"
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-19T22:00:00Z",
+      "goals": [
+        {
+          "player": "Ismael SAIBARI",
+          "team": "Morocco",
+          "minute": "2",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "31": {
       "home": "United States",
       "away": "Australia",
-      "homeGoals": 1,
+      "homeGoals": 2,
       "awayGoals": 0,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-06-19T19:00:00Z",
-      "minute": "23"
+      "goals": [
+        {
+          "player": "Cameron BURGESS",
+          "team": "United States",
+          "minute": "11",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "Alex FREEMAN",
+          "team": "United States",
+          "minute": "43",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "32": {
       "home": "Turkey",
@@ -1295,6 +1320,20 @@
       "wiki": "Folarin Balogun"
     },
     {
+      "player": "Ismael Saibari",
+      "team": "Morocco",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Ismael Saibari"
+    },
+    {
+      "player": "Vinicius Junior",
+      "team": "Brazil",
+      "goals": 2,
+      "assists": 2,
+      "wiki": "Vinícius Júnior"
+    },
+    {
       "player": "Kai Havertz",
       "team": "Germany",
       "goals": 2,
@@ -1342,6 +1381,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Johan Manzambi"
+    },
+    {
+      "player": "Matheus Cunha",
+      "team": "Brazil",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Matheus Cunha"
     },
     {
       "player": "Julián Quiñones",
@@ -1408,20 +1454,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Boualem Khoukhi"
-    },
-    {
-      "player": "Ismael Saibari",
-      "team": "Morocco",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Ismael Saibari"
-    },
-    {
-      "player": "Vinicius Junior",
-      "team": "Brazil",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Vinícius Júnior"
     },
     {
       "player": "John McGinn",
@@ -1751,6 +1783,13 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Luis Romo"
+    },
+    {
+      "player": "Alex Freeman",
+      "team": "United States",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Alex Freeman"
     }
   ],
   "wikiLinks": {
@@ -1897,6 +1936,11 @@
     "Granit Xhaka": "Granit Xhaka",
     "Nathan-Dylan Saliba": "Nathan Saliba",
     "Luis Romo": "Luis Romo",
-    "Luis ROMO": ""
+    "Luis ROMO": "",
+    "Ismael SAIBARI": "",
+    "Cameron BURGESS": "",
+    "Alex FREEMAN": "",
+    "Matheus Cunha": "Matheus Cunha",
+    "Alex Freeman": "Alex Freeman"
   }
 }
