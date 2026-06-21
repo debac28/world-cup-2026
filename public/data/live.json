@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-20T19:07:39.967Z",
+  "updated": "2026-06-21T02:35:26.515Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1003,18 +1003,41 @@
     "33": {
       "home": "Germany",
       "away": "Ivory Coast",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-20T20:00Z"
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-20T20:00:00Z",
+      "goals": [
+        {
+          "player": "Deniz UNDAV",
+          "team": "Germany",
+          "minute": "68",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Deniz UNDAV",
+          "team": "Germany",
+          "minute": "90+4",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Franck KESSIE",
+          "team": "Ivory Coast",
+          "minute": "30",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "34": {
       "home": "Ecuador",
       "away": "Curaçao",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-21T00:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-21T00:00:00Z"
     },
     "35": {
       "home": "Netherlands",
@@ -1367,6 +1390,13 @@
   },
   "scorers": [
     {
+      "player": "Deniz Undav",
+      "team": "Germany",
+      "goals": 3,
+      "assists": 2,
+      "wiki": "Deniz Undav"
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 3,
@@ -1569,7 +1599,7 @@
       "player": "Felix Kalu Nmecha",
       "team": "Germany",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Felix Nmecha"
     },
     {
@@ -1598,13 +1628,6 @@
       "team": "Germany",
       "goals": 1,
       "assists": 1
-    },
-    {
-      "player": "Deniz Undav",
-      "team": "Germany",
-      "goals": 1,
-      "assists": 2,
-      "wiki": "Deniz Undav"
     },
     {
       "player": "Virgil van Dijk",
@@ -1899,6 +1922,13 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Memphis Depay"
+    },
+    {
+      "player": "Franck Kessié",
+      "team": "Ivory Coast",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Franck Kessié"
     }
   ],
   "wikiLinks": {
@@ -2062,6 +2092,8 @@
     "Brian Brobbey": "Brian Brobbey",
     "Cody Gakpo": "Cody Gakpo",
     "Anthony Elanga": "Anthony Elanga",
-    "Memphis Depay": "Memphis Depay"
+    "Memphis Depay": "Memphis Depay",
+    "Franck KESSIE": "",
+    "Franck Kessié": "Franck Kessié"
   }
 }
