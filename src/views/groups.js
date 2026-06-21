@@ -29,7 +29,13 @@ function groupTable(g, rows, flagOf) {
     const cls = i < 2 ? 'qual' : i === 2 ? 'playoff' : 'out'
     return el('tr', { class: `srow srow--${cls}` }, [
       td(String(i + 1)),
-      el('td', { class: 'left team-cell' }, [flag(flagOf.get(r.team), r.team), r.team]),
+      el('td', { class: 'left team-cell' }, [
+        flag(flagOf.get(r.team), r.team),
+        r.team,
+        r.clinched
+          ? el('span', { class: 'qual-check', title: 'Qualified for the knockout stage' }, '✓')
+          : null,
+      ]),
       td(String(r.played)), td(String(r.win)), td(String(r.draw)), td(String(r.loss)),
       td(String(r.gf)), td(String(r.ga)), td(fmtGD(r.gd)), el('td', { class: 'pts' }, String(r.points)),
     ])

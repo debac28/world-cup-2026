@@ -41,13 +41,64 @@ export function computeStandings(groups, groupMatches, rankOf) {
     else { h.draw++; a.draw++; h.points++; a.points++ }
   }
 
+  // Group every fixture by its group so the clinch check below can see the unplayed ones.
+  const teamGroup = {}
+  for (const [g, teams] of Object.entries(groups)) for (const t of teams) teamGroup[t] = g
+  const matchesByGroup = Object.fromEntries(Object.keys(groups).map((g) => [g, []]))
+  for (const m of groupMatches) {
+    const g = teamGroup[m.home]
+    if (g && teamGroup[m.away] === g) matchesByGroup[g].push(m)
+  }
+
   for (const g of Object.keys(standings)) {
     for (const row of standings[g]) row.gd = row.gf - row.ga
     standings[g].sort(makeComparator(finished))
     standings[g].forEach((row, i) => { row.position = i + 1 })
     standings[g].allFinished = standings[g].every((r) => r.played === 3)
+    const clinched = clinchedTop2(groups[g], matchesByGroup[g])
+    for (const row of standings[g]) row.clinched = clinched.has(row.team)
   }
   return standings
+}
+
+// Teams that have mathematically secured a top-2 (direct qualification) spot: in EVERY
+// possible win/draw/loss combination of their group's remaining matches, at most one other
+// team can match or exceed their points. Points-only by design — goal margins are unbounded,
+// so any team that can merely draw level on points is treated as a possible rival (a team
+// safe only on current goal difference is NOT certain). Best-third-place qualification is
+// never certain at this stage, so this flags guaranteed top-2 only. A group has at most a
+// handful of unplayed matches, so the 3^n enumeration stays tiny.
+function clinchedTop2(teams, matches) {
+  const base = Object.fromEntries(teams.map((t) => [t, 0]))
+  const remaining = []
+  for (const m of matches) {
+    if (m.finished && m.homeGoals != null && m.awayGoals != null) {
+      if (m.homeGoals > m.awayGoals) base[m.home] += 3
+      else if (m.awayGoals > m.homeGoals) base[m.away] += 3
+      else { base[m.home] += 1; base[m.away] += 1 }
+    } else {
+      remaining.push(m)
+    }
+  }
+  const safe = new Set(teams)
+  const outcomes = [[3, 0], [1, 1], [0, 3]] // home win / draw / away win
+  const total = 3 ** remaining.length
+  for (let mask = 0; mask < total; mask++) {
+    const pts = { ...base }
+    let n = mask
+    for (const m of remaining) {
+      const [hp, ap] = outcomes[n % 3]
+      n = (n / 3) | 0
+      pts[m.home] += hp
+      pts[m.away] += ap
+    }
+    for (const t of [...safe]) {
+      let geq = 0
+      for (const u of teams) if (u !== t && pts[u] >= pts[t]) geq++
+      if (geq > 1) safe.delete(t)
+    }
+  }
+  return safe
 }
 
 function makeComparator(finished) {
