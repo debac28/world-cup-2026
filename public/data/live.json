@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-21T02:35:26.515Z",
+  "updated": "2026-06-21T09:33:55.142Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1094,42 +1094,72 @@
     "36": {
       "home": "Tunisia",
       "away": "Japan",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-21T04:00:00Z"
+      "homeGoals": 0,
+      "awayGoals": 4,
+      "status": "FT",
+      "kickoff": "2026-06-21T04:00:00Z",
+      "goals": [
+        {
+          "player": "Daichi KAMADA",
+          "team": "Japan",
+          "minute": "4",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ayase UEDA",
+          "team": "Japan",
+          "minute": "31",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Junya ITO",
+          "team": "Japan",
+          "minute": "69",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ayase UEDA",
+          "team": "Japan",
+          "minute": "83",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "37": {
       "home": "Uruguay",
       "away": "Cape Verde",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-21T22:00:00Z"
+      "kickoff": "2026-06-21T22:00Z"
     },
     "38": {
       "home": "Spain",
       "away": "Saudi Arabia",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-21T16:00:00Z"
+      "kickoff": "2026-06-21T16:00Z"
     },
     "39": {
       "home": "Belgium",
       "away": "Iran",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-21T19:00:00Z"
+      "kickoff": "2026-06-21T19:00Z"
     },
     "40": {
       "home": "New Zealand",
       "away": "Egypt",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-22T01:00:00Z"
+      "kickoff": "2026-06-22T01:00Z"
     },
     "41": {
       "home": "Norway",
@@ -1446,6 +1476,13 @@
       "wiki": "Kai Havertz"
     },
     {
+      "player": "Daichi Kamada",
+      "team": "Japan",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Daichi Kamada"
+    },
+    {
       "player": "Yasin Ayari",
       "team": "Sweden",
       "goals": 2,
@@ -1507,6 +1544,13 @@
       "goals": 2,
       "assists": 2,
       "wiki": "Cody Gakpo"
+    },
+    {
+      "player": "Ayase Ueda",
+      "team": "Japan",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Ayase Ueda"
     },
     {
       "player": "Julián Quiñones",
@@ -1640,7 +1684,7 @@
       "player": "Keito Nakamura",
       "team": "Japan",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Keito Nakamura"
     },
     {
@@ -1649,13 +1693,6 @@
       "goals": 1,
       "assists": 1,
       "wiki": "Crysencio Summerville"
-    },
-    {
-      "player": "Daichi Kamada",
-      "team": "Japan",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Daichi Kamada"
     },
     {
       "player": "Amad Diallo",
@@ -1929,6 +1966,13 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Franck Kessié"
+    },
+    {
+      "player": "Junya Ito",
+      "team": "Japan",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Junya Itō"
     }
   ],
   "wikiLinks": {
@@ -2094,6 +2138,11 @@
     "Anthony Elanga": "Anthony Elanga",
     "Memphis Depay": "Memphis Depay",
     "Franck KESSIE": "",
-    "Franck Kessié": "Franck Kessié"
+    "Franck Kessié": "Franck Kessié",
+    "Daichi KAMADA": "",
+    "Ayase UEDA": "",
+    "Junya ITO": "",
+    "Ayase Ueda": "Ayase Ueda",
+    "Junya Ito": "Junya Itō"
   }
 }
