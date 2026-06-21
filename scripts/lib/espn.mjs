@@ -172,7 +172,7 @@ export function mergeResults(base, overlay, { preserveBreak = false } = {}) {
     if (rOv > rCur) takeOverlay = true
     else if (rOv < rCur) takeOverlay = false
     else if (rOv === 1) takeOverlay = true // both live -> ESPN is the fresher live source
-    else takeOverlay = !hasGoals(cur) && hasGoals(ov) // NS/FT tie: only if overlay adds goals
+    else takeOverlay = hasGoals(ov) // NS/FT tie: a complete overlay wins (corrections + precedence)
     if (!takeOverlay) continue
     const keepBreak =
       preserveBreak && BREAK_STATUSES.has(cur.status) && !BREAK_STATUSES.has(ov.status)
