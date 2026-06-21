@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-21T13:45:35.435Z",
+  "updated": "2026-06-21T19:12:40.755Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1140,18 +1140,49 @@
     "38": {
       "home": "Spain",
       "away": "Saudi Arabia",
-      "homeGoals": 0,
+      "homeGoals": 4,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-21T16:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-21T16:00:00Z",
+      "goals": [
+        {
+          "player": "Lamine YAMAL",
+          "team": "Spain",
+          "minute": "10",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mikel OYARZABAL",
+          "team": "Spain",
+          "minute": "21",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mikel OYARZABAL",
+          "team": "Spain",
+          "minute": "24",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "HASSAN ALTAMBAKTI",
+          "team": "Spain",
+          "minute": "49",
+          "pen": false,
+          "og": true
+        }
+      ]
     },
     "39": {
       "home": "Belgium",
       "away": "Iran",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-21T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-21T19:00:00Z",
+      "minute": "12"
     },
     "40": {
       "home": "New Zealand",
@@ -1551,6 +1582,13 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Ayase Ueda"
+    },
+    {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Mikel Oyarzabal"
     },
     {
       "player": "Julián Quiñones",
@@ -1973,6 +2011,13 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Junya Itō"
+    },
+    {
+      "player": "Lamine Yamal",
+      "team": "Spain",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Lamine Yamal"
     }
   ],
   "wikiLinks": {
@@ -2143,6 +2188,11 @@
     "Ayase UEDA": "",
     "Junya ITO": "",
     "Ayase Ueda": "Ayase Ueda",
-    "Junya Ito": "Junya Itō"
+    "Junya Ito": "Junya Itō",
+    "Lamine YAMAL": "",
+    "Mikel OYARZABAL": "",
+    "HASSAN ALTAMBAKTI": "",
+    "Mikel Oyarzabal": "Mikel Oyarzabal",
+    "Lamine Yamal": "Lamine Yamal"
   }
 }
