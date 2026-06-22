@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-22T16:25:46.213Z",
+  "updated": "2026-06-22T20:32:04.513Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1270,10 +1270,26 @@
     "43": {
       "home": "Argentina",
       "away": "Austria",
-      "homeGoals": 0,
+      "homeGoals": 2,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-22T17:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-22T17:00:00Z",
+      "goals": [
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "38",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "90+5",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "44": {
       "home": "Jordan",
@@ -1510,18 +1526,18 @@
   },
   "scorers": [
     {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 5,
+      "assists": 0,
+      "wiki": "Lionel Messi"
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3,
       "assists": 2,
       "wiki": "Deniz Undav"
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "goals": 3,
-      "assists": 0,
-      "wiki": "Lionel Messi"
     },
     {
       "player": "Jonathan David",
