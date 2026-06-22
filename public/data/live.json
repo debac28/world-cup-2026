@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-21T19:12:40.755Z",
+  "updated": "2026-06-22T02:38:48.628Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1132,10 +1132,40 @@
     "37": {
       "home": "Uruguay",
       "away": "Cape Verde",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-21T22:00Z"
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-21T22:00:00Z",
+      "goals": [
+        {
+          "player": "Maxi ARAUJO",
+          "team": "Uruguay",
+          "minute": "44",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Agustin CANOBBIO",
+          "team": "Uruguay",
+          "minute": "45+6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "KEVIN PINA",
+          "team": "Cape Verde",
+          "minute": "21",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "HELIO VARELA",
+          "team": "Cape Verde",
+          "minute": "61",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "38": {
       "home": "Spain",
@@ -1180,17 +1210,23 @@
       "away": "Iran",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-06-21T19:00:00Z",
-      "minute": "12"
+      "redHome": [
+        {
+          "name": "Nathan Ngoy",
+          "min": "66'"
+        }
+      ]
     },
     "40": {
       "home": "New Zealand",
       "away": "Egypt",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-22T01:00Z"
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "status": "2H",
+      "kickoff": "2026-06-22T01:00:00Z",
+      "minute": "78"
     },
     "41": {
       "home": "Norway",
@@ -1521,6 +1557,13 @@
       "wiki": "Yasin Ayari"
     },
     {
+      "player": "Maximiliano Araújo",
+      "team": "Uruguay",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Maximiliano Araújo"
+    },
+    {
       "player": "Elijah Just",
       "team": "New Zealand",
       "goals": 2,
@@ -1781,13 +1824,6 @@
       "assists": 0
     },
     {
-      "player": "Maximiliano Araújo",
-      "team": "Uruguay",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Maximiliano Araújo"
-    },
-    {
       "player": "Ramin Rezaeian",
       "team": "Iran",
       "goals": 1,
@@ -2018,6 +2054,47 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Lamine Yamal"
+    },
+    {
+      "player": "Kevin Pina",
+      "team": "Cape Verde",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Agustín Canobbio",
+      "team": "Uruguay",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Agustín Canobbio"
+    },
+    {
+      "player": "Hélio Varela",
+      "team": "Cape Verde",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Hélio Varela"
+    },
+    {
+      "player": "Finn Surman",
+      "team": "New Zealand",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Finn Surman"
+    },
+    {
+      "player": "Mostafa Ziko",
+      "team": "Egypt",
+      "goals": 1,
+      "assists": 1,
+      "wiki": "Mostafa Ziko"
+    },
+    {
+      "player": "Mohamed Salah",
+      "team": "Egypt",
+      "goals": 1,
+      "assists": 1,
+      "wiki": "Mohamed Salah"
     }
   ],
   "wikiLinks": {
@@ -2193,6 +2270,15 @@
     "Mikel OYARZABAL": "",
     "HASSAN ALTAMBAKTI": "",
     "Mikel Oyarzabal": "Mikel Oyarzabal",
-    "Lamine Yamal": "Lamine Yamal"
+    "Lamine Yamal": "Lamine Yamal",
+    "Agustin CANOBBIO": "",
+    "KEVIN PINA": "",
+    "HELIO VARELA": "",
+    "Kevin Pina": "",
+    "Agustín Canobbio": "Agustín Canobbio",
+    "Hélio Varela": "Hélio Varela",
+    "Finn Surman": "Finn Surman",
+    "Mostafa Ziko": "Mostafa Ziko",
+    "Mohamed Salah": "Mohamed Salah"
   }
 }
