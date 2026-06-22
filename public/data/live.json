@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-22T02:38:48.628Z",
+  "updated": "2026-06-22T11:32:02.946Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1211,54 +1211,77 @@
       "homeGoals": 0,
       "awayGoals": 0,
       "status": "FT",
-      "kickoff": "2026-06-21T19:00:00Z",
-      "redHome": [
-        {
-          "name": "Nathan Ngoy",
-          "min": "66'"
-        }
-      ]
+      "kickoff": "2026-06-21T19:00:00Z"
     },
     "40": {
       "home": "New Zealand",
       "away": "Egypt",
       "homeGoals": 1,
-      "awayGoals": 2,
-      "status": "2H",
+      "awayGoals": 3,
+      "status": "FT",
       "kickoff": "2026-06-22T01:00:00Z",
-      "minute": "78"
+      "goals": [
+        {
+          "player": "Finn SURMAN",
+          "team": "New Zealand",
+          "minute": "15",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MOSTAFA ZICO",
+          "team": "Egypt",
+          "minute": "58",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MOHAMED SALAH",
+          "team": "Egypt",
+          "minute": "67",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "TREZEGUET",
+          "team": "Egypt",
+          "minute": "82",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "41": {
       "home": "Norway",
       "away": "Senegal",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-23T00:00:00Z"
+      "kickoff": "2026-06-23T00:00Z"
     },
     "42": {
       "home": "France",
       "away": "Iraq",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-22T21:00:00Z"
+      "kickoff": "2026-06-22T21:00Z"
     },
     "43": {
       "home": "Argentina",
       "away": "Austria",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-22T17:00:00Z"
+      "kickoff": "2026-06-22T17:00Z"
     },
     "44": {
       "home": "Jordan",
       "away": "Algeria",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-23T03:00:00Z"
+      "kickoff": "2026-06-23T03:00Z"
     },
     "45": {
       "home": "England",
@@ -2093,8 +2116,14 @@
       "player": "Mohamed Salah",
       "team": "Egypt",
       "goals": 1,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Mohamed Salah"
+    },
+    {
+      "player": "Trezeguet",
+      "team": "Egypt",
+      "goals": 1,
+      "assists": 0
     }
   ],
   "wikiLinks": {
@@ -2279,6 +2308,11 @@
     "Hélio Varela": "Hélio Varela",
     "Finn Surman": "Finn Surman",
     "Mostafa Ziko": "Mostafa Ziko",
-    "Mohamed Salah": "Mohamed Salah"
+    "Mohamed Salah": "Mohamed Salah",
+    "Finn SURMAN": "",
+    "MOSTAFA ZICO": "",
+    "MOHAMED SALAH": "",
+    "TREZEGUET": "",
+    "Trezeguet": ""
   }
 }
