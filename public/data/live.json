@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T14:23:28.147Z",
+  "updated": "2026-06-23T19:48:11.311Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1401,10 +1401,47 @@
     "47": {
       "home": "Portugal",
       "away": "Uzbekistan",
-      "homeGoals": 0,
+      "homeGoals": 5,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-23T17:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-23T17:00:00Z",
+      "goals": [
+        {
+          "player": "CRISTIANO RONALDO",
+          "team": "Portugal",
+          "minute": "6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "NUNO MENDES",
+          "team": "Portugal",
+          "minute": "17",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "CRISTIANO RONALDO",
+          "team": "Portugal",
+          "minute": "39",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Abduvohid NEMATOV",
+          "team": "Portugal",
+          "minute": "60",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "RAFAEL LEAO",
+          "team": "Portugal",
+          "minute": "87",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "48": {
       "home": "Colombia",
@@ -1668,7 +1705,7 @@
       "player": "Vinicius Junior",
       "team": "Brazil",
       "goals": 2,
-      "assists": 2,
+      "assists": 1,
       "wiki": "Vinícius Júnior"
     },
     {
@@ -2459,6 +2496,10 @@
     "Amine GOUIRI": "",
     "Nizar Al Rashdan": "Nizar Al-Rashdan",
     "Nadhir Benbouali": "Nadhir Benbouali",
-    "Amine Gouiri": "Amine Gouiri"
+    "Amine Gouiri": "Amine Gouiri",
+    "CRISTIANO RONALDO": "",
+    "NUNO MENDES": "",
+    "Abduvohid NEMATOV": "",
+    "RAFAEL LEAO": ""
   }
 }
