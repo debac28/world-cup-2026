@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T08:56:12.289Z",
+  "updated": "2026-06-23T14:23:28.147Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1679,6 +1679,13 @@
       "wiki": "Kai Havertz"
     },
     {
+      "player": "Crysencio Summerville",
+      "team": "Netherlands",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Crysencio Summerville"
+    },
+    {
       "player": "Daichi Kamada",
       "team": "Japan",
       "goals": 2,
@@ -1738,7 +1745,7 @@
       "player": "Cody Gakpo",
       "team": "Netherlands",
       "goals": 2,
-      "assists": 2,
+      "assists": 1,
       "wiki": "Cody Gakpo"
     },
     {
@@ -1896,13 +1903,6 @@
       "goals": 1,
       "assists": 1,
       "wiki": "Keito Nakamura"
-    },
-    {
-      "player": "Crysencio Summerville",
-      "team": "Netherlands",
-      "goals": 1,
-      "assists": 1,
-      "wiki": "Crysencio Summerville"
     },
     {
       "player": "Amad Diallo",
@@ -2155,13 +2155,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Anthony Elanga"
-    },
-    {
-      "player": "Memphis Depay",
-      "team": "Netherlands",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Memphis Depay"
     },
     {
       "player": "Franck Kessié",
