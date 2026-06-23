@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-22T20:32:04.513Z",
+  "updated": "2026-06-23T02:05:16.324Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1254,18 +1254,78 @@
     "41": {
       "home": "Norway",
       "away": "Senegal",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-23T00:00Z"
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-23T00:00:00Z",
+      "goals": [
+        {
+          "player": "Marcus HOLMGREN PEDERSEN",
+          "team": "Norway",
+          "minute": "43",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "48",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "58",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ismaila SARR",
+          "team": "Senegal",
+          "minute": "53",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ismaila SARR",
+          "team": "Senegal",
+          "minute": "90+3",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "42": {
       "home": "France",
       "away": "Iraq",
-      "homeGoals": 0,
+      "homeGoals": 3,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-22T21:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-22T21:00:00Z",
+      "goals": [
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "14",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "54",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "66",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "43": {
       "home": "Argentina",
@@ -1533,6 +1593,20 @@
       "wiki": "Lionel Messi"
     },
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "goals": 4,
+      "assists": 0,
+      "wiki": "Kylian Mbappé"
+    },
+    {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "goals": 4,
+      "assists": 0,
+      "wiki": "Erling Haaland"
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3,
@@ -1610,20 +1684,6 @@
       "wiki": "Elijah Just"
     },
     {
-      "player": "Kylian Mbappé",
-      "team": "France",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Kylian Mbappé"
-    },
-    {
-      "player": "Erling Haaland",
-      "team": "Norway",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Erling Haaland"
-    },
-    {
       "player": "Harry Kane",
       "team": "England",
       "goals": 2,
@@ -1671,6 +1731,13 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Mikel Oyarzabal"
+    },
+    {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Ismaïla Sarr"
     },
     {
       "player": "Julián Quiñones",
@@ -2140,6 +2207,20 @@
       "team": "Egypt",
       "goals": 1,
       "assists": 0
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 1,
+      "assists": 1,
+      "wiki": "Ousmane Dembélé"
+    },
+    {
+      "player": "Marcus Pedersen",
+      "team": "Norway",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Marcus Pedersen"
     }
   ],
   "wikiLinks": {
@@ -2329,6 +2410,12 @@
     "MOSTAFA ZICO": "",
     "MOHAMED SALAH": "",
     "TREZEGUET": "",
-    "Trezeguet": ""
+    "Trezeguet": "",
+    "Marcus HOLMGREN PEDERSEN": "",
+    "Ismaila SARR": "",
+    "Ousmane DEMBELE": "",
+    "Ismaïla Sarr": "Ismaïla Sarr",
+    "Ousmane Dembélé": "Ousmane Dembélé",
+    "Marcus Pedersen": "Marcus Pedersen"
   }
 }
