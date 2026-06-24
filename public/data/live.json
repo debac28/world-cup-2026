@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T19:48:11.311Z",
+  "updated": "2026-06-24T02:07:29.156Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1387,16 +1387,25 @@
       "away": "Ghana",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-23T20:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-23T20:00:00Z"
     },
     "46": {
       "home": "Panama",
       "away": "Croatia",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-23T23:00Z"
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-23T23:00:00Z",
+      "goals": [
+        {
+          "player": "Ante BUDIMIR",
+          "team": "Croatia",
+          "minute": "54",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "47": {
       "home": "Portugal",
@@ -1448,8 +1457,9 @@
       "away": "DR Congo",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-24T02:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-24T02:00:00Z",
+      "minute": "7"
     },
     "49": {
       "home": "Scotland",
@@ -1805,6 +1815,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Ismaïla Sarr"
+    },
+    {
+      "player": "Cristiano Ronaldo",
+      "team": "Portugal",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Cristiano Ronaldo"
     },
     {
       "player": "Julián Quiñones",
@@ -2295,6 +2312,32 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Amine Gouiri"
+    },
+    {
+      "player": "Nuno Mendes",
+      "team": "Portugal",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Abduvakhid Nematov",
+      "team": "Portugal",
+      "goals": 1,
+      "assists": 0
+    },
+    {
+      "player": "Rafael Leão",
+      "team": "Portugal",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Rafael Leão"
+    },
+    {
+      "player": "Ante Budimir",
+      "team": "Croatia",
+      "goals": 1,
+      "assists": 0,
+      "wiki": "Ante Budimir"
     }
   ],
   "wikiLinks": {
@@ -2500,6 +2543,12 @@
     "CRISTIANO RONALDO": "",
     "NUNO MENDES": "",
     "Abduvohid NEMATOV": "",
-    "RAFAEL LEAO": ""
+    "RAFAEL LEAO": "",
+    "Ante BUDIMIR": "",
+    "Cristiano Ronaldo": "Cristiano Ronaldo",
+    "Nuno Mendes": "",
+    "Abduvakhid Nematov": "",
+    "Rafael Leão": "Rafael Leão",
+    "Ante Budimir": "Ante Budimir"
   }
 }
