@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-24T14:04:00.266Z",
+  "updated": "2026-06-24T19:25:07.782Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1490,16 +1490,18 @@
       "away": "Canada",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-24T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-24T19:00:00Z",
+      "minute": "25"
     },
     "52": {
       "home": "Bosnia and Herzegovina",
       "away": "Qatar",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-24T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-24T19:00:00Z",
+      "minute": "23"
     },
     "53": {
       "home": "Czech Republic",
