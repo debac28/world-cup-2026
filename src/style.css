@@ -216,12 +216,19 @@ html, body {
 @media (min-width: 620px) { .groupgrid { grid-template-columns: 1fr 1fr; } }
 
 .group__head { background: var(--pitch); padding: 9px 12px; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.4px; }
-table.standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+/* Fixed layout: numeric columns reserve a set width (PTS never clips); the team column
+   absorbs the rest and its name truncates with an ellipsis when space is tight. */
+table.standings { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 0.8rem; }
+.standings th, .standings td { width: 26px; }
+.standings th:first-child, .standings td:first-child { width: 22px; }
 .standings th { color: var(--muted); font-weight: 600; font-size: 0.68rem; text-transform: uppercase; padding: 7px 4px; text-align: center; }
 .standings td { padding: 8px 4px; text-align: center; border-top: 1px solid var(--line); }
-.standings .left { text-align: left; padding-left: 12px; }
-.standings th.left { text-align: left; padding-left: 12px; }
-.team-cell { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.standings .left { width: auto; text-align: left; padding-left: 12px; }
+.standings th.left { width: auto; text-align: left; padding-left: 12px; }
+/* min-width:0 lets the cell shrink so it never pushes PTS off-screen; the name truncates
+   with an ellipsis (below) so the ✓/✗/% badge always stays on the same line. */
+.team-cell { display: flex; align-items: center; min-width: 0; gap: 8px; font-weight: 600; }
+.team-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pts { font-weight: 800; color: var(--gold); }
 .rank { color: var(--muted); font-weight: 700; }
 

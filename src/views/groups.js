@@ -19,14 +19,17 @@ export function renderGroups(model) {
   return wrap
 }
 
-// Format a 0..1 qualification chance for the 3rd-placed badge ("100%" → ">99%" so it
-// never overstates certainty; "<1%" likewise at the floor).
+// Format a 0..1 qualification chance for the 3rd-placed badge. Cap at 99% / floor at 1%
+// so it never reads a misleading "100%"/"0%" while still fitting in the narrow badge.
 function fmtProb(p) {
   const pct = p * 100
-  if (pct >= 99.5) return '>99%'
-  if (pct > 0 && pct < 0.5) return '<1%'
+  if (pct >= 99) return '99%'
+  if (pct > 0 && pct < 1) return '1%'
   return `${Math.round(pct)}%`
 }
+
+// A few official names are too long for the narrow team column; show a short label.
+const SHORT_NAME = { 'Bosnia and Herzegovina': 'Bosnia & Herz.' }
 
 function groupTable(g, rows, flagOf, thirdProb) {
   const head = el('tr', {}, [
@@ -43,7 +46,7 @@ function groupTable(g, rows, flagOf, thirdProb) {
       td(String(i + 1)),
       el('td', { class: 'left team-cell' }, [
         flag(flagOf.get(r.team), r.team),
-        r.team,
+        el('span', { class: 'team-name' }, SHORT_NAME[r.team] || r.team),
         r.clinched
           ? el('span', { class: 'qual-check', title: 'Qualified for the knockout stage' }, '✓')
           : null,
