@@ -234,8 +234,29 @@ table.standings { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
   flex: 0 0 auto;
 }
 
+/* ✗ shown on teams mathematically eliminated from the knockout stage. */
+.elim-cross {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--red, #e5484d); color: #fff;
+  font-size: 11px; font-weight: 800; line-height: 1;
+  flex: 0 0 auto;
+}
+
 .srow--qual td:first-child { box-shadow: inset 3px 0 0 var(--green); }
 .srow--playoff td:first-child { box-shadow: inset 3px 0 0 var(--gold); }
+
+/* Best-third qualification chance, shown on a finished group's 3rd-placed team. */
+.third-prob {
+  margin-left: auto;
+  flex: 0 0 auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  color: var(--gold);
+  font-size: 0.72rem; font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
 
 /* Scorers */
 .scorer { display: flex; flex-direction: column; gap: 2px; }

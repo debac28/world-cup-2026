@@ -13,13 +13,22 @@ export function renderGroups(model) {
 
   const grid = el('div', { class: 'groupgrid' })
   for (const g of Object.keys(model.groups).sort()) {
-    grid.appendChild(groupTable(g, model.standings[g], model.flagOf))
+    grid.appendChild(groupTable(g, model.standings[g], model.flagOf, model.thirdProbs?.get(g)))
   }
   wrap.appendChild(grid)
   return wrap
 }
 
-function groupTable(g, rows, flagOf) {
+// Format a 0..1 qualification chance for the 3rd-placed badge ("100%" → ">99%" so it
+// never overstates certainty; "<1%" likewise at the floor).
+function fmtProb(p) {
+  const pct = p * 100
+  if (pct >= 99.5) return '>99%'
+  if (pct > 0 && pct < 0.5) return '<1%'
+  return `${Math.round(pct)}%`
+}
+
+function groupTable(g, rows, flagOf, thirdProb) {
   const head = el('tr', {}, [
     th('#'), th('Team', 'left'), th('Pl'), th('W'), th('D'), th('L'),
     th('GF'), th('GA'), th('GD'), th('Pts'),
@@ -27,6 +36,9 @@ function groupTable(g, rows, flagOf) {
 
   const body = rows.map((r, i) => {
     const cls = i < 2 ? 'qual' : i === 2 ? 'playoff' : 'out'
+    // The 3rd-placed team of a finished group shows its chance of being a best-third
+    // qualifier — but only while undecided (once green/red it's resolved, so drop the %).
+    const showProb = i === 2 && thirdProb != null && !r.clinched && !r.eliminated
     return el('tr', { class: `srow srow--${cls}` }, [
       td(String(i + 1)),
       el('td', { class: 'left team-cell' }, [
@@ -34,6 +46,21 @@ function groupTable(g, rows, flagOf) {
         r.team,
         r.clinched
           ? el('span', { class: 'qual-check', title: 'Qualified for the knockout stage' }, '✓')
+          : null,
+        r.eliminated
+          ? el('span', { class: 'elim-cross', title: 'Eliminated' }, '✗')
+          : null,
+        showProb
+          ? el(
+              'span',
+              {
+                class: 'third-prob',
+                title:
+                  'Estimated chance of qualifying as one of the 8 best 3rd-placed teams — ' +
+                  '4,000 simulations of the remaining group matches (goals modelled from FIFA ratings).',
+              },
+              fmtProb(thirdProb),
+            )
           : null,
       ]),
       td(String(r.played)), td(String(r.win)), td(String(r.draw)), td(String(r.loss)),

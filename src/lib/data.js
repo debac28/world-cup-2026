@@ -4,7 +4,7 @@
 // with just the schedule, and "fills in" once results arrive.
 
 import { parse } from './time.js'
-import { computeStandings, resolveKnockout } from './standings.js'
+import { computeStandings, resolveKnockout, thirdPlaceProbabilities } from './standings.js'
 import { winProbability } from './predict.js'
 import { fetchEspnOdds } from './odds.js'
 
@@ -180,6 +180,8 @@ function buildModel(seed, live) {
     groupMatches,
     knockoutMatches,
     standings,
+    // Per finished group: chance its 3rd-placed team is one of the 8 best thirds (0..1).
+    thirdProbs: thirdPlaceProbabilities(standings, seed.groups, groupMatches, rankOf),
     scorers: live.scorers || [],
     watchParties: watchCache || [],
   }
