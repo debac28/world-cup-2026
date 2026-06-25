@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-24T19:25:07.782Z",
+  "updated": "2026-06-25T02:07:23.931Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1473,51 +1473,172 @@
       "home": "Scotland",
       "away": "Brazil",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-24T22:00Z"
+      "awayGoals": 3,
+      "status": "FT",
+      "kickoff": "2026-06-24T22:00:00Z",
+      "goals": [
+        {
+          "player": "VINICIUS JUNIOR",
+          "team": "Brazil",
+          "minute": "7",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "VINICIUS JUNIOR",
+          "team": "Brazil",
+          "minute": "45+3",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MATHEUS CUNHA",
+          "team": "Brazil",
+          "minute": "60",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "50": {
       "home": "Morocco",
       "away": "Haiti",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-24T22:00Z"
+      "homeGoals": 4,
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-24T22:00:00Z",
+      "goals": [
+        {
+          "player": "Achraf HAKIMI",
+          "team": "Morocco",
+          "minute": "39",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ismael SAIBARI",
+          "team": "Morocco",
+          "minute": "45+1",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Soufiane RAHIMI",
+          "team": "Morocco",
+          "minute": "78",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Gessime YASSINE",
+          "team": "Morocco",
+          "minute": "89",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Yassine BOUNOU",
+          "team": "Haiti",
+          "minute": "10",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "Wilson Isidor",
+          "team": "Haiti",
+          "minute": "43",
+          "pen": false,
+          "og": false,
+          "wiki": "Wilson Isidor"
+        }
+      ]
     },
     "51": {
       "home": "Switzerland",
       "away": "Canada",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "1H",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-24T19:00:00Z",
-      "minute": "25"
+      "goals": [
+        {
+          "player": "Ruben VARGAS",
+          "team": "Switzerland",
+          "minute": "46",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Johan MANZAMBI",
+          "team": "Switzerland",
+          "minute": "57",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Promise DAVID",
+          "team": "Canada",
+          "minute": "76",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "52": {
       "home": "Bosnia and Herzegovina",
       "away": "Qatar",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "1H",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "FT",
       "kickoff": "2026-06-24T19:00:00Z",
-      "minute": "23"
+      "goals": [
+        {
+          "player": "Kerim ALAJBEGOVIC",
+          "team": "Bosnia and Herzegovina",
+          "minute": "29",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MAHMOUD ABUNADA",
+          "team": "Bosnia and Herzegovina",
+          "minute": "34",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "Ermin MAHMIC",
+          "team": "Bosnia and Herzegovina",
+          "minute": "80",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "HASSAN ALHAYDOS",
+          "team": "Qatar",
+          "minute": "42",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "53": {
       "home": "Czech Republic",
       "away": "Mexico",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-25T01:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-25T01:00:00Z",
+      "minute": "46"
     },
     "54": {
       "home": "South Africa",
       "away": "Korea Republic",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-25T01:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-25T01:00:00Z",
+      "minute": "46"
     },
     "55": {
       "home": "Curaçao",
@@ -1673,6 +1794,13 @@
       "wiki": "Lionel Messi"
     },
     {
+      "player": "Vinicius Junior",
+      "team": "Brazil",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Vinícius Júnior"
+    },
+    {
       "player": "Kylian Mbappé",
       "team": "France",
       "goals": 4,
@@ -1687,6 +1815,13 @@
       "wiki": "Erling Haaland"
     },
     {
+      "player": "Ismael Saibari",
+      "team": "Morocco",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Ismael Saibari"
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3,
@@ -1694,11 +1829,25 @@
       "wiki": "Deniz Undav"
     },
     {
+      "player": "Johan Manzambi",
+      "team": "Switzerland",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Johan Manzambi"
+    },
+    {
       "player": "Jonathan David",
       "team": "Canada",
       "goals": 3,
       "assists": 0,
       "wiki": "Jonathan David"
+    },
+    {
+      "player": "Matheus Cunha",
+      "team": "Brazil",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Matheus Cunha"
     },
     {
       "player": "Cyle Larin",
@@ -1713,20 +1862,6 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Folarin Balogun"
-    },
-    {
-      "player": "Ismael Saibari",
-      "team": "Morocco",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Ismael Saibari"
-    },
-    {
-      "player": "Vinicius Junior",
-      "team": "Brazil",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Vinícius Júnior"
     },
     {
       "player": "Kai Havertz",
@@ -1784,18 +1919,17 @@
       "assists": 0
     },
     {
-      "player": "Johan Manzambi",
+      "player": "Ruben Vargas",
       "team": "Switzerland",
       "goals": 2,
-      "assists": 0,
-      "wiki": "Johan Manzambi"
+      "assists": 1,
+      "wiki": "Rubén Vargas"
     },
     {
-      "player": "Matheus Cunha",
-      "team": "Brazil",
+      "player": "Ermin Mahmic",
+      "team": "Bosnia and Herzegovina",
       "goals": 2,
-      "assists": 0,
-      "wiki": "Matheus Cunha"
+      "assists": 0
     },
     {
       "player": "Brian Brobbey",
@@ -1895,7 +2029,7 @@
       "player": "Breel Embolo",
       "team": "Switzerland",
       "goals": 1,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Breel Embolo"
     },
     {
@@ -2167,19 +2301,6 @@
       "assists": 0
     },
     {
-      "player": "Ruben Vargas",
-      "team": "Switzerland",
-      "goals": 1,
-      "assists": 1,
-      "wiki": "Rubén Vargas"
-    },
-    {
-      "player": "Ermin Mahmic",
-      "team": "Bosnia and Herzegovina",
-      "goals": 1,
-      "assists": 0
-    },
-    {
       "player": "Granit Xhaka",
       "team": "Switzerland",
       "goals": 1,
@@ -2190,7 +2311,7 @@
       "player": "Nathan-Dylan Saliba",
       "team": "Canada",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Nathan Saliba"
     },
     {
@@ -2342,6 +2463,13 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Ante Budimir"
+    },
+    {
+      "player": "Promise Akinpelu",
+      "team": "Canada",
+      "goals": 1,
+      "assists": 1,
+      "wiki": "Promise David"
     }
   ],
   "wikiLinks": {
@@ -2553,6 +2681,16 @@
     "Nuno Mendes": "",
     "Abduvakhid Nematov": "",
     "Rafael Leão": "Rafael Leão",
-    "Ante Budimir": "Ante Budimir"
+    "Ante Budimir": "Ante Budimir",
+    "Achraf HAKIMI": "",
+    "Soufiane RAHIMI": "",
+    "Gessime YASSINE": "",
+    "Yassine BOUNOU": "",
+    "Wilson Isidor": "Wilson Isidor",
+    "Promise DAVID": "",
+    "Kerim ALAJBEGOVIC": "",
+    "MAHMOUD ABUNADA": "",
+    "HASSAN ALHAYDOS": "",
+    "Promise Akinpelu": "Promise David"
   }
 }
