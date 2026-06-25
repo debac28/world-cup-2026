@@ -125,7 +125,10 @@ change the card art. The OG meta in `index.html` hardcodes the prod Pages URL.
 
 - When football-data.org team names differ from the spreadsheet, add aliases to
   `TEAM_ALIASES` in `update_results.mjs` — otherwise group results silently fail to map.
-- The best-third-placed bracket allocation is intentionally **not** auto-assigned (its
-  mapping depends on which thirds qualify); those slots display their pool label.
+- The best-third-placed bracket allocation **auto-resolves once all 12 groups finish**:
+  `rankThirdPlace` in `standings.js` ranks the twelve 3rd-placed teams (points → GD → GF →
+  FIFA rank) and looks up FIFA's 495-row Annex-C table in `src/lib/third-place-table.js`
+  (generated from Wikipedia — do not hand-edit). Until every group is final, those slots
+  show their pool label. Self-check: `node scripts/test_thirdplace.mjs`.
 - `seed.json` is committed. Only rerun `npm run seed` if the spreadsheet changes; the
   extractor hardcodes the bracket adjacency (`KNOCKOUT`) derived from the sheet layout.

@@ -1,3 +1,5 @@
+import { THIRD_PLACE_TABLE, THIRD_SLOT_ORDER } from './third-place-table.js'
+
 // Group standings + knockout slot resolution.
 //
 // Standings are computed from finished group matches using FIFA's 2026 group-stage
@@ -134,7 +136,36 @@ function headToHead(a, b, finished) {
 // (left unresolved — exact allocation depends on which thirds qualify); "W74" =
 // winner of match 74; "L101" = loser of match 101.
 
+// Map each third-place winner-slot ("1A", "1B", …) to the actual team that fills it,
+// per FIFA's allocation table — but only once ALL twelve groups are fully played, since
+// the eight best thirds can't be known until then. Returns null while any group is live.
+function rankThirdPlace(standings) {
+  const groups = Object.keys(standings)
+  if (groups.length < 12 || !groups.every((g) => standings[g].allFinished)) return null
+  const thirds = groups.map((g) => ({ g, row: standings[g][2] })).filter((x) => x.row)
+  if (thirds.length < 12) return null
+  // FIFA criteria for ranking third-placed teams: points, goal difference, goals scored.
+  // Disciplinary points / drawing of lots aren't available client-side, so fall back to
+  // FIFA ranking (rankPoints) as a deterministic final tiebreak.
+  // ponytail: an exact tie at the 8th/9th boundary is vanishingly rare; wire in fair-play
+  // points only if FIFA exposes them.
+  thirds.sort(
+    (a, b) =>
+      b.row.points - a.row.points ||
+      b.row.gd - a.row.gd ||
+      b.row.gf - a.row.gf ||
+      (b.row.rankPoints || 0) - (a.row.rankPoints || 0),
+  )
+  const top8 = thirds.slice(0, 8).map((x) => x.g)
+  const assignment = THIRD_PLACE_TABLE[[...top8].sort().join('')]
+  if (!assignment) return null // 495 keys cover every combo; guard anyway
+  const bySlot = new Map()
+  THIRD_SLOT_ORDER.forEach((slot, i) => bySlot.set(slot, standings[assignment[i]][2].team))
+  return bySlot
+}
+
 export function resolveKnockout(knockout, standings, results, normStatus) {
+  const thirdBySlot = rankThirdPlace(standings)
   const winners = new Map()
   const losers = new Map()
   for (const [id, r] of Object.entries(results)) {
@@ -151,7 +182,9 @@ export function resolveKnockout(knockout, standings, results, normStatus) {
     else if (aw) { winners.set(+id, r.away); losers.set(+id, r.home) }
   }
 
-  const resolve = (slot) => {
+  // `sibling` is the other slot in the same match — a "3rd Group ..." pool is allocated
+  // by which group winner (1A/1B/…) it faces, so we resolve it via that sibling slot.
+  const resolve = (slot, sibling) => {
     if (!slot) return null
     const pos = slot.match(/^([12])([A-L])$/)
     if (pos) {
@@ -163,14 +196,15 @@ export function resolveKnockout(knockout, standings, results, normStatus) {
     if (w) return winners.get(+w[1]) || null
     const l = slot.match(/^L(\d+)$/)
     if (l) return losers.get(+l[1]) || null
-    return null // "3rd Group ..." pool — shown as the slot label
+    if (slot.startsWith('3rd') && thirdBySlot) return thirdBySlot.get(sibling) || null
+    return null // best-third pool, not yet allocated — shown as the slot label
   }
 
   return knockout.map((ko) => ({
     ...ko,
-    home: resolve(ko.homeSlot) || ko.homeSlot,
-    away: resolve(ko.awaySlot) || ko.awaySlot,
-    homeResolved: !!resolve(ko.homeSlot),
-    awayResolved: !!resolve(ko.awaySlot),
+    home: resolve(ko.homeSlot, ko.awaySlot) || ko.homeSlot,
+    away: resolve(ko.awaySlot, ko.homeSlot) || ko.awaySlot,
+    homeResolved: !!resolve(ko.homeSlot, ko.awaySlot),
+    awayResolved: !!resolve(ko.awaySlot, ko.homeSlot),
   }))
 }
