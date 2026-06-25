@@ -55,8 +55,11 @@ export function computeStandings(groups, groupMatches, rankOf) {
     standings[g].sort(makeComparator(finished))
     standings[g].forEach((row, i) => { row.position = i + 1 })
     standings[g].allFinished = standings[g].every((r) => r.played === 3)
+    // Once the group is fully played, the top 2 by final standings have qualified —
+    // the points-only clinch heuristic misses a runner-up tied on points (decided on GD).
     const clinched = clinchedTop2(groups[g], matchesByGroup[g])
-    for (const row of standings[g]) row.clinched = clinched.has(row.team)
+    for (const row of standings[g])
+      row.clinched = standings[g].allFinished ? row.position <= 2 : clinched.has(row.team)
   }
   return standings
 }
