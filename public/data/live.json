@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-25T02:07:23.931Z",
+  "updated": "2026-06-25T08:44:56.230Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1626,67 +1626,97 @@
       "home": "Czech Republic",
       "away": "Mexico",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "2H",
+      "awayGoals": 3,
+      "status": "FT",
       "kickoff": "2026-06-25T01:00:00Z",
-      "minute": "46"
+      "goals": [
+        {
+          "player": "Mateo CHAVEZ",
+          "team": "Mexico",
+          "minute": "55",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Julian QUINONES",
+          "team": "Mexico",
+          "minute": "61",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Alvaro FIDALGO",
+          "team": "Mexico",
+          "minute": "90+4",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "54": {
       "home": "South Africa",
       "away": "Korea Republic",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-06-25T01:00:00Z",
-      "minute": "46"
+      "goals": [
+        {
+          "player": "Thapelo MASEKO",
+          "team": "South Africa",
+          "minute": "63",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "55": {
       "home": "Curaçao",
       "away": "Ivory Coast",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-25T20:00:00Z"
+      "kickoff": "2026-06-25T20:00Z"
     },
     "56": {
       "home": "Ecuador",
       "away": "Germany",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-25T20:00:00Z"
+      "kickoff": "2026-06-25T20:00Z"
     },
     "57": {
       "home": "Japan",
       "away": "Sweden",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-25T23:00:00Z"
+      "kickoff": "2026-06-25T23:00Z"
     },
     "58": {
       "home": "Tunisia",
       "away": "Netherlands",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-25T23:00:00Z"
+      "kickoff": "2026-06-25T23:00Z"
     },
     "59": {
       "home": "Turkey",
       "away": "United States",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-26T02:00:00Z"
+      "kickoff": "2026-06-26T02:00Z"
     },
     "60": {
       "home": "Paraguay",
       "away": "Australia",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "status": "NS",
-      "kickoff": "2026-06-26T02:00:00Z"
+      "kickoff": "2026-06-26T02:00Z"
     },
     "61": {
       "home": "Norway",
@@ -1783,6 +1813,14 @@
       "awayGoals": null,
       "status": "NS",
       "kickoff": "2026-06-27T23:30:00Z"
+    },
+    "73": {
+      "home": "South Africa",
+      "away": "Canada",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-06-28T19:00:00Z"
     }
   },
   "scorers": [
@@ -1848,6 +1886,13 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Matheus Cunha"
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Julián Quiñones"
     },
     {
       "player": "Cyle Larin",
@@ -1972,13 +2017,6 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Cristiano Ronaldo"
-    },
-    {
-      "player": "Julián Quiñones",
-      "team": "Mexico",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Julián Quiñones"
     },
     {
       "player": "Raúl Jiménez",
@@ -2318,7 +2356,7 @@
       "player": "Luis Romo",
       "team": "Mexico",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Luis Romo"
     },
     {
@@ -2691,6 +2729,10 @@
     "Kerim ALAJBEGOVIC": "",
     "MAHMOUD ABUNADA": "",
     "HASSAN ALHAYDOS": "",
-    "Promise Akinpelu": "Promise David"
+    "Promise Akinpelu": "Promise David",
+    "Mateo CHAVEZ": "",
+    "Julian QUINONES": "",
+    "Alvaro FIDALGO": "",
+    "Thapelo MASEKO": ""
   }
 }
