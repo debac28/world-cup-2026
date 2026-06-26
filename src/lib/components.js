@@ -3,6 +3,7 @@ import { el, flag } from './dom.js'
 import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
 import { officialBrand, validCandidate, isGlobalChannel } from '../../scripts/lib/highlights.mjs'
+import { commentaryBand } from './commentary.js'
 
 // Minimal calendar-with-plus glyph (currentColor stroke), used by the country "add all to
 // calendar" button in the Fixtures tab.
@@ -14,7 +15,7 @@ export function calendarPlusIcon() {
 }
 
 // One match row: flags + names on each side, score or kickoff time in the middle.
-export function matchRow(m, { showRound = false, showPrediction = false } = {}) {
+export function matchRow(m, { showRound = false, showPrediction = false, showCommentary = false } = {}) {
   const score = scoreCell(m)
   const homeWin = m.finished && m.homeGoals > m.awayGoals
   const awayWin = m.finished && m.awayGoals > m.homeGoals
@@ -49,6 +50,7 @@ export function matchRow(m, { showRound = false, showPrediction = false } = {}) 
     ]),
     shareScoreLink(m),
     highlightLink(m),
+    showCommentary && m.live ? commentaryBand(m) : null,
   ])
 }
 

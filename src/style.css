@@ -338,6 +338,35 @@ button.wp-action { font: inherit; cursor: pointer; }
 .match__share:active { opacity: 0.7; }
 .cal-ico { display: inline-flex; }
 
+/* Live Commentary band — a full-width footer on live cards that expands into a rolling feed. */
+.cmty { margin: 10px -12px -12px; border-top: 1px solid var(--line); }
+.cmty__toggle {
+  width: 100%; display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; background: transparent; border: 0; cursor: pointer;
+  color: var(--text); font: inherit; font-size: 0.78rem; font-weight: 700;
+}
+.cmty__dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--live);
+  box-shadow: 0 0 0 0 var(--live); animation: cmty-pulse 1.6s ease-out infinite; flex: 0 0 auto;
+}
+@keyframes cmty-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,77,77,0.6); } 100% { box-shadow: 0 0 0 7px rgba(255,77,77,0); } }
+.cmty__chev { margin-left: auto; color: var(--muted); font-size: 0.7rem; }
+.cmty__panel { max-height: 260px; overflow-y: auto; padding: 0 12px 10px; -webkit-overflow-scrolling: touch; }
+/* Refresh sits in a sticky mini-bar so it's reachable without collapsing the panel. */
+.cmty__bar { position: sticky; top: 0; display: flex; justify-content: flex-end; padding: 6px 0; background: var(--panel); }
+.cmty__refresh {
+  background: transparent; border: 1px solid var(--line); border-radius: 999px;
+  padding: 3px 10px; color: var(--muted); font: inherit; font-size: 0.72rem; font-weight: 700; cursor: pointer;
+}
+.cmty__refresh:active { color: var(--text); }
+.cmty__row { display: flex; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 0.8rem; line-height: 1.35; }
+.cmty__row:first-child { border-top: 0; }
+.cmty__min { flex: 0 0 30px; color: var(--gold); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.cmty__text { color: var(--text); }
+.cmty__row--goal { background: color-mix(in srgb, var(--gold) 14%, transparent); border-radius: 8px; padding: 8px 8px; margin: 4px -8px; }
+.cmty__row--goal .cmty__text { font-weight: 800; color: var(--gold); }
+.cmty__note { padding: 12px 0; color: var(--muted); font-size: 0.8rem; text-align: center; }
+
 /* Country "add all" button: a gold pill, the primary action when a team is filtered. */
 /* Sits directly below the (right-aligned) country dropdown. */
 .cal-allbar { display: flex; justify-content: flex-end; margin: 2px 2px 12px; }
