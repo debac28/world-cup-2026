@@ -53,14 +53,45 @@ export function pairKey(a, b) {
 
 // Build the `results` object (keyed by seed match number 1-104) from a list of
 // football-data.org match objects. Group matches map by unordered team pair (goals
-// oriented to seed home/away); knockout matches map by round + nearest kickoff.
+// Match resolved knockout candidates (real team names from a live source, each with a
+// `date` = kickoff ms) onto the seed's knockout slots by kickoff. Globally greedy: bind the
+// smallest kickoff-diff pairs first so an EXACT-time match always wins, instead of iterating
+// slots in order and letting an early slot grab a candidate that belongs to a later one —
+// that ordering bug cascaded every later slot onto the wrong date/venue/opponent (e.g. the
+// 17:00 R32 belongs to seed 76 but seed 74 grabbed it, shoving USA-Bosnia onto 76). A
+// candidate farther than MAX_KO_DIFF_MS from every slot is left unmapped (its true slot isn't
+// scheduled/resolved yet). Returns Map<ko.id, candidate>.
+const MAX_KO_DIFF_MS = 6 * 60 * 60 * 1000 // 6h: same scheduled match, tolerating minor drift
+export function matchKnockoutByKickoff(seed, candidates) {
+  const pairs = []
+  for (const ko of seed.knockout) {
+    if (!ko.kickoff) continue
+    const target = new Date(ko.kickoff).getTime()
+    for (const cand of candidates) {
+      if (cand.date == null) continue
+      const diff = Math.abs(cand.date - target)
+      if (diff <= MAX_KO_DIFF_MS) pairs.push({ diff, koId: ko.id, cand })
+    }
+  }
+  pairs.sort((a, b) => a.diff - b.diff)
+  const bySeedId = new Map()
+  const usedCand = new Set()
+  for (const { koId, cand } of pairs) {
+    if (bySeedId.has(koId) || usedCand.has(cand)) continue
+    bySeedId.set(koId, cand)
+    usedCand.add(cand)
+  }
+  return bySeedId
+}
+
+// oriented to seed home/away); knockout matches map by global nearest-kickoff assignment.
 export function buildResults(seed, matches) {
   const results = {}
 
   const seedGroupByPair = new Map()
   for (const f of seed.fixtures) seedGroupByPair.set(pairKey(f.home, f.away), f)
 
-  const apiKnockoutByRound = {}
+  const knockoutCandidates = []
 
   for (const m of matches) {
     const home = norm(m.homeTeam?.name)
@@ -85,9 +116,8 @@ export function buildResults(seed, matches) {
       continue
     }
 
-    const rnd = STAGE_TO_ROUND[m.stage]
-    if (rnd) {
-      ;(apiKnockoutByRound[rnd] ||= []).push({
+    if (STAGE_TO_ROUND[m.stage]) {
+      knockoutCandidates.push({
         date: kickoff ? new Date(kickoff).getTime() : null,
         home,
         away,
@@ -101,33 +131,17 @@ export function buildResults(seed, matches) {
     }
   }
 
-  // Knockout: zip each round's API matches to seed slots by nearest kickoff.
-  for (const ko of seed.knockout) {
-    const pool = apiKnockoutByRound[ko.round]
-    if (!pool || !pool.length || !ko.kickoff) continue
-    const target = new Date(ko.kickoff).getTime()
-    let best = null
-    let bestDiff = Infinity
-    for (const cand of pool) {
-      if (cand.used || cand.date == null) continue
-      const diff = Math.abs(cand.date - target)
-      if (diff < bestDiff) {
-        bestDiff = diff
-        best = cand
-      }
-    }
-    if (best) {
-      best.used = true
-      results[ko.id] = {
-        home: best.home,
-        away: best.away,
-        homeGoals: best.homeGoals,
-        awayGoals: best.awayGoals,
-        homePens: best.homePens,
-        awayPens: best.awayPens,
-        status: best.status,
-        kickoff: best.kickoff,
-      }
+  // Knockout: globally assign API matches to seed slots by nearest kickoff (see helper).
+  for (const [id, best] of matchKnockoutByKickoff(seed, knockoutCandidates)) {
+    results[id] = {
+      home: best.home,
+      away: best.away,
+      homeGoals: best.homeGoals,
+      awayGoals: best.awayGoals,
+      homePens: best.homePens,
+      awayPens: best.awayPens,
+      status: best.status,
+      kickoff: best.kickoff,
     }
   }
 

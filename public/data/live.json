@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-26T02:08:53.030Z",
+  "updated": "2026-06-26T06:16:46.264Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1747,7 +1747,17 @@
           "pen": false,
           "og": false
         }
-      ]
+      ],
+      "highlights": {
+        "US": [
+          {
+            "videoId": "CerrE-MoofY",
+            "title": "Japan vs Sweden Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+            "channel": "FOX Sports",
+            "thumbnail": "https://i.ytimg.com/vi/CerrE-MoofY/mqdefault.jpg"
+          }
+        ]
+      }
     },
     "58": {
       "home": "Tunisia",
@@ -1785,25 +1795,91 @@
           "pen": false,
           "og": false
         }
-      ]
+      ],
+      "highlights": {
+        "US": [
+          {
+            "videoId": "o0AmHN-XnOs",
+            "title": "Tunisia vs Netherlands Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+            "channel": "FOX Sports",
+            "thumbnail": "https://i.ytimg.com/vi/o0AmHN-XnOs/mqdefault.jpg"
+          }
+        ]
+      }
     },
     "59": {
       "home": "Turkey",
       "away": "United States",
-      "homeGoals": 0,
-      "awayGoals": 1,
-      "status": "1H",
+      "homeGoals": 3,
+      "awayGoals": 2,
+      "status": "FT",
       "kickoff": "2026-06-26T02:00:00Z",
-      "minute": "9"
+      "goals": [
+        {
+          "player": "Arda GULER",
+          "team": "Turkey",
+          "minute": "10",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Baris Alper YILMAZ",
+          "team": "Turkey",
+          "minute": "31",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Kaan Ayhan",
+          "team": "Turkey",
+          "minute": "90+8",
+          "pen": false,
+          "og": false,
+          "wiki": "Kaan Ayhan"
+        },
+        {
+          "player": "Auston TRUSTY",
+          "team": "United States",
+          "minute": "3",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Sebastian BERHALTER",
+          "team": "United States",
+          "minute": "49",
+          "pen": false,
+          "og": false
+        }
+      ],
+      "highlights": {
+        "US": [
+          {
+            "videoId": "7JJLMyKBG90",
+            "title": "Türkiye vs United States Extended Highlights 🌎🏆 2026 FIFA World Cup™",
+            "channel": "FOX Sports",
+            "thumbnail": "https://i.ytimg.com/vi/7JJLMyKBG90/mqdefault.jpg"
+          }
+        ]
+      }
     },
     "60": {
       "home": "Paraguay",
       "away": "Australia",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-06-26T02:00:00Z",
-      "minute": "9"
+      "highlights": {
+        "US": [
+          {
+            "videoId": "NdgZtyReLbY",
+            "title": "Paraguay vs Australia Extended Highlights 🌎🏆  2026 FIFA World Cup™",
+            "channel": "FOX Sports",
+            "thumbnail": "https://i.ytimg.com/vi/NdgZtyReLbY/mqdefault.jpg"
+          }
+        ]
+      }
     },
     "61": {
       "home": "Norway",
@@ -1909,14 +1985,6 @@
       "status": "NS",
       "kickoff": "2026-06-28T19:00:00Z"
     },
-    "74": {
-      "home": "Brazil",
-      "away": "Japan",
-      "homeGoals": null,
-      "awayGoals": null,
-      "status": "NS",
-      "kickoff": "2026-06-29T17:00:00Z"
-    },
     "75": {
       "home": "Netherlands",
       "away": "Morocco",
@@ -1926,6 +1994,14 @@
       "kickoff": "2026-06-30T01:00:00Z"
     },
     "76": {
+      "home": "Brazil",
+      "away": "Japan",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-06-29T17:00:00Z"
+    },
+    "81": {
       "home": "United States",
       "away": "Bosnia and Herzegovina",
       "homeGoals": null,
@@ -2853,6 +2929,11 @@
     "Hazem MASTOURI": "",
     "Ellyes SKHIRI": "",
     "Jan Paul VAN HECKE": "",
-    "Nicolas Pépé": "Nicolas Pépé"
+    "Nicolas Pépé": "Nicolas Pépé",
+    "Arda GULER": "",
+    "Baris Alper YILMAZ": "",
+    "Kaan Ayhan": "Kaan Ayhan",
+    "Auston TRUSTY": "",
+    "Sebastian BERHALTER": ""
   }
 }

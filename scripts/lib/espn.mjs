@@ -11,7 +11,7 @@
 // Each event: competitions[0].status.type.{state,name} (state = pre|in|post) and
 // competitions[0].competitors[] with { homeAway, team.displayName, score }.
 
-import { norm, pairKey } from './map.mjs'
+import { norm, pairKey, matchKnockoutByKickoff } from './map.mjs'
 
 export const ESPN_SCOREBOARD_URL =
   'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard'
@@ -111,32 +111,17 @@ export function buildEspnResults(seed, events) {
     knockoutCandidates.push({ ...e, date: e.kickoff ? new Date(e.kickoff).getTime() : null })
   }
 
-  // Knockout: zip each seed slot to its nearest-kickoff ESPN event (real team names from ESPN).
-  for (const ko of seed.knockout) {
-    if (!ko.kickoff) continue
-    const target = new Date(ko.kickoff).getTime()
-    let best = null
-    let bestDiff = Infinity
-    for (const cand of knockoutCandidates) {
-      if (cand.used || cand.date == null) continue
-      const diff = Math.abs(cand.date - target)
-      if (diff < bestDiff) {
-        bestDiff = diff
-        best = cand
-      }
-    }
-    if (best) {
-      best.used = true
-      results[ko.id] = {
-        home: best.home,
-        away: best.away,
-        homeGoals: best.homeGoals,
-        awayGoals: best.awayGoals,
-        status: best.status,
-        kickoff: best.kickoff,
-        redHome: reds(best.redHome),
-        redAway: reds(best.redAway),
-      }
+  // Knockout: globally assign ESPN events to seed slots by nearest kickoff (see helper).
+  for (const [id, best] of matchKnockoutByKickoff(seed, knockoutCandidates)) {
+    results[id] = {
+      home: best.home,
+      away: best.away,
+      homeGoals: best.homeGoals,
+      awayGoals: best.awayGoals,
+      status: best.status,
+      kickoff: best.kickoff,
+      redHome: reds(best.redHome),
+      redAway: reds(best.redAway),
     }
   }
 

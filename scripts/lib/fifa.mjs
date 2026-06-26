@@ -20,7 +20,7 @@
 // spellings (Türkiye, Czechia, Côte d'Ivoire, Cabo Verde, IR Iran, Congo DR, USA) are
 // already covered by TEAM_ALIASES in map.mjs, so norm() resolves them to seed names.
 
-import { norm, pairKey } from './map.mjs'
+import { norm, pairKey, matchKnockoutByKickoff } from './map.mjs'
 
 export const FIFA_COMPETITION = '17' // FIFA World Cup
 export const FIFA_SEASON = '285023' // 2026
@@ -102,23 +102,8 @@ function joinToSeed(seed, matches) {
     knockoutCandidates.push({ ...e, date: e.kickoff ? new Date(e.kickoff).getTime() : null })
   }
 
-  for (const ko of seed.knockout) {
-    if (!ko.kickoff) continue
-    const target = new Date(ko.kickoff).getTime()
-    let best = null
-    let bestDiff = Infinity
-    for (const cand of knockoutCandidates) {
-      if (cand.used || cand.date == null) continue
-      const diff = Math.abs(cand.date - target)
-      if (diff < bestDiff) {
-        bestDiff = diff
-        best = cand
-      }
-    }
-    if (best) {
-      best.used = true
-      bySeedId[ko.id] = best
-    }
+  for (const [id, best] of matchKnockoutByKickoff(seed, knockoutCandidates)) {
+    bySeedId[id] = best
   }
 
   return bySeedId
