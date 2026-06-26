@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-26T13:59:55.262Z",
+  "updated": "2026-06-26T19:27:04.928Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1844,18 +1844,26 @@
     "61": {
       "home": "Norway",
       "away": "France",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-26T19:00Z"
+      "homeGoals": 1,
+      "awayGoals": 2,
+      "status": "1H",
+      "kickoff": "2026-06-26T19:00:00Z",
+      "minute": "24"
     },
     "62": {
       "home": "Senegal",
       "away": "Iraq",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-26T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-26T19:00:00Z",
+      "minute": "23",
+      "redAway": [
+        {
+          "name": "Rebin Sulaka",
+          "min": "13'"
+        }
+      ]
     },
     "63": {
       "home": "Egypt",
@@ -1997,7 +2005,7 @@
       "player": "Kylian Mbappé",
       "team": "France",
       "goals": 4,
-      "assists": 0,
+      "assists": 2,
       "wiki": "Kylian Mbappé"
     },
     {
@@ -2048,6 +2056,13 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Brian Brobbey"
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Julián Quiñones",
@@ -2608,13 +2623,6 @@
       "team": "Egypt",
       "goals": 1,
       "assists": 0
-    },
-    {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "goals": 1,
-      "assists": 1,
-      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Marcus Pedersen",
