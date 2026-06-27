@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-26T19:27:04.928Z",
+  "updated": "2026-06-27T02:04:00.291Z",
   "season": "2026",
   "results": {
     "1": {
@@ -1845,23 +1845,95 @@
       "home": "Norway",
       "away": "France",
       "homeGoals": 1,
-      "awayGoals": 2,
-      "status": "1H",
+      "awayGoals": 4,
+      "status": "FT",
       "kickoff": "2026-06-26T19:00:00Z",
-      "minute": "24"
+      "goals": [
+        {
+          "player": "Thelo AASGAARD",
+          "team": "Norway",
+          "minute": "21",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "7",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "20",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "32",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Desire DOUE",
+          "team": "France",
+          "minute": "90+4",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "62": {
       "home": "Senegal",
       "away": "Iraq",
-      "homeGoals": 1,
+      "homeGoals": 5,
       "awayGoals": 0,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-06-26T19:00:00Z",
-      "minute": "23",
       "redAway": [
         {
           "name": "Rebin Sulaka",
           "min": "13'"
+        }
+      ],
+      "goals": [
+        {
+          "player": "Habib DIARRA",
+          "team": "Senegal",
+          "minute": "4",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ismaila SARR",
+          "team": "Senegal",
+          "minute": "56",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Pape GUEYE",
+          "team": "Senegal",
+          "minute": "59",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Pape GUEYE",
+          "team": "Senegal",
+          "minute": "71",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Iliman NDIAYE",
+          "team": "Senegal",
+          "minute": "82",
+          "pen": false,
+          "og": false
         }
       ]
     },
@@ -1886,16 +1958,31 @@
       "away": "Saudi Arabia",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T00:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-27T00:00:00Z"
     },
     "66": {
       "home": "Uruguay",
       "away": "Spain",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T00:00Z"
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-27T00:00:00Z",
+      "redHome": [
+        {
+          "name": "Agustín Canobbio",
+          "min": "90'+5'"
+        }
+      ],
+      "goals": [
+        {
+          "player": "Alex BAENA",
+          "team": "Spain",
+          "minute": "42",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "67": {
       "home": "Panama",
@@ -1950,8 +2037,6 @@
       "away": "Canada",
       "homeGoals": null,
       "awayGoals": null,
-      "homePens": null,
-      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-28T19:00:00Z"
     },
@@ -1960,8 +2045,6 @@
       "away": "Morocco",
       "homeGoals": null,
       "awayGoals": null,
-      "homePens": null,
-      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-30T01:00:00Z"
     },
@@ -1970,18 +2053,22 @@
       "away": "Japan",
       "homeGoals": null,
       "awayGoals": null,
-      "homePens": null,
-      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-29T17:00:00Z"
+    },
+    "78": {
+      "home": "Ivory Coast",
+      "away": "Norway",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-06-30T17:00:00Z"
     },
     "81": {
       "home": "United States",
       "away": "Bosnia and Herzegovina",
       "homeGoals": null,
       "awayGoals": null,
-      "homePens": null,
-      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-02T00:00:00Z"
     }
@@ -2014,6 +2101,13 @@
       "goals": 4,
       "assists": 0,
       "wiki": "Erling Haaland"
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Ismael Saibari",
@@ -2058,11 +2152,11 @@
       "wiki": "Brian Brobbey"
     },
     {
-      "player": "Ousmane Dembélé",
-      "team": "France",
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
       "goals": 3,
       "assists": 1,
-      "wiki": "Ousmane Dembélé"
+      "wiki": "Ismaïla Sarr"
     },
     {
       "player": "Julián Quiñones",
@@ -2182,13 +2276,6 @@
       "wiki": "Mikel Oyarzabal"
     },
     {
-      "player": "Ismaïla Sarr",
-      "team": "Senegal",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Ismaïla Sarr"
-    },
-    {
       "player": "Cristiano Ronaldo",
       "team": "Portugal",
       "goals": 2,
@@ -2201,6 +2288,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Nicolas Pépé"
+    },
+    {
+      "player": "Pape Gueye",
+      "team": "Senegal",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Pape Gueye"
     },
     {
       "player": "Raúl Jiménez",
@@ -2396,7 +2490,7 @@
       "player": "Bradley Barcola",
       "team": "France",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Bradley Barcola"
     },
     {
@@ -2664,13 +2758,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Rafael Leão"
-    },
-    {
-      "player": "Ante Budimir",
-      "team": "Croatia",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Ante Budimir"
     }
   ],
   "wikiLinks": {
@@ -2910,6 +2997,13 @@
     "Baris Alper YILMAZ": "",
     "Kaan Ayhan": "Kaan Ayhan",
     "Auston TRUSTY": "",
-    "Sebastian BERHALTER": ""
+    "Sebastian BERHALTER": "",
+    "Thelo AASGAARD": "",
+    "Desire DOUE": "",
+    "Habib DIARRA": "",
+    "Pape GUEYE": "",
+    "Iliman NDIAYE": "",
+    "Alex BAENA": "",
+    "Pape Gueye": "Pape Gueye"
   }
 }
