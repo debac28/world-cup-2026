@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-27T13:06:16.119Z",
+  "updated": "2026-06-27T19:02:11.646Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2085,6 +2085,8 @@
       "away": "Canada",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-28T19:00:00Z"
     },
@@ -2101,6 +2103,8 @@
       "away": "Morocco",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-30T01:00:00Z"
     },
@@ -2109,6 +2113,8 @@
       "away": "Japan",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-06-29T17:00:00Z"
     },
@@ -2133,6 +2139,8 @@
       "away": "Bosnia and Herzegovina",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-02T00:00:00Z"
     },
