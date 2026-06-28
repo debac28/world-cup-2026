@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-27T19:02:11.646Z",
+  "updated": "2026-06-28T02:14:57.233Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2036,49 +2036,120 @@
       "home": "Panama",
       "away": "England",
       "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T21:00Z"
+      "awayGoals": 2,
+      "status": "FT",
+      "kickoff": "2026-06-27T21:00:00Z",
+      "goals": [
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "62",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "67",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "68": {
       "home": "Croatia",
       "away": "Ghana",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T21:00Z"
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-27T21:00:00Z",
+      "goals": [
+        {
+          "player": "Petar SUCIC",
+          "team": "Croatia",
+          "minute": "31",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Nikola VLASIC",
+          "team": "Croatia",
+          "minute": "83",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Derrick LUCKASSEN",
+          "team": "Ghana",
+          "minute": "73",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "69": {
       "home": "Algeria",
       "away": "Austria",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-28T02:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-28T02:00:00Z",
+      "minute": "14"
     },
     "70": {
       "home": "Jordan",
       "away": "Argentina",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-28T02:00Z"
+      "status": "1H",
+      "kickoff": "2026-06-28T02:00:00Z",
+      "minute": "14"
     },
     "71": {
       "home": "Colombia",
       "away": "Portugal",
       "homeGoals": 0,
       "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T23:30Z"
+      "status": "FT",
+      "kickoff": "2026-06-27T23:30:00Z"
     },
     "72": {
       "home": "DR Congo",
       "away": "Uzbekistan",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "status": "NS",
-      "kickoff": "2026-06-27T23:30Z"
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "FT",
+      "kickoff": "2026-06-27T23:30:00Z",
+      "goals": [
+        {
+          "player": "Yoane WISSA",
+          "team": "DR Congo",
+          "minute": "68",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Fiston MAYELE",
+          "team": "DR Congo",
+          "minute": "78",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Yoane WISSA",
+          "team": "DR Congo",
+          "minute": "90+1",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Eldor SHOMURODOV",
+          "team": "Uzbekistan",
+          "minute": "10",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "73": {
       "home": "South Africa",
@@ -2134,6 +2205,22 @@
       "status": "NS",
       "kickoff": "2026-06-30T17:00:00Z"
     },
+    "79": {
+      "home": "Mexico",
+      "away": "Ecuador",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-01T01:00:00Z"
+    },
+    "80": {
+      "home": "England",
+      "away": "DR Congo",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-01T16:00:00Z"
+    },
     "81": {
       "home": "United States",
       "away": "Bosnia and Herzegovina",
@@ -2144,6 +2231,22 @@
       "status": "NS",
       "kickoff": "2026-07-02T00:00:00Z"
     },
+    "82": {
+      "home": "Belgium",
+      "away": "Senegal",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-01T20:00:00Z"
+    },
+    "83": {
+      "home": "Portugal",
+      "away": "Croatia",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-02T23:00:00Z"
+    },
     "86": {
       "home": "Argentina",
       "away": "Cape Verde",
@@ -2151,6 +2254,14 @@
       "awayGoals": null,
       "status": "NS",
       "kickoff": "2026-07-03T22:00:00Z"
+    },
+    "87": {
+      "home": "Colombia",
+      "away": "Ghana",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-04T01:30:00Z"
     },
     "88": {
       "home": "Australia",
@@ -2217,6 +2328,20 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Elijah Just"
+    },
+    {
+      "player": "Yoane Wissa",
+      "team": "DR Congo",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Yoane Wissa"
+    },
+    {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Harry Kane"
     },
     {
       "player": "Johan Manzambi",
@@ -2317,11 +2442,11 @@
       "wiki": "Ramin Rezaeian"
     },
     {
-      "player": "Harry Kane",
+      "player": "Jude Bellingham",
       "team": "England",
       "goals": 2,
-      "assists": 0,
-      "wiki": "Harry Kane"
+      "assists": 1,
+      "wiki": "Jude Bellingham"
     },
     {
       "player": "Daniel Muñoz",
@@ -2637,13 +2762,6 @@
       "wiki": "João Neves"
     },
     {
-      "player": "Yoane Wissa",
-      "team": "DR Congo",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Yoane Wissa"
-    },
-    {
       "player": "Martin Baturina",
       "team": "Croatia",
       "goals": 1,
@@ -2656,13 +2774,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Petar Musa"
-    },
-    {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Jude Bellingham"
     },
     {
       "player": "Marcus Rashford",
@@ -3098,6 +3209,11 @@
     "Kevin DE BRUYNE": "",
     "Romelu LUKAKU": "",
     "Alexis SAELEMAEKERS": "",
-    "Leandro Trossard": "Leandro Trossard"
+    "Leandro Trossard": "Leandro Trossard",
+    "Petar SUCIC": "",
+    "Nikola VLASIC": "",
+    "Derrick LUCKASSEN": "",
+    "Fiston MAYELE": "",
+    "Eldor SHOMURODOV": ""
   }
 }
