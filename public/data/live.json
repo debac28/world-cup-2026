@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-29T15:27:00.272Z",
+  "updated": "2026-06-29T19:41:08.481Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2268,12 +2268,35 @@
     "76": {
       "home": "Brazil",
       "away": "Japan",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 2,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-06-29T17:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-29T17:00:00Z",
+      "goals": [
+        {
+          "player": "CASEMIRO",
+          "team": "Brazil",
+          "minute": "56",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "GABRIEL MARTINELLI",
+          "team": "Brazil",
+          "minute": "90+5",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Kaishu SANO",
+          "team": "Japan",
+          "minute": "29",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "77": {
       "home": "France",
@@ -3347,6 +3370,9 @@
     "MOUSA ALTAMARI": "",
     "Giovani Lo Celso": "Giovani Lo Celso",
     "Lautaro MARTINEZ": "",
-    "Stephen EUSTAQUIO": ""
+    "Stephen EUSTAQUIO": "",
+    "CASEMIRO": "",
+    "GABRIEL MARTINELLI": "",
+    "Kaishu SANO": ""
   }
 }
