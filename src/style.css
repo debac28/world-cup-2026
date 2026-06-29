@@ -272,6 +272,8 @@ table.standings { width: 100%; table-layout: fixed; border-collapse: collapse; f
 
 /* Bracket */
 /* Mirrored bracket: left half fans rightward, right half leftward, meeting at the centre Final. */
+.bracket-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.bracket-toggle { flex: none; margin-top: 4px; }
 .bracket { position: relative; display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 6px 2px 14px; -webkit-overflow-scrolling: touch; }
 .bconns { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 0; }
 .bconn { fill: none; stroke: var(--gold); stroke-width: 2; opacity: 0.5; }

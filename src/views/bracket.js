@@ -42,19 +42,42 @@ function bracketGeom(seedKo) {
   return { left, right, pos }
 }
 
+// Compact view (default) hides the rounds whose teams aren't known yet, so early on you only
+// see R32+R16 instead of scrolling past empty QF/SF/Final columns. Persists across re-renders.
+let full = false
+
 // `highlight` is an optional team name (from the global country dropdown): when set, that
 // team's slots are emphasized and cards it isn't in are dimmed, so you can trace its path.
 export function renderBracket(model, { highlight = '' } = {}) {
   const wrap = el('div', { class: 'stack' })
-  wrap.appendChild(
-    sectionTitle('Knockout bracket', 'Slots fill in as group & knockout results land'),
-  )
 
   const ko = model.knockoutMatches
   const hl = highlight && ko.some((m) => m.home === highlight || m.away === highlight) ? highlight : ''
   const { left, right, pos } = bracketGeom(model.seed.knockout)
 
+  // Compact view shows a sliding 2-round window per side (≤4 columns total): the earliest
+  // not-yet-complete round plus the next one. As a round finishes it's discarded and the
+  // following round is revealed. The full view shows every round.
+  const ROUND_SEQ = ['R32', 'R16', 'QF', 'SF', 'F']
+  const complete = (round) => {
+    const g = ko.filter((m) => m.round === round)
+    return g.length > 0 && g.every((m) => m.finished)
+  }
+  let lead = ROUND_SEQ.findIndex((r) => !complete(r))
+  if (lead === -1) lead = ROUND_SEQ.length - 1
+  const win = new Set([ROUND_SEQ[lead], ROUND_SEQ[lead + 1]].filter(Boolean))
+  const visible = (round) => full || win.has(round) || (round === '3P' && win.has('F'))
+
+  wrap.appendChild(el('div', { class: 'bracket-head' }, [
+    sectionTitle('Knockout bracket', 'Slots fill in as group & knockout results land'),
+    el('button', {
+      class: 'chip bracket-toggle',
+      onclick: () => { full = !full; wrap.replaceWith(renderBracket(model, { highlight })) },
+    }, full ? 'Compact view' : 'Show full bracket'),
+  ]))
+
   const column = (round, ids) => {
+    if (!visible(round)) return null
     const games = ko.filter((m) => m.round === round && ids.has(m.id))
       .sort((a, b) => (pos.get(a.id) ?? 0) - (pos.get(b.id) ?? 0))
     if (!games.length) return null
@@ -64,11 +87,12 @@ export function renderBracket(model, { highlight = '' } = {}) {
     ])
   }
 
-  const centre = el('div', { class: 'bcentre' }, [
+  // Centre holds the Final (+ 3rd-place); only render it — and the trophy — once those are in play.
+  const centre = visible('F') ? el('div', { class: 'bcentre' }, [
     el('div', { class: 'bcentre__crown' }, '🏆'),
     ...ko.filter((m) => m.round === 'F').map((m) => bracketCard(m, model, hl)),
     ...ko.filter((m) => m.round === '3P').map((m) => bracketCard(m, model, hl)),
-  ])
+  ]) : null
 
   const bracket = el('div', { class: 'bracket' }, [
     el('div', { class: 'bside bside--left' }, LEFT_ROUNDS.map((r) => column(r, left))),
