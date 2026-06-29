@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 20,
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/wc-live-feed.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
