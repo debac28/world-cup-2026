@@ -271,9 +271,22 @@ table.standings { width: 100%; table-layout: fixed; border-collapse: collapse; f
 .scorer__team { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--muted); }
 
 /* Bracket */
-.bracket { display: flex; gap: 14px; overflow-x: auto; padding: 6px 2px 14px; -webkit-overflow-scrolling: touch; }
-.bcol { flex: none; width: 200px; display: flex; flex-direction: column; gap: 12px; }
-.bcol__head { position: sticky; top: 0; margin: 0; font-size: 0.78rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.6px; }
+/* Mirrored bracket: left half fans rightward, right half leftward, meeting at the centre Final. */
+.bracket { position: relative; display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 6px 2px 14px; -webkit-overflow-scrolling: touch; }
+.bconns { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 0; }
+.bconn { fill: none; stroke: var(--gold); stroke-width: 2; opacity: 0.5; }
+.bconn--loser { stroke: var(--muted); stroke-dasharray: 4 4; opacity: 0.45; }
+.bcard { position: relative; z-index: 1; }
+.bside { display: flex; gap: 6px; flex: none; }
+/* Right half mirrors the left: cards flip so flag/score point inward toward the centre Final. */
+.bside--right .bslot { flex-direction: row-reverse; text-align: right; }
+.bside--right .bcard__top { flex-direction: row-reverse; }
+.bside--right .bcard__venue { text-align: left; }
+.bcol { flex: none; width: 150px; display: flex; flex-direction: column; gap: 8px; }
+.bcol__games { flex: 1; display: flex; flex-direction: column; justify-content: space-around; gap: 10px; }
+.bcol__head { margin: 0 0 4px; font-size: 0.66rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+.bcentre { flex: none; width: 160px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.bcentre__crown { font-size: 1.6rem; text-align: center; }
 .bcard { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
 .bcard__top { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
 .bcard__num { font-size: 0.58rem; color: var(--gold); font-weight: 700; }
