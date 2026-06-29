@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-28T19:00:19.438Z",
+  "updated": "2026-06-29T02:14:27.985Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2230,11 +2230,20 @@
       "home": "South Africa",
       "away": "Canada",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-06-28T19:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-28T19:00:00Z",
+      "goals": [
+        {
+          "player": "Stephen EUSTAQUIO",
+          "team": "Canada",
+          "minute": "90+2",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "74": {
       "home": "Germany",
@@ -3337,6 +3346,7 @@
     "Sasa KALAJDZIC": "",
     "MOUSA ALTAMARI": "",
     "Giovani Lo Celso": "Giovani Lo Celso",
-    "Lautaro MARTINEZ": ""
+    "Lautaro MARTINEZ": "",
+    "Stephen EUSTAQUIO": ""
   }
 }
