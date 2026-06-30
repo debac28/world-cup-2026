@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-30T13:53:27.689Z",
+  "updated": "2026-06-30T19:29:50.606Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2311,12 +2311,35 @@
     "78": {
       "home": "Ivory Coast",
       "away": "Norway",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-06-30T17:00Z"
+      "status": "FT",
+      "kickoff": "2026-06-30T17:00:00Z",
+      "goals": [
+        {
+          "player": "Amad DIALLO",
+          "team": "Ivory Coast",
+          "minute": "74",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Antonio NUSA",
+          "team": "Norway",
+          "minute": "39",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "86",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "79": {
       "home": "Mexico",
@@ -2427,6 +2450,14 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-04T17:00:00Z"
+    },
+    "91": {
+      "home": "Brazil",
+      "away": "Norway",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-05T20:00:00Z"
     }
   },
   "scorers": [
@@ -2436,6 +2467,13 @@
       "goals": 6,
       "assists": 0,
       "wiki": "Lionel Messi"
+    },
+    {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "goals": 5,
+      "assists": 0,
+      "wiki": "Erling Haaland"
     },
     {
       "player": "Vinicius Junior",
@@ -2450,13 +2488,6 @@
       "goals": 4,
       "assists": 2,
       "wiki": "Kylian Mbappé"
-    },
-    {
-      "player": "Erling Haaland",
-      "team": "Norway",
-      "goals": 4,
-      "assists": 0,
-      "wiki": "Erling Haaland"
     },
     {
       "player": "Ousmane Dembélé",
@@ -2585,6 +2616,13 @@
       "wiki": "Daichi Kamada"
     },
     {
+      "player": "Amad Diallo",
+      "team": "Ivory Coast",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Amad Diallo"
+    },
+    {
       "player": "Yasin Ayari",
       "team": "Sweden",
       "goals": 2,
@@ -2670,7 +2708,7 @@
       "player": "Nicolas Pépé",
       "team": "Ivory Coast",
       "goals": 2,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Nicolas Pépé"
     },
     {
@@ -2821,13 +2859,6 @@
       "goals": 1,
       "assists": 1,
       "wiki": "Keito Nakamura"
-    },
-    {
-      "player": "Amad Diallo",
-      "team": "Ivory Coast",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Amad Diallo"
     },
     {
       "player": "Alexander Isak",
@@ -3383,6 +3414,7 @@
     "Stephen EUSTAQUIO": "",
     "CASEMIRO": "",
     "GABRIEL MARTINELLI": "",
-    "Kaishu SANO": ""
+    "Kaishu SANO": "",
+    "Antonio NUSA": ""
   }
 }
