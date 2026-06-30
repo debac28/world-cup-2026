@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-29T19:41:08.481Z",
+  "updated": "2026-06-30T02:09:20.675Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2248,12 +2248,12 @@
     "74": {
       "home": "Germany",
       "away": "Paraguay",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "homePens": null,
-      "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-06-29T20:30Z"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "homePens": 3,
+      "awayPens": 4,
+      "status": "FT",
+      "kickoff": "2026-06-29T20:30:00Z"
     },
     "75": {
       "home": "Netherlands",
@@ -2262,8 +2262,9 @@
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-06-30T01:00Z"
+      "status": "2H",
+      "kickoff": "2026-06-30T01:00:00Z",
+      "minute": "47"
     },
     "76": {
       "home": "Brazil",
@@ -2463,6 +2464,13 @@
       "wiki": "Ismael Saibari"
     },
     {
+      "player": "Kai Havertz",
+      "team": "Germany",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Kai Havertz"
+    },
+    {
       "player": "Deniz Undav",
       "team": "Germany",
       "goals": 3,
@@ -2545,13 +2553,6 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Folarin Balogun"
-    },
-    {
-      "player": "Kai Havertz",
-      "team": "Germany",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Kai Havertz"
     },
     {
       "player": "Crysencio Summerville",
@@ -3008,7 +3009,7 @@
       "player": "Matías Galarza",
       "team": "Paraguay",
       "goals": 1,
-      "assists": 0
+      "assists": 1
     },
     {
       "player": "Franck Kessié",
