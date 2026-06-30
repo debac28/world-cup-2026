@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-30T02:09:20.675Z",
+  "updated": "2026-06-30T08:54:05.743Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2258,13 +2258,12 @@
     "75": {
       "home": "Netherlands",
       "away": "Morocco",
-      "homeGoals": 0,
-      "awayGoals": 0,
-      "homePens": null,
-      "awayPens": null,
-      "status": "2H",
-      "kickoff": "2026-06-30T01:00:00Z",
-      "minute": "47"
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "homePens": 2,
+      "awayPens": 3,
+      "status": "FT",
+      "kickoff": "2026-06-30T01:00:00Z"
     },
     "76": {
       "home": "Brazil",
@@ -2302,32 +2301,32 @@
     "77": {
       "home": "France",
       "away": "Sweden",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-06-30T21:00:00Z"
+      "kickoff": "2026-06-30T21:00Z"
     },
     "78": {
       "home": "Ivory Coast",
       "away": "Norway",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-06-30T17:00:00Z"
+      "kickoff": "2026-06-30T17:00Z"
     },
     "79": {
       "home": "Mexico",
       "away": "Ecuador",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-01T01:00:00Z"
+      "kickoff": "2026-07-01T01:00Z"
     },
     "80": {
       "home": "England",
@@ -2418,6 +2417,16 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-03T18:00:00Z"
+    },
+    "90": {
+      "home": "Canada",
+      "away": "Morocco",
+      "homeGoals": null,
+      "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
+      "status": "NS",
+      "kickoff": "2026-07-04T17:00:00Z"
     }
   },
   "scorers": [
@@ -2527,6 +2536,13 @@
       "wiki": "Brian Brobbey"
     },
     {
+      "player": "Cody Gakpo",
+      "team": "Netherlands",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Cody Gakpo"
+    },
+    {
       "player": "Ismaïla Sarr",
       "team": "Senegal",
       "goals": 3,
@@ -2558,7 +2574,7 @@
       "player": "Crysencio Summerville",
       "team": "Netherlands",
       "goals": 2,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Crysencio Summerville"
     },
     {
@@ -2621,13 +2637,6 @@
       "team": "Bosnia and Herzegovina",
       "goals": 2,
       "assists": 0
-    },
-    {
-      "player": "Cody Gakpo",
-      "team": "Netherlands",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Cody Gakpo"
     },
     {
       "player": "Anthony Elanga",
