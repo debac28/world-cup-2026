@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T14:04:34.383Z",
+  "updated": "2026-07-01T19:28:05.723Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2393,12 +2393,35 @@
     "80": {
       "home": "England",
       "away": "DR Congo",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 2,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-01T16:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-01T16:00:00Z",
+      "goals": [
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "75",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "86",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Brian CIPENGA",
+          "team": "DR Congo",
+          "minute": "7",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "81": {
       "home": "United States",
@@ -2509,6 +2532,14 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-05T20:00:00Z"
+    },
+    "92": {
+      "home": "Mexico",
+      "away": "England",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-06T00:00:00Z"
     }
   },
   "scorers": [
@@ -2532,6 +2563,13 @@
       "goals": 5,
       "assists": 0,
       "wiki": "Erling Haaland"
+    },
+    {
+      "player": "Harry Kane",
+      "team": "England",
+      "goals": 5,
+      "assists": 0,
+      "wiki": "Harry Kane"
     },
     {
       "player": "Vinicius Junior",
@@ -2588,13 +2626,6 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Yoane Wissa"
-    },
-    {
-      "player": "Harry Kane",
-      "team": "England",
-      "goals": 3,
-      "assists": 0,
-      "wiki": "Harry Kane"
     },
     {
       "player": "Johan Manzambi",
@@ -3467,6 +3498,7 @@
     "GABRIEL MARTINELLI": "",
     "Kaishu SANO": "",
     "Antonio NUSA": "",
-    "Raul JIMENEZ": ""
+    "Raul JIMENEZ": "",
+    "Brian CIPENGA": ""
   }
 }
