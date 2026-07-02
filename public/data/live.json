@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-02T13:26:53.675Z",
+  "updated": "2026-07-02T19:07:08.022Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2513,8 +2513,9 @@
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-02T19:00Z"
+      "status": "1H",
+      "kickoff": "2026-07-02T19:00:00Z",
+      "minute": "7"
     },
     "85": {
       "home": "Switzerland",
