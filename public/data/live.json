@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01T19:28:05.723Z",
+  "updated": "2026-07-02T02:06:11.768Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2426,22 +2426,66 @@
     "81": {
       "home": "United States",
       "away": "Bosnia and Herzegovina",
-      "homeGoals": 0,
+      "homeGoals": 2,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-02T00:00Z"
+      "status": "2H",
+      "kickoff": "2026-07-02T00:00:00Z",
+      "minute": "90+10",
+      "redHome": [
+        {
+          "name": "Folarin Balogun",
+          "min": "64'"
+        }
+      ]
     },
     "82": {
       "home": "Belgium",
       "away": "Senegal",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 3,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-01T20:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-01T20:00:00Z",
+      "goals": [
+        {
+          "player": "Romelu LUKAKU",
+          "team": "Belgium",
+          "minute": "86",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Youri TIELEMANS",
+          "team": "Belgium",
+          "minute": "89",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Youri TIELEMANS",
+          "team": "Belgium",
+          "minute": "120+5",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Habib DIARRA",
+          "team": "Senegal",
+          "minute": "24",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ismaila SARR",
+          "team": "Senegal",
+          "minute": "51",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "83": {
       "home": "Portugal",
@@ -2586,11 +2630,25 @@
       "wiki": "Ousmane Dembélé"
     },
     {
+      "player": "Ismaïla Sarr",
+      "team": "Senegal",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Ismaïla Sarr"
+    },
+    {
       "player": "Julián Quiñones",
       "team": "Mexico",
       "goals": 3,
       "assists": 1,
       "wiki": "Julián Quiñones"
+    },
+    {
+      "player": "Folarin Balogun",
+      "team": "United States",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Folarin Balogun"
     },
     {
       "player": "Ismael Saibari",
@@ -2663,13 +2721,6 @@
       "wiki": "Cody Gakpo"
     },
     {
-      "player": "Ismaïla Sarr",
-      "team": "Senegal",
-      "goals": 3,
-      "assists": 1,
-      "wiki": "Ismaïla Sarr"
-    },
-    {
       "player": "Raúl Jiménez",
       "team": "Mexico",
       "goals": 2,
@@ -2682,13 +2733,6 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Cyle Larin"
-    },
-    {
-      "player": "Folarin Balogun",
-      "team": "United States",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Folarin Balogun"
     },
     {
       "player": "Crysencio Summerville",
@@ -2808,6 +2852,13 @@
       "wiki": "Nicolas Pépé"
     },
     {
+      "player": "Habib Diarra",
+      "team": "Senegal",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Habib Diarra"
+    },
+    {
       "player": "Pape Gueye",
       "team": "Senegal",
       "goals": 2,
@@ -2818,8 +2869,15 @@
       "player": "Leandro Trossard",
       "team": "Belgium",
       "goals": 2,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Leandro Trossard"
+    },
+    {
+      "player": "Romelu Lukaku",
+      "team": "Belgium",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Romelu Lukaku"
     },
     {
       "player": "Riyad Mahrez",
@@ -2827,6 +2885,13 @@
       "goals": 2,
       "assists": 2,
       "wiki": "Riyad Mahrez"
+    },
+    {
+      "player": "Youri Tielemans",
+      "team": "Belgium",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Youri Tielemans"
     },
     {
       "player": "Ladislav Krejčí",
@@ -3207,27 +3272,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Marcus Pedersen"
-    },
-    {
-      "player": "Nizar Al Rashdan",
-      "team": "Jordan",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Nizar Al-Rashdan"
-    },
-    {
-      "player": "Nadhir Benbouali",
-      "team": "Algeria",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Nadhir Benbouali"
-    },
-    {
-      "player": "Amine Gouiri",
-      "team": "Algeria",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Amine Gouiri"
     }
   ],
   "wikiLinks": {
@@ -3499,6 +3543,10 @@
     "Kaishu SANO": "",
     "Antonio NUSA": "",
     "Raul JIMENEZ": "",
-    "Brian CIPENGA": ""
+    "Brian CIPENGA": "",
+    "Youri TIELEMANS": "",
+    "Habib Diarra": "Habib Diarra",
+    "Romelu Lukaku": "Romelu Lukaku",
+    "Youri Tielemans": "Youri Tielemans"
   }
 }
