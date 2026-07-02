@@ -6,14 +6,14 @@ import { initFeedback } from './lib/feedback.js'
 import { el, clear } from './lib/dom.js'
 import { renderToday } from './views/today.js'
 import { renderMatches, setMatchesMode } from './views/matches.js'
-import { renderGroups } from './views/groups.js'
+import { renderBracket } from './views/bracket.js'
 import { renderScorers } from './views/scorers.js'
 import { renderWatch } from './views/watch.js'
 
 const TABS = [
   { id: 'today', label: 'Today', render: renderToday },
   { id: 'matches', label: 'Matches', render: renderMatches },
-  { id: 'groups', label: 'Groups', render: renderGroups },
+  { id: 'bracket', label: 'Bracket', render: renderBracket },
   { id: 'scorers', label: 'Scorers', render: renderScorers },
   { id: 'watch', label: 'Watch', render: renderWatch },
 ]
@@ -43,10 +43,10 @@ function renderTabs(active) {
 }
 
 function renderView() {
-  // Bracket is no longer a top-level tab — redirect legacy #bracket links/bookmarks to
-  // the Matches tab with its Bracket sub-tab preselected.
-  if (location.hash === '#bracket') {
-    setMatchesMode('bracket')
+  // Groups is no longer a top-level tab — redirect legacy #groups links/bookmarks to
+  // the Matches tab with its Groups sub-tab preselected.
+  if (location.hash === '#groups') {
+    setMatchesMode('groups')
     history.replaceState(null, '', '#matches')
   }
   const tab = currentTab()

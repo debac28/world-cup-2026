@@ -1,17 +1,18 @@
 import { el, empty } from '../lib/dom.js'
 import { matchRow, calendarPlusIcon } from '../lib/components.js'
 import { addToCalendar } from '../lib/calendar.js'
-import { renderBracket } from './bracket.js'
+import { renderGroups } from './groups.js'
 import { fmtFullDay, localDayKey, todayKey } from '../lib/time.js'
 
 // Three sub-tabs:
 //   fixtures — upcoming matches, soonest first
 //   results  — finished + live matches, newest first (latest score on top)
-//   bracket  — the knockout tree (lives here, not in the bottom bar, until it has content)
+//   groups   — the group standings table (moved here from the bottom bar now that the
+//              knockout bracket took its top-level slot)
 const MODES = [
   { id: 'fixtures', label: 'Fixtures' },
   { id: 'results', label: 'Results' },
-  { id: 'bracket', label: 'Bracket' },
+  { id: 'groups', label: 'Groups' },
 ]
 
 let mode = null // chosen on first render based on what data exists
@@ -42,14 +43,13 @@ export function renderMatches(model) {
           mo.label,
         ),
       ),
-      countryDropdown(model, wrap),
+      mode === 'groups' ? null : countryDropdown(model, wrap),
     ]),
   )
 
-  // Bracket sub-tab: render the knockout tree (with the country dropdown highlighting that
-  // team's path) instead of the day-grouped match list.
-  if (mode === 'bracket') {
-    wrap.appendChild(renderBracket(model, { highlight: country }))
+  // Groups sub-tab: render the group standings tables instead of the day-grouped match list.
+  if (mode === 'groups') {
+    wrap.appendChild(renderGroups(model))
     return wrap
   }
 

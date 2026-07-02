@@ -225,6 +225,9 @@ table.standings { width: 100%; table-layout: fixed; border-collapse: collapse; f
 .standings td { padding: 8px 4px; text-align: center; border-top: 1px solid var(--line); }
 .standings .left { width: auto; text-align: left; padding-left: 12px; }
 .standings th.left { width: auto; text-align: left; padding-left: 12px; }
+/* "GOALS" is wider than the 26px standings columns — give the scorers total its own width
+   plus right padding so the header isn't clipped at the card edge. */
+.scorers th:last-child, .scorers td:last-child { width: 48px; padding-right: 12px; }
 /* min-width:0 lets the cell shrink so it never pushes PTS off-screen; the name truncates
    with an ellipsis (below) so the ✓/✗/% badge always stays on the same line. */
 .team-cell { display: flex; align-items: center; min-width: 0; gap: 8px; font-weight: 600; }
