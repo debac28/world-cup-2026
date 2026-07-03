@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-03T01:50:10.177Z",
+  "updated": "2026-07-03T08:46:14.817Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2565,42 +2565,58 @@
     "85": {
       "home": "Switzerland",
       "away": "Algeria",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "homePens": null,
+      "awayPens": null,
+      "status": "FT",
+      "kickoff": "2026-07-03T03:00:00Z",
+      "goals": [
+        {
+          "player": "Breel EMBOLO",
+          "team": "Switzerland",
+          "minute": "10",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Dan NDOYE",
+          "team": "Switzerland",
+          "minute": "46",
+          "pen": false,
+          "og": false
+        }
+      ]
+    },
+    "86": {
+      "home": "Argentina",
+      "away": "Cape Verde",
       "homeGoals": 0,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-03T03:00Z"
-    },
-    "86": {
-      "home": "Argentina",
-      "away": "Cape Verde",
-      "homeGoals": null,
-      "awayGoals": null,
-      "homePens": null,
-      "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-03T22:00:00Z"
+      "kickoff": "2026-07-03T22:00Z"
     },
     "87": {
       "home": "Colombia",
       "away": "Ghana",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-04T01:30:00Z"
+      "kickoff": "2026-07-04T01:30Z"
     },
     "88": {
       "home": "Australia",
       "away": "Egypt",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-03T18:00:00Z"
+      "kickoff": "2026-07-03T18:00Z"
     },
     "89": {
       "home": "Paraguay",
@@ -2771,7 +2787,7 @@
       "player": "Johan Manzambi",
       "team": "Switzerland",
       "goals": 3,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Johan Manzambi"
     },
     {
@@ -2822,6 +2838,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Cyle Larin"
+    },
+    {
+      "player": "Breel Embolo",
+      "team": "Switzerland",
+      "goals": 2,
+      "assists": 2,
+      "wiki": "Breel Embolo"
     },
     {
       "player": "Crysencio Summerville",
@@ -3005,13 +3028,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Giovanni Reyna"
-    },
-    {
-      "player": "Breel Embolo",
-      "team": "Switzerland",
-      "goals": 1,
-      "assists": 2,
-      "wiki": "Breel Embolo"
     },
     {
       "player": "Boualem Khoukhi",
@@ -3627,6 +3643,8 @@
     "Malik TILLMAN": "",
     "GONCALO RAMOS": "",
     "Ivan PERISIC": "",
-    "Pedro PORRO": ""
+    "Pedro PORRO": "",
+    "Breel EMBOLO": "",
+    "Dan NDOYE": ""
   }
 }
