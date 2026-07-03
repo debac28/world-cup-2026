@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-03T13:39:16.720Z",
+  "updated": "2026-07-03T18:59:22.518Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2612,11 +2612,11 @@
       "home": "Australia",
       "away": "Egypt",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-03T18:00Z"
+      "status": "HT",
+      "kickoff": "2026-07-03T18:00:00Z"
     },
     "89": {
       "home": "Paraguay",
@@ -2873,6 +2873,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Yasin Ayari"
+    },
+    {
+      "player": "Emam Ashour",
+      "team": "Egypt",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Emam Ashour"
     },
     {
       "player": "Maximiliano Araújo",
@@ -3132,13 +3139,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Mattias Svanberg"
-    },
-    {
-      "player": "Emam Ashour",
-      "team": "Egypt",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Emam Ashour"
     },
     {
       "player": "Abdulelah Al Amri",
