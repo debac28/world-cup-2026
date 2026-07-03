@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-02T19:07:08.022Z",
+  "updated": "2026-07-03T01:50:10.177Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2499,23 +2499,68 @@
     "83": {
       "home": "Portugal",
       "away": "Croatia",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 2,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-02T23:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-02T23:00:00Z",
+      "goals": [
+        {
+          "player": "CRISTIANO RONALDO",
+          "team": "Portugal",
+          "minute": "68",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "GONCALO RAMOS",
+          "team": "Portugal",
+          "minute": "90+4",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ivan PERISIC",
+          "team": "Croatia",
+          "minute": "53",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "84": {
       "home": "Spain",
       "away": "Austria",
-      "homeGoals": 0,
+      "homeGoals": 3,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-07-02T19:00:00Z",
-      "minute": "7"
+      "goals": [
+        {
+          "player": "Mikel OYARZABAL",
+          "team": "Spain",
+          "minute": "36",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Pedro PORRO",
+          "team": "Spain",
+          "minute": "66",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mikel OYARZABAL",
+          "team": "Spain",
+          "minute": "89",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "85": {
       "home": "Switzerland",
@@ -2597,6 +2642,14 @@
       "status": "NS",
       "kickoff": "2026-07-06T00:00:00Z"
     },
+    "93": {
+      "home": "Portugal",
+      "away": "Spain",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-06T19:00:00Z"
+    },
     "94": {
       "home": "United States",
       "away": "Belgium",
@@ -2643,6 +2696,13 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Vinícius Júnior"
+    },
+    {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Mikel Oyarzabal"
     },
     {
       "player": "Ousmane Dembélé",
@@ -2741,6 +2801,13 @@
       "goals": 3,
       "assists": 1,
       "wiki": "Cody Gakpo"
+    },
+    {
+      "player": "Cristiano Ronaldo",
+      "team": "Portugal",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Cristiano Ronaldo"
     },
     {
       "player": "Raúl Jiménez",
@@ -2851,20 +2918,6 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Ayase Ueda"
-    },
-    {
-      "player": "Mikel Oyarzabal",
-      "team": "Spain",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Mikel Oyarzabal"
-    },
-    {
-      "player": "Cristiano Ronaldo",
-      "team": "Portugal",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Cristiano Ronaldo"
     },
     {
       "player": "Nicolas Pépé",
@@ -3571,6 +3624,9 @@
     "Romelu Lukaku": "Romelu Lukaku",
     "Youri Tielemans": "Youri Tielemans",
     "Folarin BALOGUN": "",
-    "Malik TILLMAN": ""
+    "Malik TILLMAN": "",
+    "GONCALO RAMOS": "",
+    "Ivan PERISIC": "",
+    "Pedro PORRO": ""
   }
 }
