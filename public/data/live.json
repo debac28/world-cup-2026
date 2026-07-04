@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-04T12:57:03.553Z",
+  "updated": "2026-07-04T18:53:53.537Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2678,11 +2678,12 @@
       "home": "Canada",
       "away": "Morocco",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-04T17:00Z"
+      "status": "2H",
+      "kickoff": "2026-07-04T17:00:00Z",
+      "minute": "90"
     },
     "91": {
       "home": "Brazil",
@@ -3067,6 +3068,13 @@
       "wiki": "Youri Tielemans"
     },
     {
+      "player": "Azzedine Ounahi",
+      "team": "Morocco",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Azzedine Ounahi"
+    },
+    {
       "player": "Ladislav Krejčí",
       "team": "Czech Republic",
       "goals": 1,
@@ -3424,13 +3432,6 @@
       "team": "Egypt",
       "goals": 1,
       "assists": 0
-    },
-    {
-      "player": "Marcus Pedersen",
-      "team": "Norway",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Marcus Pedersen"
     }
   ],
   "wikiLinks": {
@@ -3718,6 +3719,7 @@
     "DINEY BORGES": "",
     "DEROY DUARTE": "",
     "SIDNY LOPES CABRAL": "",
-    "Jhon ARIAS": ""
+    "Jhon ARIAS": "",
+    "Azzedine Ounahi": "Azzedine Ounahi"
   }
 }
