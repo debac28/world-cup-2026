@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-03T18:59:22.518Z",
+  "updated": "2026-07-04T01:49:55.437Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2591,31 +2591,69 @@
     "86": {
       "home": "Argentina",
       "away": "Cape Verde",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 3,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-03T22:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-03T22:00:00Z",
+      "goals": [
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "29",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lisandro MARTINEZ",
+          "team": "Argentina",
+          "minute": "92",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "DINEY BORGES",
+          "team": "Argentina",
+          "minute": "111",
+          "pen": false,
+          "og": true
+        },
+        {
+          "player": "DEROY DUARTE",
+          "team": "Cape Verde",
+          "minute": "59",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "SIDNY LOPES CABRAL",
+          "team": "Cape Verde",
+          "minute": "103",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "87": {
       "home": "Colombia",
       "away": "Ghana",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-04T01:30Z"
+      "status": "1H",
+      "kickoff": "2026-07-04T01:30:00Z",
+      "minute": "20"
     },
     "88": {
       "home": "Australia",
       "away": "Egypt",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 1,
-      "homePens": null,
-      "awayPens": null,
-      "status": "HT",
+      "homePens": 2,
+      "awayPens": 4,
+      "status": "FT",
       "kickoff": "2026-07-03T18:00:00Z"
     },
     "89": {
@@ -2675,22 +2713,30 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-07T00:00:00Z"
+    },
+    "95": {
+      "home": "Argentina",
+      "away": "Egypt",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-07T16:00:00Z"
     }
   },
   "scorers": [
+    {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 7,
+      "assists": 1,
+      "wiki": "Lionel Messi"
+    },
     {
       "player": "Kylian Mbappé",
       "team": "France",
       "goals": 6,
       "assists": 2,
       "wiki": "Kylian Mbappé"
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "goals": 6,
-      "assists": 0,
-      "wiki": "Lionel Messi"
     },
     {
       "player": "Erling Haaland",
@@ -3645,6 +3691,10 @@
     "Ivan PERISIC": "",
     "Pedro PORRO": "",
     "Breel EMBOLO": "",
-    "Dan NDOYE": ""
+    "Dan NDOYE": "",
+    "Lisandro MARTINEZ": "",
+    "DINEY BORGES": "",
+    "DEROY DUARTE": "",
+    "SIDNY LOPES CABRAL": ""
   }
 }
