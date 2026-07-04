@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-04T01:49:55.437Z",
+  "updated": "2026-07-04T08:21:14.477Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2642,9 +2642,17 @@
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-07-04T01:30:00Z",
-      "minute": "20"
+      "goals": [
+        {
+          "player": "Jhon ARIAS",
+          "team": "Colombia",
+          "minute": "14",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "88": {
       "home": "Australia",
@@ -2659,22 +2667,22 @@
     "89": {
       "home": "Paraguay",
       "away": "France",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-04T21:00:00Z"
+      "kickoff": "2026-07-04T21:00Z"
     },
     "90": {
       "home": "Canada",
       "away": "Morocco",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-04T17:00:00Z"
+      "kickoff": "2026-07-04T17:00Z"
     },
     "91": {
       "home": "Brazil",
@@ -2701,6 +2709,8 @@
       "away": "Spain",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-06T19:00:00Z"
     },
@@ -2719,8 +2729,20 @@
       "away": "Egypt",
       "homeGoals": null,
       "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-07T16:00:00Z"
+    },
+    "96": {
+      "home": "Switzerland",
+      "away": "Colombia",
+      "homeGoals": null,
+      "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
+      "status": "NS",
+      "kickoff": "2026-07-07T20:00:00Z"
     }
   },
   "scorers": [
@@ -3695,6 +3717,7 @@
     "Lisandro MARTINEZ": "",
     "DINEY BORGES": "",
     "DEROY DUARTE": "",
-    "SIDNY LOPES CABRAL": ""
+    "SIDNY LOPES CABRAL": "",
+    "Jhon ARIAS": ""
   }
 }
