@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-04T18:53:53.537Z",
+  "updated": "2026-07-05T01:55:41.981Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2668,22 +2668,53 @@
       "home": "Paraguay",
       "away": "France",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-04T21:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-04T21:00:00Z",
+      "goals": [
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "70",
+          "pen": true,
+          "og": false
+        }
+      ]
     },
     "90": {
       "home": "Canada",
       "away": "Morocco",
       "homeGoals": 0,
-      "awayGoals": 2,
+      "awayGoals": 3,
       "homePens": null,
       "awayPens": null,
-      "status": "2H",
+      "status": "FT",
       "kickoff": "2026-07-04T17:00:00Z",
-      "minute": "90"
+      "goals": [
+        {
+          "player": "Azzedine OUNAHI",
+          "team": "Morocco",
+          "minute": "50",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Azzedine OUNAHI",
+          "team": "Morocco",
+          "minute": "82",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Soufiane RAHIMI",
+          "team": "Morocco",
+          "minute": "90+8",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "91": {
       "home": "Brazil",
@@ -2744,22 +2775,30 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-07T20:00:00Z"
+    },
+    "97": {
+      "home": "France",
+      "away": "Morocco",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-09T20:00:00Z"
     }
   },
   "scorers": [
+    {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "goals": 7,
+      "assists": 2,
+      "wiki": "Kylian Mbappé"
+    },
     {
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 7,
       "assists": 0,
       "wiki": "Lionel Messi"
-    },
-    {
-      "player": "Kylian Mbappé",
-      "team": "France",
-      "goals": 6,
-      "assists": 2,
-      "wiki": "Kylian Mbappé"
     },
     {
       "player": "Erling Haaland",
@@ -3017,6 +3056,13 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Ayase Ueda"
+    },
+    {
+      "player": "Soufiane Rahimi",
+      "team": "Morocco",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Soufiane Rahimi"
     },
     {
       "player": "Nicolas Pépé",
@@ -3426,12 +3472,6 @@
       "goals": 1,
       "assists": 2,
       "wiki": "Mohamed Salah"
-    },
-    {
-      "player": "Trezeguet",
-      "team": "Egypt",
-      "goals": 1,
-      "assists": 0
     }
   ],
   "wikiLinks": {
@@ -3720,6 +3760,8 @@
     "DEROY DUARTE": "",
     "SIDNY LOPES CABRAL": "",
     "Jhon ARIAS": "",
-    "Azzedine Ounahi": "Azzedine Ounahi"
+    "Azzedine Ounahi": "Azzedine Ounahi",
+    "Azzedine OUNAHI": "",
+    "Soufiane Rahimi": "Soufiane Rahimi"
   }
 }
