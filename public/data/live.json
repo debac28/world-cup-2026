@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-05T18:59:06.396Z",
+  "updated": "2026-07-06T02:02:38.843Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2719,22 +2719,45 @@
     "91": {
       "home": "Brazil",
       "away": "Norway",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-05T20:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-05T20:00:00Z",
+      "goals": [
+        {
+          "player": "NEYMAR JR",
+          "team": "Brazil",
+          "minute": "90+10",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "79",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Erling HAALAND",
+          "team": "Norway",
+          "minute": "90",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "92": {
       "home": "Mexico",
       "away": "England",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-06T00:00Z"
+      "status": "HT",
+      "kickoff": "2026-07-06T01:00:00Z"
     },
     "93": {
       "home": "Portugal",
@@ -2796,6 +2819,13 @@
       "wiki": "Kylian Mbappé"
     },
     {
+      "player": "Erling Haaland",
+      "team": "Norway",
+      "goals": 7,
+      "assists": 0,
+      "wiki": "Erling Haaland"
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 7,
@@ -2803,18 +2833,18 @@
       "wiki": "Lionel Messi"
     },
     {
-      "player": "Erling Haaland",
-      "team": "Norway",
-      "goals": 5,
-      "assists": 0,
-      "wiki": "Erling Haaland"
-    },
-    {
       "player": "Harry Kane",
       "team": "England",
       "goals": 5,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Harry Kane"
+    },
+    {
+      "player": "Julián Quiñones",
+      "team": "Mexico",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Julián Quiñones"
     },
     {
       "player": "Vinicius Junior",
@@ -2822,6 +2852,13 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Vinícius Júnior"
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "goals": 4,
+      "assists": 1,
+      "wiki": "Jude Bellingham"
     },
     {
       "player": "Mikel Oyarzabal",
@@ -2843,13 +2880,6 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Ismaïla Sarr"
-    },
-    {
-      "player": "Julián Quiñones",
-      "team": "Mexico",
-      "goals": 3,
-      "assists": 1,
-      "wiki": "Julián Quiñones"
     },
     {
       "player": "Folarin Balogun",
@@ -3018,13 +3048,6 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Marko Arnautović"
-    },
-    {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Jude Bellingham"
     },
     {
       "player": "Daniel Muñoz",
@@ -3764,6 +3787,7 @@
     "Jhon ARIAS": "",
     "Azzedine Ounahi": "Azzedine Ounahi",
     "Azzedine OUNAHI": "",
-    "Soufiane Rahimi": "Soufiane Rahimi"
+    "Soufiane Rahimi": "Soufiane Rahimi",
+    "NEYMAR JR": ""
   }
 }
