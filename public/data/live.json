@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-06T02:02:38.843Z",
+  "updated": "2026-07-06T09:52:56.620Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2752,32 +2752,69 @@
     "92": {
       "home": "Mexico",
       "away": "England",
-      "homeGoals": 1,
-      "awayGoals": 2,
+      "homeGoals": 2,
+      "awayGoals": 3,
       "homePens": null,
       "awayPens": null,
-      "status": "HT",
-      "kickoff": "2026-07-06T01:00:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-06T01:00:00Z",
+      "goals": [
+        {
+          "player": "Julian QUINONES",
+          "team": "Mexico",
+          "minute": "42",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Raul JIMENEZ",
+          "team": "Mexico",
+          "minute": "69",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "36",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "38",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Harry KANE",
+          "team": "England",
+          "minute": "60",
+          "pen": true,
+          "og": false
+        }
+      ]
     },
     "93": {
       "home": "Portugal",
       "away": "Spain",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-06T19:00:00Z"
+      "kickoff": "2026-07-06T19:00Z"
     },
     "94": {
       "home": "United States",
       "away": "Belgium",
-      "homeGoals": null,
-      "awayGoals": null,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
       "status": "NS",
-      "kickoff": "2026-07-07T00:00:00Z"
+      "kickoff": "2026-07-07T00:00Z"
     },
     "95": {
       "home": "Argentina",
@@ -2808,6 +2845,16 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-09T20:00:00Z"
+    },
+    "99": {
+      "home": "Norway",
+      "away": "England",
+      "homeGoals": null,
+      "awayGoals": null,
+      "homePens": null,
+      "awayPens": null,
+      "status": "NS",
+      "kickoff": "2026-07-11T21:00:00Z"
     }
   },
   "scorers": [
@@ -2835,7 +2882,7 @@
     {
       "player": "Harry Kane",
       "team": "England",
-      "goals": 5,
+      "goals": 6,
       "assists": 1,
       "wiki": "Harry Kane"
     },
@@ -2880,6 +2927,13 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Ismaïla Sarr"
+    },
+    {
+      "player": "Raúl Jiménez",
+      "team": "Mexico",
+      "goals": 3,
+      "assists": 0,
+      "wiki": "Raúl Jiménez"
     },
     {
       "player": "Folarin Balogun",
@@ -2964,13 +3018,6 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Cristiano Ronaldo"
-    },
-    {
-      "player": "Raúl Jiménez",
-      "team": "Mexico",
-      "goals": 2,
-      "assists": 0,
-      "wiki": "Raúl Jiménez"
     },
     {
       "player": "Cyle Larin",
