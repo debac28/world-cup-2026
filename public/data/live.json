@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-06T19:39:18.723Z",
+  "updated": "2026-07-07T01:57:49.784Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2800,22 +2800,31 @@
       "home": "Portugal",
       "away": "Spain",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-07-06T19:00:00Z",
-      "minute": "38"
+      "goals": [
+        {
+          "player": "Mikel MERINO",
+          "team": "Spain",
+          "minute": "90+1",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "94": {
       "home": "United States",
       "away": "Belgium",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 4,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-07T00:00Z"
+      "status": "2H",
+      "kickoff": "2026-07-07T00:00:00Z",
+      "minute": "90+3"
     },
     "95": {
       "home": "Argentina",
@@ -3162,7 +3171,7 @@
       "player": "Leandro Trossard",
       "team": "Belgium",
       "goals": 2,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Leandro Trossard"
     },
     {
@@ -3187,11 +3196,25 @@
       "wiki": "Youri Tielemans"
     },
     {
+      "player": "Malik Tillman",
+      "team": "United States",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Malik Tillman"
+    },
+    {
       "player": "Azzedine Ounahi",
       "team": "Morocco",
       "goals": 2,
       "assists": 0,
       "wiki": "Azzedine Ounahi"
+    },
+    {
+      "player": "Charles De Ketelaere",
+      "team": "Belgium",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Charles De Ketelaere"
     },
     {
       "player": "Ladislav Krejčí",
@@ -3531,20 +3554,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Finn Surman"
-    },
-    {
-      "player": "Mostafa Ziko",
-      "team": "Egypt",
-      "goals": 1,
-      "assists": 1,
-      "wiki": "Mostafa Ziko"
-    },
-    {
-      "player": "Mohamed Salah",
-      "team": "Egypt",
-      "goals": 1,
-      "assists": 2,
-      "wiki": "Mohamed Salah"
     }
   ],
   "wikiLinks": {
@@ -3836,6 +3845,9 @@
     "Azzedine Ounahi": "Azzedine Ounahi",
     "Azzedine OUNAHI": "",
     "Soufiane Rahimi": "Soufiane Rahimi",
-    "NEYMAR JR": ""
+    "NEYMAR JR": "",
+    "Mikel MERINO": "",
+    "Malik Tillman": "Malik Tillman",
+    "Charles De Ketelaere": "Charles De Ketelaere"
   }
 }
