@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-07T14:03:44.893Z",
+  "updated": "2026-07-07T19:38:37.858Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2865,12 +2865,49 @@
     "95": {
       "home": "Argentina",
       "away": "Egypt",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 3,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-07T16:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-07T16:00:00Z",
+      "goals": [
+        {
+          "player": "Cristian ROMERO",
+          "team": "Argentina",
+          "minute": "79",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lionel MESSI",
+          "team": "Argentina",
+          "minute": "83",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Enzo FERNANDEZ",
+          "team": "Argentina",
+          "minute": "90+2",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "YASSER IBRAHIM",
+          "team": "Egypt",
+          "minute": "15",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "MOSTAFA ZICO",
+          "team": "Egypt",
+          "minute": "67",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "96": {
       "home": "Switzerland",
@@ -2915,6 +2952,13 @@
   },
   "scorers": [
     {
+      "player": "Lionel Messi",
+      "team": "Argentina",
+      "goals": 8,
+      "assists": 1,
+      "wiki": "Lionel Messi"
+    },
+    {
       "player": "Kylian Mbappé",
       "team": "France",
       "goals": 7,
@@ -2927,13 +2971,6 @@
       "goals": 7,
       "assists": 0,
       "wiki": "Erling Haaland"
-    },
-    {
-      "player": "Lionel Messi",
-      "team": "Argentina",
-      "goals": 7,
-      "assists": 0,
-      "wiki": "Lionel Messi"
     },
     {
       "player": "Harry Kane",
@@ -3191,6 +3228,13 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Ayase Ueda"
+    },
+    {
+      "player": "Mostafa Ziko",
+      "team": "Egypt",
+      "goals": 2,
+      "assists": 1,
+      "wiki": "Mostafa Ziko"
     },
     {
       "player": "Soufiane Rahimi",
@@ -3593,13 +3637,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Hélio Varela"
-    },
-    {
-      "player": "Finn Surman",
-      "team": "New Zealand",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Finn Surman"
     }
   ],
   "wikiLinks": {
@@ -3896,6 +3933,9 @@
     "Malik Tillman": "Malik Tillman",
     "Charles De Ketelaere": "Charles De Ketelaere",
     "Charles DE KETELAERE": "",
-    "Hans VANAKEN": ""
+    "Hans VANAKEN": "",
+    "Cristian ROMERO": "",
+    "Enzo FERNANDEZ": "",
+    "YASSER IBRAHIM": ""
   }
 }
