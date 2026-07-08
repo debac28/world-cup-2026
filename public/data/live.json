@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-07T19:38:37.858Z",
+  "updated": "2026-07-08T01:27:33.753Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2914,10 +2914,10 @@
       "away": "Colombia",
       "homeGoals": 0,
       "awayGoals": 0,
-      "homePens": null,
-      "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-07T20:00Z"
+      "homePens": 4,
+      "awayPens": 3,
+      "status": "FT",
+      "kickoff": "2026-07-07T20:00:00Z"
     },
     "97": {
       "home": "France",
@@ -2948,6 +2948,14 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-11T21:00:00Z"
+    },
+    "100": {
+      "home": "Argentina",
+      "away": "Switzerland",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-12T01:00:00Z"
     }
   },
   "scorers": [
