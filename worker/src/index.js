@@ -13,6 +13,7 @@
 //   FOOTBALL_DATA_TOKEN, YOUTUBE_API_KEY (secrets); KV (namespace); BASE_LIVE_URL (var).
 
 import seed from '../../public/data/seed.json'
+import poll from '../../public/data/poll.json'
 import { buildResults, norm } from '../../scripts/lib/map.mjs'
 import { buildEspnResults, mergeResults, ESPN_SCOREBOARD_URL } from '../../scripts/lib/espn.mjs'
 import { buildFifaResults, fetchFifaMatchGoals, FIFA_MATCHES_URL, FIFA_HEADERS } from '../../scripts/lib/fifa.mjs'
@@ -23,7 +24,7 @@ import { attachWikiLinks } from '../../scripts/lib/wikilinks.mjs'
 const FD_BASE = 'https://api.football-data.org/v4'
 const CORS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 const CACHE_SECONDS = 60
@@ -53,6 +54,8 @@ const RECENT_FT_WINDOW_MS = 4 * 60 * 60 * 1000
 export default {
   async fetch(request, env, ctx) {
     if (request.method === 'OPTIONS') return new Response(null, { headers: CORS })
+
+    if (new URL(request.url).pathname === '/poll') return handlePoll(request, env)
 
     const cache = caches.default
     const cacheKey = new Request(new URL('/live', request.url).toString())
@@ -93,6 +96,47 @@ function withCors(res) {
   const r = new Response(res.body, res)
   for (const [k, v] of Object.entries(CORS)) r.headers.set(k, v)
   return r
+}
+
+// "Who wins the cup?" poll — one poll per knockout stage (qf|sf|final), the app showing the
+// teams alive for the next round. GET /poll?stage=… returns that stage's real votes; POST
+// { choice } records one. The client adds a committed seed baseline on top, so this endpoint
+// stores ONLY real votes (starts empty per stage). One-vote-per-user is enforced client-side
+// (localStorage); this is just the shared counter. Choices are validated against poll.json's
+// team list so a stray request can't inject arbitrary KV keys.
+const POLL_STAGES = new Set(['qf', 'sf', 'final'])
+const POLL_NAMES = new Set(Object.keys(poll.seed))
+
+async function readVotes(env, stage) {
+  if (!env.KV) return {}
+  try {
+    return JSON.parse((await env.KV.get(`poll:${stage}`)) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+async function handlePoll(request, env) {
+  const stage = new URL(request.url).searchParams.get('stage')
+  if (!POLL_STAGES.has(stage)) return pollJSON({ error: 'invalid stage' }, 400)
+  if (request.method === 'POST') {
+    const choice = await request.json().then((b) => b?.choice).catch(() => null)
+    if (!POLL_NAMES.has(choice)) return pollJSON({ error: 'invalid choice' }, 400)
+    const counts = await readVotes(env, stage)
+    counts[choice] = (counts[choice] || 0) + 1
+    // ponytail: KV read-modify-write is last-write-wins, so two simultaneous votes can lose
+    // one. Fine for a fun poll; switch to a Durable Object if exact tallies ever matter.
+    if (env.KV) await env.KV.put(`poll:${stage}`, JSON.stringify(counts))
+    return pollJSON({ counts })
+  }
+  return pollJSON({ counts: await readVotes(env, stage) })
+}
+
+function pollJSON(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...CORS },
+  })
 }
 
 async function fetchJSON(url, init) {

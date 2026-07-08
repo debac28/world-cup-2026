@@ -1,5 +1,6 @@
 import { el, empty } from '../lib/dom.js'
 import { matchRow, sectionTitle } from '../lib/components.js'
+import { pollCard } from './poll.js'
 import { LOCAL_TZ, fmtFullDay, todayKey, localDayKey } from '../lib/time.js'
 
 export function renderToday(model) {
@@ -28,6 +29,9 @@ export function renderToday(model) {
       frag.appendChild(sectionTitle('Next match day', fmtFullDay(next.date)))
       for (const m of next.matches) frag.appendChild(matchRow(m, { showRound: true }))
     }
+    // Only on no-match days: a "who wins the cup?" poll over the teams still alive.
+    const poll = pollCard(model)
+    if (poll) frag.appendChild(poll)
   }
   return frag
 }
