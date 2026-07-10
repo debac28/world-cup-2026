@@ -6,6 +6,39 @@ import { norm } from '../../scripts/lib/map.mjs'
 
 const SUMMARY = (id) =>
   `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=${id}`
+const SCOREBOARD = (date) =>
+  `https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=${date}`
+
+// ESPN's scoreboard wants a UTC YYYYMMDD. Kickoffs near a day boundary can land on the
+// neighbouring UTC date, so callers probe ±1 day.
+const ymd = (d) =>
+  `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}`
+
+// Resolve an ESPN event id for a match the live feed didn't tag (any match older than what the
+// default scoreboard lists). Query the scoreboard for the kickoff's UTC date ±1 and match by
+// team pair. Returns null if ESPN has no such event (falls through to a graceful "unavailable").
+async function resolveEventId(home, away, kickoff) {
+  if (!kickoff) return null
+  const t = new Date(kickoff).getTime()
+  const days = [...new Set([ymd(new Date(t - 864e5)), ymd(new Date(t)), ymd(new Date(t + 864e5))])]
+  const want = new Set([norm(home), norm(away)])
+  for (const day of days) {
+    let events
+    try {
+      const res = await fetch(SCOREBOARD(day))
+      if (!res.ok) continue
+      ;({ events = [] } = await res.json())
+    } catch {
+      continue
+    }
+    for (const e of events) {
+      const comps = e.competitions?.[0]?.competitors || []
+      const names = comps.map((c) => norm(c.team?.displayName || c.team?.name))
+      if (names.length === 2 && names.every((n) => want.has(n))) return e.id
+    }
+  }
+  return null
+}
 
 // Stats we surface, in display order: [espnStatName, label, isPercent].
 const STAT_SPEC = [
@@ -83,15 +116,18 @@ function parse(json, home) {
   return { stats, lineups: { home: readLineup(hR), away: readLineup(aR) } }
 }
 
-// Fetch + parse a match's detail. `home` is the seed home name (for orientation). Cached per
-// event id; a live match re-fetches after LIVE_TTL, a finished one is served from cache forever.
-export async function fetchMatchDetail(espnId, home, { live = false } = {}) {
-  if (!espnId) return null
-  const hit = cache.get(espnId)
-  if (hit && (!live || Date.now() - hit.at < LIVE_TTL)) return hit.data
-  const res = await fetch(SUMMARY(espnId))
+// Fetch + parse a match's detail from the model match `m`. Uses `m.espnId` when the feed
+// tagged it (recent matches), else resolves the id by date. Cached by match id; a live match
+// re-fetches after LIVE_TTL, a finished one is served from cache forever.
+export async function fetchMatchDetail(m) {
+  const key = String(m.id)
+  const hit = cache.get(key)
+  if (hit && (!m.live || Date.now() - hit.at < LIVE_TTL)) return hit.data
+  const id = m.espnId || (await resolveEventId(m.home, m.away, m.kickoff))
+  if (!id) throw new Error('no ESPN event')
+  const res = await fetch(SUMMARY(id))
   if (!res.ok) throw new Error(`ESPN ${res.status}`)
-  const data = parse(await res.json(), home)
-  cache.set(espnId, { at: Date.now(), data })
+  const data = parse(await res.json(), m.home)
+  cache.set(key, { at: Date.now(), data })
   return data
 }

@@ -54,8 +54,9 @@ export function matchRow(m, { showRound = false, showPrediction = false, showCom
     showCommentary && m.live ? commentaryBand(m) : null,
     // Lineups + team stats (possession, passes, fouls…), lazy-loaded from ESPN on expand.
     // Finished matches only — during play the live commentary carries the card; adding the
-    // full stats+lineups panel too is too much data on a phone.
-    m.espnId && m.finished ? matchDetails(m) : null,
+    // full stats+lineups panel too is too much data on a phone. The ESPN event id is resolved
+    // on expand (from m.espnId when present, else by match date), so it works for every match.
+    m.finished ? matchDetails(m) : null,
   ])
 }
 
@@ -76,7 +77,7 @@ function matchDetails(m) {
     loaded = true
     panel.replaceChildren(el('div', { class: 'mdet__msg' }, 'Loading…'))
     try {
-      const d = await fetchMatchDetail(m.espnId, m.home, { live: m.live })
+      const d = await fetchMatchDetail(m)
       const nodes = detailNodes(d)
       panel.replaceChildren(...(nodes.length ? nodes : [el('div', { class: 'mdet__msg' }, 'No details yet.')]))
     } catch {

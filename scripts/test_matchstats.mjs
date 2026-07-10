@@ -34,7 +34,7 @@ const summary = {
 
 globalThis.fetch = async () => ({ ok: true, json: async () => summary })
 
-const d = await fetchMatchDetail('evt', 'France', {})
+const d = await fetchMatchDetail({ id: 97, home: 'France', away: 'Morocco', espnId: '760510', finished: true })
 
 const poss = d.stats.find((s) => s.label === 'Possession')
 assert.equal(poss.home, '48%', 'home possession oriented to seed home (France)')
