@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-09T19:19:51.197Z",
+  "updated": "2026-07-10T01:48:23.642Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2922,12 +2922,28 @@
     "97": {
       "home": "France",
       "away": "Morocco",
-      "homeGoals": 0,
+      "homeGoals": 2,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-09T20:00Z"
+      "status": "FT",
+      "kickoff": "2026-07-09T20:00:00Z",
+      "goals": [
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "60",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "66",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "98": {
       "home": "Spain",
@@ -2962,18 +2978,18 @@
   },
   "scorers": [
     {
+      "player": "Kylian Mbappé",
+      "team": "France",
+      "goals": 8,
+      "assists": 2,
+      "wiki": "Kylian Mbappé"
+    },
+    {
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 8,
       "assists": 1,
       "wiki": "Lionel Messi"
-    },
-    {
-      "player": "Kylian Mbappé",
-      "team": "France",
-      "goals": 7,
-      "assists": 2,
-      "wiki": "Kylian Mbappé"
     },
     {
       "player": "Erling Haaland",
@@ -2988,6 +3004,13 @@
       "goals": 6,
       "assists": 1,
       "wiki": "Harry Kane"
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "team": "France",
+      "goals": 5,
+      "assists": 2,
+      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Julián Quiñones",
@@ -3016,13 +3039,6 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Mikel Oyarzabal"
-    },
-    {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "goals": 4,
-      "assists": 2,
-      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Ismaïla Sarr",
