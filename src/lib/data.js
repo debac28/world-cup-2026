@@ -145,6 +145,9 @@ function buildModel(seed, live) {
       // Shown as a red-card marker on the team so you can see a side is down a player.
       redHome: r.redHome || [],
       redAway: r.redAway || [],
+      // ESPN event id — key for the on-demand match-detail fetch (lineups + live/full stats).
+      // Null until the ESPN overlay covers the match; the details toggle only shows when set.
+      espnId: r.espnId ?? null,
       // Elapsed minute from FIFA, shown on the live badge ("● 87'"); null when not live.
       minute: status === 'live' ? r.minute || null : null,
       // Raw feed status code (e.g. '2H', 'HT', 'BT'), kept while live so the badge can show

@@ -4,6 +4,7 @@ import { fmtTime, relativeHint, REGION } from './time.js'
 import { shareAnchor } from './share.js'
 import { officialBrand, validCandidate, isGlobalChannel } from '../../scripts/lib/highlights.mjs'
 import { commentaryBand } from './commentary.js'
+import { fetchMatchDetail } from './matchstats.js'
 
 // Minimal calendar-with-plus glyph (currentColor stroke), used by the country "add all to
 // calendar" button in the Fixtures tab.
@@ -51,6 +52,90 @@ export function matchRow(m, { showRound = false, showPrediction = false, showCom
     shareScoreLink(m),
     highlightLink(m),
     showCommentary && m.live ? commentaryBand(m) : null,
+    // Lineups + team stats (possession, passes, fouls…), lazy-loaded from ESPN on expand.
+    // Finished matches only — during play the live commentary carries the card; adding the
+    // full stats+lineups panel too is too much data on a phone.
+    m.espnId && m.finished ? matchDetails(m) : null,
+  ])
+}
+
+// Collapsible per-match detail. The heavy data (lineups + full team stats) is fetched from
+// ESPN's per-match summary only on first expand — kept out of live.json to keep the feed lean.
+function matchDetails(m) {
+  const panel = el('div', { class: 'mdet__panel' })
+  let loaded = false
+  const btn = el(
+    'button',
+    { class: 'mdet__toggle', type: 'button' },
+    'Match details ▾',
+  )
+  btn.addEventListener('click', async () => {
+    const open = panel.classList.toggle('mdet__panel--open')
+    btn.textContent = open ? 'Hide match details ▴' : 'Match details ▾'
+    if (!open || loaded) return
+    loaded = true
+    panel.replaceChildren(el('div', { class: 'mdet__msg' }, 'Loading…'))
+    try {
+      const d = await fetchMatchDetail(m.espnId, m.home, { live: m.live })
+      const nodes = detailNodes(d)
+      panel.replaceChildren(...(nodes.length ? nodes : [el('div', { class: 'mdet__msg' }, 'No details yet.')]))
+    } catch {
+      loaded = false // let a retry re-fetch
+      panel.replaceChildren(el('div', { class: 'mdet__msg' }, 'Stats unavailable right now.'))
+    }
+  })
+  return el('div', { class: 'mdet' }, [btn, panel])
+}
+
+function detailNodes(d) {
+  const nodes = []
+  if (d.stats.length) nodes.push(el('div', { class: 'stats' }, d.stats.map(statBar)))
+  const { home, away } = d.lineups
+  if (home.starters.length || away.starters.length) {
+    nodes.push(
+      el('div', { class: 'lineups' }, [lineupCol(home, 'home'), lineupCol(away, 'away')]),
+    )
+  }
+  return nodes
+}
+
+// One stat as a two-sided comparison bar: home value | label | away value, with a bar split
+// proportionally between the two (50/50 when both are zero so it never collapses).
+function statBar(row) {
+  const total = row.hn + row.an
+  const hp = total ? Math.round((row.hn / total) * 100) : 50
+  return el('div', { class: 'stat' }, [
+    el('div', { class: 'stat__row' }, [
+      el('span', { class: 'stat__v' }, row.home),
+      el('span', { class: 'stat__label' }, row.label),
+      el('span', { class: 'stat__v' }, row.away),
+    ]),
+    el('div', { class: 'stat__bar' }, [
+      el('span', { class: 'stat__fill stat__fill--home', style: `width:${hp}%` }),
+      el('span', { class: 'stat__fill stat__fill--away', style: `width:${100 - hp}%` }),
+    ]),
+  ])
+}
+
+function lineupCol(lu, which) {
+  const player = (p) =>
+    el('li', { class: `lp ${p.subbedOut ? 'lp--off' : ''}` }, [
+      el('span', { class: 'lp__num' }, String(p.num)),
+      el('span', { class: 'lp__name' }, p.name),
+      p.pos ? el('span', { class: 'lp__pos' }, p.pos) : null,
+    ])
+  return el('div', { class: `lineup lineup--${which}` }, [
+    el('div', { class: 'lineup__head' }, [
+      el('span', { class: 'lineup__team' }, lu.team),
+      lu.formation ? el('span', { class: 'lineup__form' }, lu.formation) : null,
+    ]),
+    el('ul', { class: 'lineup__xi' }, lu.starters.map(player)),
+    lu.subs.length
+      ? el('div', { class: 'lineup__subs' }, [
+          el('div', { class: 'lineup__subs-h' }, 'Subs used'),
+          el('ul', { class: 'lineup__xi' }, lu.subs.map(player)),
+        ])
+      : null,
   ])
 }
 

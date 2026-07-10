@@ -74,6 +74,9 @@ function readEvent(ev) {
     kickoff: ev.date || comp.date || null,
     redHome: r.home,
     redAway: r.away,
+    // ESPN event id — the key for the on-demand per-match summary (lineups + stats) the app
+    // fetches client-side. Carried through so the browser needn't re-resolve it by date.
+    espnId: ev.id != null ? String(ev.id) : null,
   }
 }
 
@@ -104,6 +107,7 @@ export function buildEspnResults(seed, events) {
         kickoff: e.kickoff,
         redHome: reds(sameOrder ? e.redHome : e.redAway),
         redAway: reds(sameOrder ? e.redAway : e.redHome),
+        espnId: e.espnId,
       }
       continue
     }
@@ -122,6 +126,7 @@ export function buildEspnResults(seed, events) {
       kickoff: best.kickoff,
       redHome: reds(best.redHome),
       redAway: reds(best.redAway),
+      espnId: best.espnId,
     }
   }
 
@@ -178,6 +183,9 @@ export function mergeResults(base, overlay, { preserveBreak = false } = {}) {
       // `...cur` keeps any the ESPN layer already added (e.g. when FIFA wins a later live tie).
       ...(ov.redHome != null ? { redHome: ov.redHome } : {}),
       ...(ov.redAway != null ? { redAway: ov.redAway } : {}),
+      // ESPN event id: only the ESPN overlay carries it; `...cur` preserves it when a
+      // later, id-less source (FIFA/football-data) wins a live tie.
+      ...(ov.espnId != null ? { espnId: ov.espnId } : {}),
     }
   }
   return merged

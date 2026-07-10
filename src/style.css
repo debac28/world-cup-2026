@@ -403,3 +403,43 @@ button.wp-action { font: inherit; cursor: pointer; }
 .cal-allbar { display: flex; justify-content: flex-end; margin: 2px 2px 12px; }
 .cal-all { display: inline-flex; align-items: center; gap: 7px; font-size: 0.82rem; font-weight: 800; color: #1a1300; background: var(--gold); border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer; }
 .cal-all:active { transform: scale(0.98); }
+
+/* ── Match details (lazy ESPN lineups + team stats) ─────────────────────────── */
+.mdet { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 8px; }
+.mdet__toggle {
+  width: 100%; background: none; border: 0; cursor: pointer; padding: 4px 0;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3px; color: var(--muted);
+}
+.mdet__toggle:active { transform: scale(0.99); }
+.mdet__panel { display: none; margin-top: 8px; }
+.mdet__panel--open { display: block; }
+.mdet__msg { font-size: 0.78rem; color: var(--muted); text-align: center; padding: 10px 0; }
+
+/* Two-sided comparison bars: home value | label | away value + proportional split bar. */
+.stats { display: grid; gap: 9px; }
+.stat__row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.stat__v { font-size: 0.82rem; font-weight: 800; min-width: 2.6em; }
+.stat__row .stat__v:last-child { text-align: right; }
+.stat__label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; text-align: center; }
+.stat__bar { display: flex; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 3px; background: var(--panel-2); }
+.stat__fill--home { background: var(--green); }
+.stat__fill--away { background: var(--gold); opacity: 0.85; }
+
+/* Lineups: two columns, XI then the subs who came on. */
+.lineups { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin-top: 14px; }
+.lineup__head { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+.lineup--away .lineup__head { flex-direction: row-reverse; }
+.lineup__team { font-size: 0.78rem; font-weight: 800; }
+.lineup__form { font-size: 0.66rem; color: var(--muted); font-weight: 700; }
+.lineup__xi { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.lineup--away .lineup__xi { text-align: right; }
+.lp { display: flex; align-items: baseline; gap: 6px; font-size: 0.78rem; }
+.lineup--away .lp { flex-direction: row-reverse; }
+.lp--off { opacity: 0.5; }
+.lp__num { color: var(--muted); font-weight: 700; min-width: 1.6em; font-variant-numeric: tabular-nums; }
+.lineup--away .lp__num { text-align: right; }
+.lp__name { flex: 1; }
+.lp__pos { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; }
+.lineup__subs { margin-top: 8px; }
+.lineup__subs-h { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+.lineup--away .lineup__subs-h { text-align: right; }
