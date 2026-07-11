@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-10T19:13:55.440Z",
+  "updated": "2026-07-11T01:27:35.584Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2948,14 +2948,36 @@
     "98": {
       "home": "Spain",
       "away": "Belgium",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 2,
+      "awayGoals": 1,
       "homePens": null,
       "awayPens": null,
-      "status": "1H",
+      "status": "FT",
       "kickoff": "2026-07-10T19:00:00Z",
-      "minute": "13",
-      "espnId": "760511"
+      "espnId": "760511",
+      "goals": [
+        {
+          "player": "Fabian RUIZ",
+          "team": "Spain",
+          "minute": "30",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Mikel MERINO",
+          "team": "Spain",
+          "minute": "88",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Charles DE KETELAERE",
+          "team": "Belgium",
+          "minute": "41",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "99": {
       "home": "Norway",
@@ -2976,6 +2998,14 @@
       "awayPens": null,
       "status": "NS",
       "kickoff": "2026-07-12T01:00:00Z"
+    },
+    "101": {
+      "home": "France",
+      "away": "Spain",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-14T19:00:00Z"
     }
   },
   "scorers": [
@@ -3146,6 +3176,13 @@
       "goals": 3,
       "assists": 1,
       "wiki": "Romelu Lukaku"
+    },
+    {
+      "player": "Charles De Ketelaere",
+      "team": "Belgium",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Charles De Ketelaere"
     },
     {
       "player": "Cyle Larin",
@@ -3328,11 +3365,11 @@
       "wiki": "Azzedine Ounahi"
     },
     {
-      "player": "Charles De Ketelaere",
-      "team": "Belgium",
+      "player": "Mikel Merino",
+      "team": "Spain",
       "goals": 2,
-      "assists": 1,
-      "wiki": "Charles De Ketelaere"
+      "assists": 0,
+      "wiki": "Mikel Merino"
     },
     {
       "player": "Ladislav Krejčí",
@@ -3658,13 +3695,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Agustín Canobbio"
-    },
-    {
-      "player": "Hélio Varela",
-      "team": "Cape Verde",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Hélio Varela"
     }
   ],
   "wikiLinks": {
@@ -3964,6 +3994,8 @@
     "Hans VANAKEN": "",
     "Cristian ROMERO": "",
     "Enzo FERNANDEZ": "",
-    "YASSER IBRAHIM": ""
+    "YASSER IBRAHIM": "",
+    "Fabian RUIZ": "",
+    "Mikel Merino": "Mikel Merino"
   }
 }
