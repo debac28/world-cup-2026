@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-11T18:42:50.451Z",
+  "updated": "2026-07-12T01:28:55.409Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2981,23 +2981,47 @@
     "99": {
       "home": "Norway",
       "away": "England",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-11T21:00Z",
-      "espnId": "760512"
+      "status": "FT",
+      "kickoff": "2026-07-11T21:00:00Z",
+      "espnId": "760512",
+      "goals": [
+        {
+          "player": "Andreas SCHJELDERUP",
+          "team": "Norway",
+          "minute": "36",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "45+2",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "93",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "100": {
       "home": "Argentina",
       "away": "Switzerland",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-12T01:00Z",
+      "status": "1H",
+      "kickoff": "2026-07-12T01:00:00Z",
+      "minute": "28",
       "espnId": "760513"
     },
     "101": {
@@ -3023,7 +3047,7 @@
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 8,
-      "assists": 1,
+      "assists": 2,
       "wiki": "Lionel Messi"
     },
     {
@@ -3039,6 +3063,13 @@
       "goals": 6,
       "assists": 1,
       "wiki": "Harry Kane"
+    },
+    {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "goals": 6,
+      "assists": 1,
+      "wiki": "Jude Bellingham"
     },
     {
       "player": "Ousmane Dembélé",
@@ -3060,13 +3091,6 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Vinícius Júnior"
-    },
-    {
-      "player": "Jude Bellingham",
-      "team": "England",
-      "goals": 4,
-      "assists": 1,
-      "wiki": "Jude Bellingham"
     },
     {
       "player": "Mikel Oyarzabal",
@@ -3999,6 +4023,7 @@
     "Enzo FERNANDEZ": "",
     "YASSER IBRAHIM": "",
     "Fabian RUIZ": "",
-    "Mikel Merino": "Mikel Merino"
+    "Mikel Merino": "Mikel Merino",
+    "Andreas SCHJELDERUP": ""
   }
 }
