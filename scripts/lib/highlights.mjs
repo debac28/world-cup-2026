@@ -34,6 +34,15 @@ export function isGlobalChannel(channel) {
   return GLOBAL.has((channel || '').trim().toLowerCase())
 }
 
+// Manually-banned videoIds: wrong-match clips that slip past every title/channel guard because
+// the fixture recurs across editions and the title carries no year (e.g. an old France v Spain
+// World Cup upload titled "Spain vs France • World Cup Highlights"). The videoId is the only
+// signal that separates them, so we denylist by id. Filtered in validCandidate, so this blocks
+// them on serve, on the client, AND stops the cron re-adding them.
+const BLOCKED_VIDEO_IDS = new Set([
+  'MVqrEPZ9ZBQ', // old France–Spain World Cup game, not the 2026 semifinal (match #101)
+])
+
 // Fold a string for loose comparison: drop diacritics, lowercase, collapse punctuation to
 // spaces ("Côte d'Ivoire" -> "cote d ivoire", "Türkiye" -> "turkiye").
 function fold(s) {
@@ -108,6 +117,7 @@ export function validCandidate(c, home, away) {
   return !!(
     c &&
     c.videoId &&
+    !BLOCKED_VIDEO_IDS.has(c.videoId) &&
     cleanChannel(c.channel) &&
     officialBrand(c.channel) &&
     titleMatchesTeams(c.title, home, away) &&
