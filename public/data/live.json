@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14T18:59:33.000Z",
+  "updated": "2026-07-15T01:16:27.575Z",
   "season": "2026",
   "results": {
     "1": {
@@ -3055,12 +3055,28 @@
       "home": "France",
       "away": "Spain",
       "homeGoals": 0,
-      "awayGoals": 0,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-14T19:00Z",
-      "espnId": "760514"
+      "status": "FT",
+      "kickoff": "2026-07-14T19:00:00Z",
+      "espnId": "760514",
+      "goals": [
+        {
+          "player": "Mikel OYARZABAL",
+          "team": "Spain",
+          "minute": "22",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Pedro PORRO",
+          "team": "Spain",
+          "minute": "58",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "102": {
       "home": "England",
@@ -3110,6 +3126,13 @@
       "wiki": "Jude Bellingham"
     },
     {
+      "player": "Mikel Oyarzabal",
+      "team": "Spain",
+      "goals": 5,
+      "assists": 1,
+      "wiki": "Mikel Oyarzabal"
+    },
+    {
       "player": "Ousmane Dembélé",
       "team": "France",
       "goals": 5,
@@ -3129,13 +3152,6 @@
       "goals": 4,
       "assists": 1,
       "wiki": "Vinícius Júnior"
-    },
-    {
-      "player": "Mikel Oyarzabal",
-      "team": "Spain",
-      "goals": 4,
-      "assists": 1,
-      "wiki": "Mikel Oyarzabal"
     },
     {
       "player": "Ismaïla Sarr",
@@ -3428,6 +3444,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Malik Tillman"
+    },
+    {
+      "player": "Pedro Porro",
+      "team": "Spain",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Pedro Porro"
     },
     {
       "player": "Dan Ndoye",
@@ -3754,13 +3777,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Junya Itō"
-    },
-    {
-      "player": "Lamine Yamal",
-      "team": "Spain",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Lamine Yamal"
     }
   ],
   "wikiLinks": {
@@ -4067,6 +4083,7 @@
     "Alexis MAC ALLISTER": "",
     "Julian ALVAREZ": "",
     "Lautaro Martínez": "Lautaro Martínez",
-    "Dan Ndoye": "Dan Ndoye"
+    "Dan Ndoye": "Dan Ndoye",
+    "Pedro Porro": "Pedro Porro"
   }
 }
