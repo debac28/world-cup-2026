@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-15T18:52:55.810Z",
+  "updated": "2026-07-16T01:26:12.620Z",
   "season": "2026",
   "results": {
     "1": {
@@ -3080,13 +3080,52 @@
     "102": {
       "home": "England",
       "away": "Argentina",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 1,
+      "awayGoals": 2,
       "homePens": null,
       "awayPens": null,
+      "status": "FT",
+      "kickoff": "2026-07-15T19:00:00Z",
+      "espnId": "760515",
+      "goals": [
+        {
+          "player": "Anthony GORDON",
+          "team": "England",
+          "minute": "55",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Enzo FERNANDEZ",
+          "team": "Argentina",
+          "minute": "85",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Lautaro MARTINEZ",
+          "team": "Argentina",
+          "minute": "90+2",
+          "pen": false,
+          "og": false
+        }
+      ]
+    },
+    "103": {
+      "home": "France",
+      "away": "England",
+      "homeGoals": null,
+      "awayGoals": null,
       "status": "NS",
-      "kickoff": "2026-07-15T19:00Z",
-      "espnId": "760515"
+      "kickoff": "2026-07-18T21:00:00Z"
+    },
+    "104": {
+      "home": "Spain",
+      "away": "Argentina",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "NS",
+      "kickoff": "2026-07-19T19:00:00Z"
     }
   },
   "scorers": [
@@ -3101,7 +3140,7 @@
       "player": "Lionel Messi",
       "team": "Argentina",
       "goals": 8,
-      "assists": 2,
+      "assists": 4,
       "wiki": "Lionel Messi"
     },
     {
@@ -3257,6 +3296,13 @@
       "goals": 3,
       "assists": 1,
       "wiki": "Romelu Lukaku"
+    },
+    {
+      "player": "Lautaro Martínez",
+      "team": "Argentina",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Lautaro Martínez"
     },
     {
       "player": "Charles De Ketelaere",
@@ -3418,13 +3464,6 @@
       "wiki": "Leandro Trossard"
     },
     {
-      "player": "Lautaro Martínez",
-      "team": "Argentina",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Lautaro Martínez"
-    },
-    {
       "player": "Riyad Mahrez",
       "team": "Algeria",
       "goals": 2,
@@ -3472,6 +3511,13 @@
       "goals": 2,
       "assists": 0,
       "wiki": "Mikel Merino"
+    },
+    {
+      "player": "Enzo Fernández",
+      "team": "Argentina",
+      "goals": 2,
+      "assists": 0,
+      "wiki": "Enzo Fernández"
     },
     {
       "player": "Ladislav Krejčí",
@@ -3770,13 +3816,6 @@
       "goals": 1,
       "assists": 0,
       "wiki": "Franck Kessié"
-    },
-    {
-      "player": "Junya Ito",
-      "team": "Japan",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Junya Itō"
     }
   ],
   "wikiLinks": {
@@ -4084,6 +4123,8 @@
     "Julian ALVAREZ": "",
     "Lautaro Martínez": "Lautaro Martínez",
     "Dan Ndoye": "Dan Ndoye",
-    "Pedro Porro": "Pedro Porro"
+    "Pedro Porro": "Pedro Porro",
+    "Anthony GORDON": "",
+    "Enzo Fernández": "Enzo Fernández"
   }
 }
