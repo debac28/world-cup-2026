@@ -24,7 +24,11 @@ const FEEDBACK_ENABLED = true
 const TALLY_FORM_ID = 'vGW5pg'
 
 const SHOW_DELAY_MS = 15000
-const SUBMITTED_KEY = 'feedbackSubmitted' // localStorage: '"true"' once submitted/disabled
+// localStorage flag set once a user submits (or disables). Bump the SUFFIX to reset it for
+// EVERYONE — the old key is then ignored so the widget reappears for past submitters; their
+// next submit writes the new key and it disappears again, for good. (Can't clear other
+// people's localStorage remotely; renaming the key is the one-time reset.)
+const SUBMITTED_KEY = 'feedbackSubmitted_v2'
 const TAB_COUNT_KEY = 'wc_openTabCount' // localStorage: shared count of open tabs
 const TAB_SEEN_KEY = 'wc_tabCounted' // sessionStorage: this tab already counted (survives reload)
 
