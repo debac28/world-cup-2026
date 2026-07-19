@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-18T18:44:03.186Z",
+  "updated": "2026-07-19T01:26:42.047Z",
   "season": "2026",
   "results": {
     "1": {
@@ -3113,13 +3113,85 @@
     "103": {
       "home": "France",
       "away": "England",
-      "homeGoals": 0,
-      "awayGoals": 0,
+      "homeGoals": 4,
+      "awayGoals": 6,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-18T21:00Z",
-      "espnId": "760516"
+      "status": "FT",
+      "kickoff": "2026-07-18T21:00:00Z",
+      "espnId": "760516",
+      "goals": [
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "48",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Bradley BARCOLA",
+          "team": "France",
+          "minute": "54",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Kylian MBAPPE",
+          "team": "France",
+          "minute": "66",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ousmane DEMBELE",
+          "team": "France",
+          "minute": "90+6",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Declan RICE",
+          "team": "England",
+          "minute": "3",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Ezri KONSA",
+          "team": "England",
+          "minute": "18",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Bukayo SAKA",
+          "team": "England",
+          "minute": "37",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Bukayo SAKA",
+          "team": "England",
+          "minute": "45+1",
+          "pen": false,
+          "og": false
+        },
+        {
+          "player": "Bukayo SAKA",
+          "team": "England",
+          "minute": "87",
+          "pen": true,
+          "og": false
+        },
+        {
+          "player": "Jude BELLINGHAM",
+          "team": "England",
+          "minute": "90+8",
+          "pen": false,
+          "og": false
+        }
+      ]
     },
     "104": {
       "home": "Spain",
@@ -3136,8 +3208,8 @@
     {
       "player": "Kylian Mbappé",
       "team": "France",
-      "goals": 8,
-      "assists": 3,
+      "goals": 10,
+      "assists": 4,
       "wiki": "Kylian Mbappé"
     },
     {
@@ -3155,6 +3227,13 @@
       "wiki": "Erling Haaland"
     },
     {
+      "player": "Jude Bellingham",
+      "team": "England",
+      "goals": 7,
+      "assists": 1,
+      "wiki": "Jude Bellingham"
+    },
+    {
       "player": "Harry Kane",
       "team": "England",
       "goals": 6,
@@ -3162,11 +3241,11 @@
       "wiki": "Harry Kane"
     },
     {
-      "player": "Jude Bellingham",
-      "team": "England",
+      "player": "Ousmane Dembélé",
+      "team": "France",
       "goals": 6,
-      "assists": 1,
-      "wiki": "Jude Bellingham"
+      "assists": 2,
+      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Mikel Oyarzabal",
@@ -3174,13 +3253,6 @@
       "goals": 5,
       "assists": 1,
       "wiki": "Mikel Oyarzabal"
-    },
-    {
-      "player": "Ousmane Dembélé",
-      "team": "France",
-      "goals": 5,
-      "assists": 2,
-      "wiki": "Ousmane Dembélé"
     },
     {
       "player": "Julián Quiñones",
@@ -3244,6 +3316,13 @@
       "goals": 3,
       "assists": 0,
       "wiki": "Elijah Just"
+    },
+    {
+      "player": "Bradley Barcola",
+      "team": "France",
+      "goals": 3,
+      "assists": 1,
+      "wiki": "Bradley Barcola"
     },
     {
       "player": "Yoane Wissa",
@@ -3316,6 +3395,13 @@
       "wiki": "Charles De Ketelaere"
     },
     {
+      "player": "Bukayo Saka",
+      "team": "England",
+      "goals": 3,
+      "assists": 3,
+      "wiki": "Bukayo Saka"
+    },
+    {
       "player": "Cyle Larin",
       "team": "Canada",
       "goals": 2,
@@ -3377,13 +3463,6 @@
       "goals": 2,
       "assists": 1,
       "wiki": "Ramin Rezaeian"
-    },
-    {
-      "player": "Bradley Barcola",
-      "team": "France",
-      "goals": 2,
-      "assists": 1,
-      "wiki": "Bradley Barcola"
     },
     {
       "player": "Marko Arnautovic",
@@ -3737,7 +3816,7 @@
       "player": "Marcus Rashford",
       "team": "England",
       "goals": 1,
-      "assists": 0,
+      "assists": 1,
       "wiki": "Marcus Rashford"
     },
     {
@@ -3813,13 +3892,6 @@
       "team": "Paraguay",
       "goals": 1,
       "assists": 1
-    },
-    {
-      "player": "Franck Kessié",
-      "team": "Ivory Coast",
-      "goals": 1,
-      "assists": 0,
-      "wiki": "Franck Kessié"
     }
   ],
   "wikiLinks": {
@@ -4129,6 +4201,10 @@
     "Dan Ndoye": "Dan Ndoye",
     "Pedro Porro": "Pedro Porro",
     "Anthony GORDON": "",
-    "Enzo Fernández": "Enzo Fernández"
+    "Enzo Fernández": "Enzo Fernández",
+    "Declan RICE": "",
+    "Ezri KONSA": "",
+    "Bukayo SAKA": "",
+    "Bukayo Saka": "Bukayo Saka"
   }
 }
