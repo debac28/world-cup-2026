@@ -4,18 +4,16 @@ import { load, refresh, onModelUpdate } from './lib/data.js'
 import { initAnalytics, initGoatCounter } from './lib/analytics.js'
 import { initFeedback } from './lib/feedback.js'
 import { el, clear } from './lib/dom.js'
-import { renderToday } from './views/today.js'
 import { renderMatches, setMatchesMode } from './views/matches.js'
 import { renderBracket } from './views/bracket.js'
 import { renderScorers } from './views/scorers.js'
-import { renderWatch } from './views/watch.js'
 
+// Tournament over: no more fixtures, so Today/Fixtures/Watch are gone. Matches (defaulting to
+// its Results sub-tab) is the landing view; unknown hashes (#today, #watch) fall back to it.
 const TABS = [
-  { id: 'today', label: 'Today', render: renderToday },
   { id: 'matches', label: 'Matches', render: renderMatches },
   { id: 'bracket', label: 'Bracket', render: renderBracket },
   { id: 'scorers', label: 'Scorers', render: renderScorers },
-  { id: 'watch', label: 'Watch', render: renderWatch },
 ]
 
 const tabsEl = document.getElementById('tabs')

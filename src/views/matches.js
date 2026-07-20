@@ -4,13 +4,11 @@ import { addToCalendar } from '../lib/calendar.js'
 import { renderGroups } from './groups.js'
 import { fmtFullDay, localDayKey, todayKey } from '../lib/time.js'
 
-// Three sub-tabs:
-//   fixtures — upcoming matches, soonest first
-//   results  — finished + live matches, newest first (latest score on top)
-//   groups   — the group standings table (moved here from the bottom bar now that the
-//              knockout bracket took its top-level slot)
+// Two sub-tabs (tournament over — no upcoming Fixtures tab any more):
+//   results — finished + live matches, newest first (latest score on top)
+//   groups  — the group standings table (moved here from the bottom bar now that the
+//             knockout bracket took its top-level slot)
 const MODES = [
-  { id: 'fixtures', label: 'Fixtures' },
   { id: 'results', label: 'Results' },
   { id: 'groups', label: 'Groups' },
 ]
@@ -24,7 +22,7 @@ export function setMatchesMode(m) {
 }
 
 export function renderMatches(model) {
-  if (mode === null) mode = 'fixtures'
+  if (mode === null) mode = 'results'
 
   const wrap = el('div', { class: 'stack' })
 
