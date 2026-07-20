@@ -42,9 +42,10 @@ function bracketGeom(seedKo) {
   return { left, right, pos }
 }
 
-// Compact view (default) hides the rounds whose teams aren't known yet, so early on you only
-// see R32+R16 instead of scrolling past empty QF/SF/Final columns. Persists across re-renders.
-let full = false
+// Tournament over — every round is decided, so default to the full bracket (all rounds shown).
+// The Compact toggle still hides not-yet-known rounds, but there are none left. Persists across
+// re-renders.
+let full = true
 
 // `highlight` is an optional team name (from the global country dropdown): when set, that
 // team's slots are emphasized and cards it isn't in are dimmed, so you can trace its path.
