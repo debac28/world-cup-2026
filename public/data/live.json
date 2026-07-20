@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-19T18:47:31.536Z",
+  "updated": "2026-07-20T01:52:13.302Z",
   "season": "2026",
   "results": {
     "1": {
@@ -3195,13 +3195,28 @@
     "104": {
       "home": "Spain",
       "away": "Argentina",
-      "homeGoals": 0,
+      "homeGoals": 1,
       "awayGoals": 0,
       "homePens": null,
       "awayPens": null,
-      "status": "NS",
-      "kickoff": "2026-07-19T19:00Z",
-      "espnId": "760517"
+      "status": "FT",
+      "kickoff": "2026-07-19T19:00:00Z",
+      "redAway": [
+        {
+          "name": "Enzo Fernández",
+          "min": "90'+3'"
+        }
+      ],
+      "espnId": "760517",
+      "goals": [
+        {
+          "player": "Ferran TORRES",
+          "team": "Spain",
+          "minute": "106",
+          "pen": false,
+          "og": false
+        }
+      ]
     }
   },
   "scorers": [
@@ -4205,6 +4220,7 @@
     "Declan RICE": "",
     "Ezri KONSA": "",
     "Bukayo SAKA": "",
-    "Bukayo Saka": "Bukayo Saka"
+    "Bukayo Saka": "Bukayo Saka",
+    "Ferran TORRES": ""
   }
 }
