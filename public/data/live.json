@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-29T13:42:39.355Z",
+  "updated": "2026-07-29T18:53:26.140Z",
   "season": "2026",
   "results": {
     "1": {
@@ -2657,8 +2657,8 @@
     "88": {
       "home": "Australia",
       "away": "Egypt",
-      "homeGoals": 3,
-      "awayGoals": 5,
+      "homeGoals": 1,
+      "awayGoals": 1,
       "homePens": 2,
       "awayPens": 4,
       "status": "FT",
@@ -2970,8 +2970,8 @@
     "96": {
       "home": "Switzerland",
       "away": "Colombia",
-      "homeGoals": 4,
-      "awayGoals": 3,
+      "homeGoals": 0,
+      "awayGoals": 0,
       "homePens": 4,
       "awayPens": 3,
       "status": "FT",
@@ -3258,7 +3258,7 @@
       "homePens": null,
       "awayPens": null,
       "status": "FT",
-      "kickoff": "2026-07-19T19:00Z",
+      "kickoff": "2026-07-19T19:00:00Z",
       "redAway": [
         {
           "name": "Enzo Fernández",
