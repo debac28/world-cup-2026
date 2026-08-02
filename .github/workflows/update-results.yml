@@ -10,8 +10,9 @@ name: Update results
 # live data moved to the Worker.
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'  # every 6h (best-effort base refresh; Worker is primary)
+  # Tournament over — nothing left to refresh, so the every-6h schedule is disabled to stop
+  # the stream of no-op "chore: update results" commits (each also triggered a redeploy).
+  # Re-add `schedule:` if a future tournament needs the base refresher again.
   workflow_dispatch: {}
 
 permissions:
